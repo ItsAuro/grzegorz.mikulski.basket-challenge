@@ -9,6 +9,11 @@ public class DBG_AddForce : MonoBehaviour
     [SerializeField]
     ForceMode ForceMode;
 
+    [SerializeField]
+    Vector3 Torque;
+    [SerializeField]
+    ForceMode TorqueMode;
+
     void Start()
     {
         Rigidbody rb = GetComponent<Rigidbody>();
@@ -19,6 +24,7 @@ public class DBG_AddForce : MonoBehaviour
         }
 
         rb.AddForce(Force, ForceMode);
+        rb.AddTorque(Torque, ForceMode);
     }
 
 }

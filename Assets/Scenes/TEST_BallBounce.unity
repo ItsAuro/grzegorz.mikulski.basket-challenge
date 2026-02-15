@@ -189,8 +189,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52be6722ef3dd3345b2ace326e6168ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Force: {x: 10, y: 0, z: 0}
+  Force: {x: 10, y: 2, z: 0}
   ForceMode: 1
+  Torque: {x: 0, y: 0, z: 0}
+  TorqueMode: 0
 --- !u!54 &272910581
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -201,7 +203,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 0.7
   m_Drag: 0.2
-  m_AngularDrag: 0.5
+  m_AngularDrag: 0.2
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -298,7 +300,7 @@ Transform:
   m_GameObject: {fileID: 272910579}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.7331338, y: 2.054686, z: -0.045123577}
+  m_LocalPosition: {x: -2, y: 2.054686, z: -0.04}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1305,8 +1307,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1262855238}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4.525566}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1315,7 +1317,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 4.5182624, y: 4.9599366}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &1322656049
