@@ -191,6 +191,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Force: {x: 10, y: 0, z: 0}
   ForceMode: 1
+  Torque: {x: 0, y: 0, z: 0}
+  TorqueMode: 0
 --- !u!54 &272910581
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -386,7 +388,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 335684248}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 751156585}
+        m_TargetAssemblyTypeName: ButtonEvents, Assembly-CSharp
+        m_MethodName: SwitchScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: SCN_Gameplay
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &335684248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -681,7 +695,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 652453522}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 751156585}
+        m_TargetAssemblyTypeName: ButtonEvents, Assembly-CSharp
+        m_MethodName: SwitchScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: SCN_MainMenu
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &652453522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -835,13 +861,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 751156584}
+  - component: {fileID: 751156585}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &751156584
 Transform:
   m_ObjectHideFlags: 0
@@ -859,6 +886,18 @@ Transform:
   - {fileID: 1262855242}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &751156585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751156583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e97b9e0b27133a047916c33a50859334, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &988554788
 GameObject:
   m_ObjectHideFlags: 0
@@ -1075,7 +1114,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1236469131}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 751156585}
+        m_TargetAssemblyTypeName: ButtonEvents, Assembly-CSharp
+        m_MethodName: SwitchScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: SCN_MainMenu
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1236469131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1132,7 +1183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1239052415
 MonoBehaviour:
   m_ObjectHideFlags: 0
