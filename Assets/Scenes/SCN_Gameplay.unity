@@ -397,13 +397,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 341552036}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 556745363}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &516565002
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,6 +486,7 @@ GameObject:
   - component: {fileID: 556745360}
   - component: {fileID: 556745359}
   - component: {fileID: 556745358}
+  - component: {fileID: 556745364}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -505,7 +506,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fae53e02d6ffbd344872915b5270d235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Head: {fileID: 341552036}
+  _head: {fileID: 341552036}
+  _characterController: {fileID: 556745359}
+  _movementSpeed: 5
+  _rotationSpeed: 20
+  _jumpForce: 5
+  _gravity: 10
 --- !u!143 &556745359
 CharacterController:
   m_ObjectHideFlags: 0
@@ -613,14 +619,27 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 556745357}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 5.445, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 341552039}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &556745364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556745357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 281c00eab67998c42b1049f543865014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerController: {fileID: 556745358}
 --- !u!1 &652453519
 GameObject:
   m_ObjectHideFlags: 0
@@ -1737,52 +1756,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &1576514456
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1576514458}
-  - component: {fileID: 1576514457}
-  m_Layer: 0
-  m_Name: BasketballFactory
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1576514457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1576514456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4a63f1d363a086468b16ef18ff4c86a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BasketballPrefab: {fileID: 7259236515502903761, guid: f5f9b2e3697d4d545a5f0ecdc12f789e, type: 3}
-  SpawnOrigin: {fileID: 1979228969}
---- !u!4 &1576514458
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1576514456}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.4349036, y: 6.143285, z: -4.0460234}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1698999460 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7200992064442075737, guid: b94328a078f253d49ba79f94389e2c41, type: 3}
@@ -2170,5 +2143,4 @@ SceneRoots:
   - {fileID: 19187544}
   - {fileID: 6741357921601999032}
   - {fileID: 2028025758}
-  - {fileID: 1576514458}
   - {fileID: 556745363}

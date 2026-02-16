@@ -6,37 +6,72 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _Head;
-    private CharacterController _Character;
-    private Rigidbody _Rigidbody;
+    GameObject _head;
+    [SerializeField]
+    CharacterController _characterController;
 
-    private const float JUMP_FORCE = 10f;
+    [SerializeField]
+    float _movementSpeed = 5f;
+    [SerializeField]
+    float _rotationSpeed = 20f;
+    [SerializeField]
+    float _jumpForce     = 5f;
+    [SerializeField]
+    float _gravity = 10f;
 
 
-    private InputAction _jump;
+    float _headAngle = 0f;
+    float _velocityY = -1f;
+
+
+    
+
+
+    public void Move(Vector2 movementVector)
+    {
+        // convert XY input into XZ movement
+        Vector3 movementDelta = transform.forward * movementVector.y + transform.right * movementVector.x;
+        movementDelta *= _movementSpeed * Time.deltaTime;
+        _characterController.Move(movementDelta);
+
+    }
+
+    public void Look(Vector2 lookVector)
+    {
+        // X rotates body Y
+        transform.localRotation *= Quaternion.Euler(Vector3.up * _rotationSpeed * lookVector.x * Time.deltaTime);
+
+        //Y rotates head X
+        _headAngle = Mathf.Clamp(_headAngle + _rotationSpeed * lookVector.y * Time.deltaTime, -90, 90);
+        _head.transform.localRotation = Quaternion.Euler(Vector3.left * _headAngle);
+    }
+
+    public void Jump()
+    {
+        if (!_characterController.isGrounded) return;
+        _velocityY = _jumpForce;
+    }
+
 
 
     // Start is called before the first frame update
     void Start()
     {
-        _Character = GetComponent<CharacterController>();
-        _Rigidbody = GetComponent<Rigidbody>();
-
-        _jump = InputSystem.actions.FindAction("Jump");
-
 
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
-        if (_jump.triggered){
-            //Vector3 jumpDirection = new Vector3(0, 1, 0);
-            //Vector3 moveDirection = transform.forward + jumpDirection * Time.deltaTime;
-            //_Character.SimpleMove(moveDirection);            
+        if (!_characterController.isGrounded)
+        {
+            _velocityY -= _gravity * Time.deltaTime;
         }
+        else 
+        {
+            _velocityY = -1f;
+        }
+            _characterController.Move(Vector3.up * _velocityY * Time.deltaTime);
 
     }
 }
