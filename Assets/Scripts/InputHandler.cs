@@ -19,7 +19,7 @@ public class InputHandler : MonoBehaviour
     InputAction _throwballAction;
 
     void Start()
-    {
+    {   
         _lookAction = InputSystem.actions.FindAction("Look");
         _moveAction = InputSystem.actions.FindAction("Move");
         _jumpAction = InputSystem.actions.FindAction("Jump");
@@ -54,12 +54,14 @@ public class InputHandler : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             _lookAction.Disable();
+            _throwballAction.Disable();
         }
         else
         { 
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
-            _lookAction.Enable(); 
+            _lookAction.Enable();
+            _throwballAction.Enable();
         }
     }
 
