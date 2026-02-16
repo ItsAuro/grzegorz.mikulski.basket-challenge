@@ -10,6 +10,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     CharacterController _characterController;
 
+
+    //TESTING/DEBUG
+    [SerializeField]
+    BasketballFactory _basketballFactory;
+
+
     [SerializeField]
     float _movementSpeed = 5f;
     [SerializeField]
@@ -33,9 +39,7 @@ public class PlayerController : MonoBehaviour
         Vector3 movementDelta = transform.forward * movementVector.y + transform.right * movementVector.x;
         movementDelta *= _movementSpeed * Time.deltaTime;
         _characterController.Move(movementDelta);
-
     }
-
     public void Look(Vector2 lookVector)
     {
         // X rotates body Y
@@ -45,24 +49,26 @@ public class PlayerController : MonoBehaviour
         _headAngle = Mathf.Clamp(_headAngle + _rotationSpeed * lookVector.y * Time.deltaTime, -90, 90);
         _head.transform.localRotation = Quaternion.Euler(Vector3.left * _headAngle);
     }
-
     public void Jump()
     {
         if (!_characterController.isGrounded) return;
         _velocityY = _jumpForce;
     }
+    public void ThrowBall()
+    {
+        _basketballFactory.CreateBasketball();
+    }
 
 
 
-    // Start is called before the first frame update
     void Start()
     {
 
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // character gravity pull down
         if (!_characterController.isGrounded)
         {
             _velocityY -= _gravity * Time.deltaTime;
@@ -71,7 +77,8 @@ public class PlayerController : MonoBehaviour
         {
             _velocityY = -1f;
         }
-            _characterController.Move(Vector3.up * _velocityY * Time.deltaTime);
+
+        _characterController.Move(Vector3.up * _velocityY * Time.deltaTime);
 
     }
 }
