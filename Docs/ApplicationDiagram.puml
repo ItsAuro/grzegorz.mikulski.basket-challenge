@@ -21,15 +21,17 @@ enum BasketballShot{
 class "GameState<pure class>" as GameState{
   + int score
   + int remainingTime
-  + int fireball //[0-100]
+  + int fireballValue //[0-100]
   
-  + event OnScoreChanged
-  + event OnRemainingTimeChanged
+  + event OnScoreChange
+  + event OnRemainingTimeChange
   + event OnTimeEnd
-  + event OnFireballChanged
-  + event OnFireballEnabled
-  + event OnFireballDisabled
+  + event OnFireballChange
+  + event OnFireballEnable
+  + event OnFireballDisable
   
+  + void AddTime(int time)
+  + void RemoveTime(int time)
   + void AddFireball(int value)
   + void AddScore(int score)
   + void Fireball(bool enable)

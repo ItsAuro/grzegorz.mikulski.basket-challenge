@@ -17,7 +17,7 @@ public static class GameConfig
     public static int MAX_TIME = 60;
     public static readonly int FIREBALL_MULTIPLIER = 2;
     public static readonly int FIREBALL_INCREMENT = 1;
-    public static readonly int FIREBALL_THRESHOLD = 5;
+    public static readonly int FIREBALL_THRESHOLD = 100;
 
 
     public readonly struct RarityMetadata
