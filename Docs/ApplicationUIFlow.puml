@@ -1,0 +1,36 @@
+struct SCN_MainMenu
+struct SCN_Gameplay
+
+class UI_MainMenu {
+  + void PlayGame()
+}
+
+SCN_MainMenu --> UI_MainMenu
+
+UI_MainMenu ..> SCN_Gameplay
+
+
+
+class UI_Gameplay{
+  - bool active = True
+  + void ExitGameplay()
+}
+class UI_Rewards{
+  - bool active = False
+  + void BackToMenu()
+  + void PlayAgain()
+}
+
+SCN_Gameplay --> UI_Gameplay
+SCN_Gameplay --> UI_Rewards
+UI_Rewards ..> SCN_Gameplay
+UI_Rewards ..> SCN_MainMenu
+UI_Gameplay ..> SCN_MainMenu
+
+class PlayerData {
+  - score
+  + void addScore(int score, int multiplier = 1)
+  + int getScore()
+  + void initialiseScore()
+  
+}

@@ -1,0 +1,127 @@
+'UTILITY AND CONFIG'
+class "GameConfig<static>" as GameConfig{
+  + int MAX_TIME
+  + int FIREBALL_MULTIPLIER
+  + int FIREBALL_INCREMENT
+  + int FIREBALL_THRESHOLD
+}
+enum Rarity{
+  Common
+  Uncommon
+  Rare
+  Epic
+  Legendary
+}
+enum BasketballShot{
+  Perfect
+  Backboard
+  HoopTouch
+  Miss
+}
+class "GameState<pure class>" as GameState{
+  + int score
+  + int remainingTime
+  + int fireball //[0-100]
+  
+  + event OnScoreChanged
+  + event OnRemainingTimeChanged
+  + event OnTimeEnd
+  + event OnFireballChanged
+  + event OnFireballEnabled
+  + event OnFireballDisabled
+  
+  + void AddFireball(int value)
+  + void AddScore(int score)
+  + void Fireball(bool enable)
+}
+class "GameplayController<singleton>" as GameplayController{
+
+  + event OnGameStart
+  + event OnGameEnd
+
+  + void StartGame()
+  + void EndGame()
+  
+}
+
+'PLAYER CLASSES'
+class InputHandler{
+  - void OnMouseToggle()
+  - void OnJumpPerformed()
+  - voic OnThrowBallPerformed()
+}
+class PlayerController{
+  + void Move()
+  + void Look()
+  + void Jump()
+  + void ThrowBall()
+}
+
+'UI ELEMENTS'
+class GameplayUI{
+  - TMP remainingTime
+  - TMP score
+  - TMP bonus
+  - TMP fireball
+  - //WIP fireball_enabled
+  
+  + void SetTimeLeft(int time)
+  + void SetScore(int score)
+  + void SetBonus(int bonus)
+  + void SetFireball(int fireball)
+}
+class RewardUI{
+  - TMP finalScore
+  
+  + void SetScore(int score)
+}
+
+
+'BASKET RELATED CLASSES'
+class BasketballHoop{
+
+}
+class BasketballBoard{
+  + int backboard_bonus
+  + Rarity SelectRarity()
+  + void ApplyBonus()
+  + void UpdateText(Color c, int m)
+}
+class BasketballFactory{
+  //WIP
+}
+class Basketball{
+  - int ball_points
+  - void OnCollisionEnter() 
+}
+note left of Basketball::OnCollision()
+- Detect hoop collision
+- Detect board collision
+- Detect scored
+end note
+
+
+
+
+
+
+
+
+
+InputHandler -> PlayerController
+PlayerController --> BasketballFactory
+
+GameplayController --> GameState
+GameState ..> GameConfig
+GameConfig -> Rarity
+
+GameplayUI ..> GameplayController
+GameplayUI ..> GameConfig
+RewardUI ..> GameplayController
+
+BasketballFactory -> BasketballShot
+BasketballFactory ..> Basketball
+
+Basketball ..> BasketballHoop
+Basketball ..> BasketballBoard
+Basketball ..> GameplayController
