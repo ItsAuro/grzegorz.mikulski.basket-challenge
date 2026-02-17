@@ -87,7 +87,7 @@ class GameplayUI{
 class RewardUI{
   - TMP finalScore
   
-  + void SetScore(int score)
+  + void SetFinalScore(int score)
 }
 
 
