@@ -47,7 +47,7 @@ public class GameplayUI: MonoBehaviour
 
     void Start()
     {
-        GameState gameState = GameplayController.Instance.gameState;
+        GameState gameState = GameplayController.Instance?.gameState;
         if (gameState == null) return;
 
         //fireball updates
