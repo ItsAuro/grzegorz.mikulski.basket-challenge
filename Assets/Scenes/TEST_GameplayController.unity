@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 763646050}
   - component: {fileID: 763646051}
   m_Layer: 0
-  m_Name: TestStart
+  m_Name: TEST_GameplayController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
