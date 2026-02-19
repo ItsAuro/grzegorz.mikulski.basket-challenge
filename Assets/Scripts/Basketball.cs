@@ -5,7 +5,10 @@ using UnityEngine;
 public class Basketball : MonoBehaviour
 {
 
+    public float BallDiameter { get { return transform.localScale.x; } }
+
     int BallPoints = 0;
+
 
 
     private void Start()
