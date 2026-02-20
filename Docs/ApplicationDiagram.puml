@@ -19,13 +19,23 @@ struct RarityMetadata{
   + int threshold
   + int pointBonus
 }
-
+class "Ballistics<static>" as Ballistics{
+  + bool, Vector3 SolveArcTargetAngle(Vector3 s, Vector3 t, float a, float g)
+  + Vector3 ReflectPointAcrossPlane(Vector3 p, Vector3 plane, Vector3 normal)
+}
+class "RandomPoint<static>" as RandomPoint{
+  + Vector3 RandomPointInBox(GameObject g1, GameObject g2)
+  + Vector3 RandomPointInBox(Vector3 g1, Vector3 g2)
+  
+}
 enum BasketballShot{
   Perfect
   Backboard
   HoopTouch
   Miss
 }
+
+
 class "GameState<pure class>" as GameState{
   + int score
   + int remainingTime
@@ -89,6 +99,26 @@ class RewardUI{
   
   + void SetFinalScore(int score)
 }
+class FloaterTextController{
+  - TMP TMP_BallPoints
+  - float autoDisable
+  - bool playOnStart
+  - GameObject _rotateTowards
+  - bool autoRotateTowards
+  
+  + void DisplayPoints(int points)
+}
+note left of FloaterTextController::TMP_BallPoints
+- animated no auto loop
+end note
+note left of FloaterTextController::autoRotateTowards
+- rotate text to object on update
+end note
+class ScoreFXController{
+  - ParticleSystem particleSystem
+  
+  + void PlayFX();
+}
 
 
 'BASKET RELATED CLASSES'
@@ -97,7 +127,7 @@ class BasketballHoop{
 }
 class BasketballBoard{
   - TMP TMP_bonus
-  - rollFrequency
+  - int rollFrequency
   + int PointBonus
   
   + BonusRarity SelectRarity()
@@ -108,13 +138,19 @@ class BasketballFactory{
   //WIP
 }
 class Basketball{
-  - int ball_points
+  + int BallPoints
+  + float BallDiameter
+  - bool isValid
   - void OnCollisionEnter() 
+  - void OnTriggerEnter()
 }
-note left of Basketball::OnCollision()
+note left of Basketball::OnCollisionEnter()
 - Detect hoop collision
 - Detect board collision
-- Detect scored
+end note
+note left of Basketball::OnTriggerEnter()
+- Validation trigger
+- Score trigger
 end note
 
 
@@ -137,9 +173,11 @@ GameplayUI ..> GameplayController
 GameplayUI ..> GameConfig
 RewardUI ..> GameplayController
 
-BasketballFactory -> BasketballShot
 BasketballFactory ..> Basketball
 
 Basketball ..> BasketballHoop
 Basketball ..> BasketballBoard
 Basketball ..> GameplayController
+Basketball -> BasketballShot
+Basketball ...> FloaterTextController
+Basketball ...> ScoreFXController
