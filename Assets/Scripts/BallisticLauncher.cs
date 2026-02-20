@@ -16,6 +16,8 @@ public class BallisticLauncher : MonoBehaviour
 
     public bool LaunchGameObject(GameObject obj, LaunchMode mode = LaunchMode.Direct, float forward_offset = 0f)
     {
+        if (Target == null) return false;
+
         return mode switch
         {
             LaunchMode.Direct => LaunchDirect(obj),
@@ -45,6 +47,8 @@ public class BallisticLauncher : MonoBehaviour
     }
     private bool LaunchReflect(GameObject obj, float forward_offset = 0f)
     {
+        if (ReflectAgainst == null) return false;
+
         Vector3 plane_point = ReflectAgainst.gameObject.GetComponent<BoxCollider>() ?
             ReflectAgainst.gameObject.GetComponent<BoxCollider>().ClosestPointOnBounds(Target.position) - ReflectAgainst.forward * forward_offset
             : ReflectAgainst.position;
