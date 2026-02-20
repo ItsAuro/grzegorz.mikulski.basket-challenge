@@ -21,6 +21,8 @@ public class Basketball : MonoBehaviour
     bool _autoDelete = true;
     int _lifetime = 5;
 
+    [SerializeField]
+    ParticleSystem _fireTrail;
 
 
     void _AutoDelete()
@@ -39,6 +41,8 @@ public class Basketball : MonoBehaviour
 
     private void Start()
     {
+        if (GameplayController.Instance.gameState.FireballStatus) _fireTrail?.Play();
+
         if( _autoDelete)
         {
             InvokeRepeating(nameof(_AutoDelete), 0, 1);
