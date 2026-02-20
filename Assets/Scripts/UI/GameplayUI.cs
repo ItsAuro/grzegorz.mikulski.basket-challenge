@@ -50,6 +50,12 @@ public class GameplayUI: MonoBehaviour
         GameState gameState = GameplayController.Instance?.gameState;
         if (gameState == null) return;
 
+        //replace default values
+        SetFireballValue(gameState.FireballValue);
+        SetScore(gameState.Score);
+        SetTimeLeft(gameState.RemainingTime);
+        if (gameState.FireballStatus) SetFireballEnable(); else SetFireballDisable();
+
         //fireball updates
         gameState.OnFireballValueChange += SetFireballValue;
         gameState.OnFireballEnable += SetFireballEnable;

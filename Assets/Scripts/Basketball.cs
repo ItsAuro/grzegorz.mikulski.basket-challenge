@@ -16,6 +16,8 @@ public class Basketball : MonoBehaviour
 
     BasketballShot _shotType = BasketballShot.Miss;
     bool _isValid = false;
+    bool _isLegal = true;
+
     
 
     private void Start()
@@ -30,13 +32,29 @@ public class Basketball : MonoBehaviour
         }
         else if (trigger.gameObject.CompareTag("TriggerScoreFinalise"))
         {
-            if (_isValid)
+            if (_isLegal && !_isValid) {
+                _isLegal = false;
+            }
+
+            if (_isLegal && _isValid)
             {
-                Debug.Log("Scored");
+                //Debug.Log("Scored");
+                GameState gameState = GameplayController.Instance.gameState;
+
+                if (gameState.FireballStatus) BallPoints *= GameConfig.FIREBALL_MULTIPLIER;
+
                 trigger.gameObject.GetComponent<FloaterTextController>()?.DisplayPoints(BallPoints);
                 trigger.gameObject.GetComponent<ScoreFXController>()?.PlayFX();
+
+                gameState.AddScore(BallPoints);
+                gameState.AddFireball(GameConfig.FIREBALL_INCREMENT);
+
+
+
+                _isValid = false;
             }
-            _isValid = false;
+
+            
 
         }
     }
@@ -44,13 +62,13 @@ public class Basketball : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("BasketballBoard"))
         {
-            Debug.Log("Hit Board");
+            //Debug.Log("Hit Board");
             int PointBonus = collision.gameObject.GetComponent<BasketballBoard>().PointBonus;
             BallPoints = PointBonus;
         }
         else if (collision.gameObject.CompareTag("BasketballHoop"))
         {
-            Debug.Log("Hit Hoop");
+            //Debug.Log("Hit Hoop");
         }
         
     }

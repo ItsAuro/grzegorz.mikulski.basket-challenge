@@ -1,8 +1,9 @@
 public class GameState
 {
-    private int _score         = 0;
-    private int _remainingTime = GameConfig.MAX_TIME;
-    private int _fireballValue = 0;
+    public int  Score          { private set; get; } = 0;
+    public int  RemainingTime  { private set; get; } = GameConfig.MAX_TIME;
+    public int  FireballValue  { private set; get; } = 0;
+    public bool FireballStatus { private set; get; } = false;
 
     public event System.Action<int> OnScoreChange;
     public event System.Action<int> OnRemainingTimeChange;
@@ -14,52 +15,60 @@ public class GameState
     // time editors
     public void AddTime(int increment)
     {
-        _remainingTime += increment;
-        OnRemainingTimeChange?.Invoke(_remainingTime);
+        RemainingTime += increment;
+        OnRemainingTimeChange?.Invoke(RemainingTime);
     }
     public void RemoveTime(int decrement)
     {
-        _remainingTime -= decrement;
+        RemainingTime -= decrement;
 
-        if (_remainingTime <= 0)
+        if (RemainingTime <= 0)
         {
-            _remainingTime = 0;
+            RemainingTime = 0;
             OnTimeEnd?.Invoke();
         }
-        OnRemainingTimeChange?.Invoke(_remainingTime);
+        OnRemainingTimeChange?.Invoke(RemainingTime);
     }
     // fireball editors
     public void AddFireball(int increment)
     {
-        _fireballValue += increment;
+        FireballValue += increment;
 
-        if (_fireballValue >= GameConfig.FIREBALL_THRESHOLD)
+        if (FireballValue >= GameConfig.FIREBALL_THRESHOLD)
         {
-            _fireballValue = GameConfig.FIREBALL_THRESHOLD;
+            FireballValue = GameConfig.FIREBALL_THRESHOLD;
             Fireball(true);
         }
-        OnFireballValueChange?.Invoke(_fireballValue);
+        OnFireballValueChange?.Invoke(FireballValue);
     }
     public void ResetFireball()
     {
-        _fireballValue = 0;
-        OnFireballValueChange?.Invoke(_fireballValue);
+        FireballValue = 0;
+        OnFireballValueChange?.Invoke(FireballValue);
         Fireball(false);
     }
     private void Fireball(bool enable)
     {
-        if(enable) OnFireballEnable?.Invoke();
-        else OnFireballDisable?.Invoke();
+        if(enable) 
+        {
+            FireballStatus = true;
+            OnFireballEnable?.Invoke(); 
+        }
+        else 
+        { 
+            FireballStatus = false;
+            OnFireballDisable?.Invoke(); 
+        }
     }
     // score editors
     public void AddScore(int score)
-    { 
-        _score += score;
-        OnScoreChange?.Invoke(_score);
+    {
+        Score += score;
+        OnScoreChange?.Invoke(Score);
     }
     public void ResetScore()
     {
-        _score = 0;
-        OnScoreChange?.Invoke(_score);
+        Score = 0;
+        OnScoreChange?.Invoke(Score);
     }
 }

@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     //TESTING/DEBUG
     [SerializeField]
     BasketballFactory _basketballFactory;
+    [SerializeField]
+    BallisticLauncher _ballisticLauncher;
+
 
 
     [SerializeField]
@@ -63,12 +66,11 @@ public class PlayerController : MonoBehaviour
             _velocityY = _jumpForce;
         }
     }
-    public void ThrowBall()
+    public void ThrowBall(bool auto = true)
     {
-        _basketballFactory.CreateBasketball();
+        GameObject ball = _basketballFactory.CreateBasketball();
+        if (auto) _ballisticLauncher.LaunchGameObject(ball, BallisticLauncher.LaunchMode.Direct, ball.GetComponent<Basketball>().BallDiameter/2f);
     }
-
-
 
     void Start()
     {

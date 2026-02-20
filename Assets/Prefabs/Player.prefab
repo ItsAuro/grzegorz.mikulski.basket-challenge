@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5185043273969395036}
   - component: {fileID: 78746817675020062}
   m_Layer: 0
-  m_Name: Test Camera
+  m_Name: PlayerCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 6679672018433940504}
   - component: {fileID: 4446633141365434220}
   - component: {fileID: 3376403532221416192}
+  - component: {fileID: 7857730621977010546}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -221,6 +222,7 @@ MonoBehaviour:
   _head: {fileID: 3828082877554831191}
   _characterController: {fileID: 7977038365998284802}
   _basketballFactory: {fileID: 3376403532221416192}
+  _ballisticLauncher: {fileID: 7857730621977010546}
   _movementSpeed: 5
   _rotationSpeed: 0.1
   _jumpForce: 5
@@ -250,10 +252,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a63f1d363a086468b16ef18ff4c86a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _basketballPrefab: {fileID: 0}
+  _basketballPrefab: {fileID: 7259236515502903761, guid: f5f9b2e3697d4d545a5f0ecdc12f789e, type: 3}
   _spawnOffset: {x: 0, y: 0, z: 3.48}
-  _launchType: 0
-  _directTarget: {fileID: 0}
-  _reflectTarget: {fileID: 0}
-  _angleTarget: -60
-  _throwForce: 10
+--- !u!114 &7857730621977010546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8040929422688208993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e121b02f52cbb324e9bb5ee9ace58cae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 0}
+  ReflectAgainst: {fileID: 0}
+  ArrivalAngle: -60
