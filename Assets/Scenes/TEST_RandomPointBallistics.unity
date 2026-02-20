@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 206686178}
   - component: {fileID: 206686177}
   - component: {fileID: 206686176}
+  - component: {fileID: 206686179}
   m_Layer: 0
   m_Name: TEST_RandomPointBallistics
   m_TagString: Untagged
@@ -154,11 +155,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _basketballPrefab: {fileID: 7259236515502903761, guid: f5f9b2e3697d4d545a5f0ecdc12f789e, type: 3}
   _spawnOffset: {x: 0, y: 0, z: 0}
-  _launchType: 1
-  _directTarget: {fileID: 1821614866}
-  _reflectTarget: {fileID: 433137164}
-  _angleTarget: -60
-  _throwForce: 10
 --- !u!114 &206686177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,6 +170,8 @@ MonoBehaviour:
   _vertex1: {fileID: 992321789}
   _vertex2: {fileID: 1899049411}
   _basketballFactory: {fileID: 206686176}
+  _ballisticLauncher: {fileID: 206686179}
+  _launchMode: 1
 --- !u!4 &206686178
 Transform:
   m_ObjectHideFlags: 0
@@ -189,6 +187,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &206686179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 206686175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e121b02f52cbb324e9bb5ee9ace58cae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 1821614866}
+  ReflectAgainst: {fileID: 433137164}
+  ArrivalAngle: -60
 --- !u!1001 &273340207
 PrefabInstance:
   m_ObjectHideFlags: 0

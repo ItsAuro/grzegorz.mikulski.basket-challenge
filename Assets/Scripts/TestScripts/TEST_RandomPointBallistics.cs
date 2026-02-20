@@ -12,6 +12,11 @@ public class TEST_RandomPointBallistics : MonoBehaviour
 
     [SerializeField]
     BasketballFactory _basketballFactory;
+    [SerializeField]
+    BallisticLauncher _ballisticLauncher;
+
+    [SerializeField]
+    BallisticLauncher.LaunchMode _launchMode = BallisticLauncher.LaunchMode.Direct;
 
 
 
@@ -25,7 +30,10 @@ public class TEST_RandomPointBallistics : MonoBehaviour
     {
         Vector3 random_point = RandomPoint.RandomPointInBox(_vertex1 , _vertex2);
         GameObject ball = _basketballFactory.CreateBasketball(random_point, Quaternion.identity);
-        _basketballFactory.LaunchBasketball(ball);
         _basketballFactory.DelayDestroy(ball, 6f);
+
+
+        _ballisticLauncher.LaunchGameObject(ball, _launchMode, ball.GetComponent<Basketball>().BallDiameter / 2f);
+
     }
 }

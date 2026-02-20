@@ -135,7 +135,28 @@ class BasketballBoard{
   + void SelectApplyRarity()
 }
 class BasketballFactory{
-  //WIP
+  - GameObject basketballPrefab
+  - Vector3 spawnOffset
+  
+  + GameObject CreateBasketball()
+  + GameObject CreateBasketball(Vector3 position, Quaternion rotation)
+  + GameObject DelayDestroy(GameObject o, float delay)
+}
+class BallisticLauncher{
+  + Transform Target
+  + Transform ReflectAgainst
+  + float ArrivalAngle
+  
+  + bool LaunchGameObject(GameObject o, LaunchMode m, float forward_offset)
+  - bool LaunchDirect(GameObject o)
+  - bool LaunchReflect(GameObject o, float forward_offset)
+  
+  + static bool LaunchDirect(...)
+  + static bool LaunchReflect(...)
+}
+enum LaunchMode {
+  Direct
+  Reflect
 }
 class Basketball{
   + int BallPoints
@@ -181,3 +202,27 @@ Basketball ..> GameplayController
 Basketball -> BasketballShot
 Basketball ...> FloaterTextController
 Basketball ...> ScoreFXController
+
+
+BallisticLauncher --> Ballistics
+BallisticLauncher -> LaunchMode
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
