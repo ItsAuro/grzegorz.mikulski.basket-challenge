@@ -17,22 +17,22 @@ public class FloaterTextController : MonoBehaviour
     bool _autoRotateTowards = false;
     
 
-    bool _isActive = false;
+    Coroutine _displayCoroutine = null;
 
     public void DisplayPoints(int points)
     {
-        if (_isActive) StopCoroutine(nameof(_DisplayPoints));
-        StartCoroutine(_DisplayPoints(points));
+
+        if (_displayCoroutine != null) StopCoroutine(_displayCoroutine);
+        _displayCoroutine = StartCoroutine(_DisplayPoints(points));
     }
     IEnumerator _DisplayPoints(int points)
     {   
-        _isActive = true;
         _TMP_ballPoints.SetText(points.ToString());
         _TMP_ballPoints.gameObject.SetActive(true);
         _TMP_ballPoints.GetComponent<Animator>().Play("Float", 0, 0f);
         yield return new WaitForSeconds(_autoDisable);
         _TMP_ballPoints.gameObject.SetActive(false);
-        _isActive = false;
+        _displayCoroutine = null;
     }
 
     private void Start()

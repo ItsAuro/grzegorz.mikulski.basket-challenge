@@ -154,9 +154,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _basketballPrefab: {fileID: 7259236515502903761, guid: f5f9b2e3697d4d545a5f0ecdc12f789e, type: 3}
   _spawnOffset: {x: 0, y: 0, z: 0}
-  _launchType: 0
+  _launchType: 1
   _directTarget: {fileID: 1821614866}
-  _reflectTarget: {fileID: 0}
+  _reflectTarget: {fileID: 433137164}
   _angleTarget: -60
   _throwForce: 10
 --- !u!114 &206686177
@@ -246,6 +246,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f32fa383bf05ec74ba75c0054a1457aa, type: 3}
+--- !u!4 &433137164 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4135876857117782577, guid: 3bcc6cb966cf7ef4cb089236e9d5f2c7, type: 3}
+  m_PrefabInstance: {fileID: 1630563123}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &479166036
 PrefabInstance:
   m_ObjectHideFlags: 0
