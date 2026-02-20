@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
     }
     public void ThrowBall(bool auto = true)
     {
-        GameObject ball = _basketballFactory.CreateBasketball();
+        GameObject ball = _basketballFactory.CreateBasketball(_head.transform.position, _head.transform.rotation);
         if (auto) _ballisticLauncher.LaunchGameObject(ball, BallisticLauncher.LaunchMode.Direct, ball.GetComponent<Basketball>().BallDiameter/2f);
     }
 

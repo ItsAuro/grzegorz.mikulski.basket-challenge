@@ -37,9 +37,10 @@ enum BasketballShot{
 
 
 class "GameState<pure class>" as GameState{
-  + int score
-  + int remainingTime
-  + int fireballValue
+  + int Score
+  + int RemainingTime
+  + int FireballValue
+  + bool FireballStatus
   
   + event OnScoreChange
   + event OnRemainingTimeChange
@@ -75,6 +76,13 @@ class InputHandler{
   - voic OnThrowBallPerformed()
 }
 class PlayerController{
+  - GameObject head
+  - CharacterController characterController
+  - float movementSpeed
+  - float rotationSpeed
+  - float jumpForce
+  - float gravity
+  
   + void Move()
   + void Look()
   + void Jump()
@@ -162,6 +170,10 @@ class Basketball{
   + int BallPoints
   + float BallDiameter
   - bool isValid
+  - bool isLegal
+  - bool autoDelete
+  - int lifetime
+  
   - void OnCollisionEnter() 
   - void OnTriggerEnter()
 }
@@ -183,7 +195,8 @@ end note
 
 
 InputHandler -> PlayerController
-PlayerController --> BasketballFactory
+PlayerController o-- BasketballFactory
+PlayerController o-- BallisticLauncher
 
 GameplayController --> GameState
 GameState ..> GameConfig
@@ -205,7 +218,7 @@ Basketball ...> ScoreFXController
 
 
 BallisticLauncher --> Ballistics
-BallisticLauncher -> LaunchMode
+BallisticLauncher -l-> LaunchMode 
 
 
 
