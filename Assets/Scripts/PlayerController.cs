@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     GameObject _head;
     [SerializeField]
     CharacterController _characterController;
+    [SerializeField]
+    InputHandler _inputHandler;
 
 
     //TESTING/DEBUG
@@ -74,7 +76,22 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+  
+    }
 
+    private void OnEnable()
+    {
+        _inputHandler.OnJump += Jump;
+        _inputHandler.OnLook += Look;
+        _inputHandler.OnMove += Move;
+        _inputHandler.OnThrowBall += ThrowBall;
+    }
+    private void OnDisable()
+    {
+        _inputHandler.OnJump -= Jump;
+        _inputHandler.OnLook -= Look;
+        _inputHandler.OnMove -= Move;
+        _inputHandler.OnThrowBall -= ThrowBall;
     }
 
     void Update()
