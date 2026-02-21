@@ -130,7 +130,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2481284625520503542}
-  - {fileID: 7957160450359041014}
+  - {fileID: 8782991769391643918}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5775493155590894665
@@ -287,8 +287,9 @@ MonoBehaviour:
   minimumDistance: 0.2
   maximumTime: 1
   directionThreshold: 0.9
-  trail: {fileID: 709874928094622785}
---- !u!1001 &6388493332900810322
+  trailEnabled: 0
+  trail: {fileID: 2186229629834859193}
+--- !u!1001 &5703399811528894634
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -299,10 +300,6 @@ PrefabInstance:
     - target: {fileID: 964941374444770889, guid: 9c6a6f76aabd8ed45bc1decb6b1e9019, type: 3}
       propertyPath: m_Name
       value: SwipeTrail
-      objectReference: {fileID: 0}
-    - target: {fileID: 964941374444770889, guid: 9c6a6f76aabd8ed45bc1decb6b1e9019, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3946841659545818532, guid: 9c6a6f76aabd8ed45bc1decb6b1e9019, type: 3}
       propertyPath: m_LocalPosition.x
@@ -344,18 +341,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5868620956901587475, guid: 9c6a6f76aabd8ed45bc1decb6b1e9019, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c6a6f76aabd8ed45bc1decb6b1e9019, type: 3}
---- !u!96 &709874928094622785 stripped
+--- !u!96 &2186229629834859193 stripped
 TrailRenderer:
   m_CorrespondingSourceObject: {fileID: 5868620956901587475, guid: 9c6a6f76aabd8ed45bc1decb6b1e9019, type: 3}
-  m_PrefabInstance: {fileID: 6388493332900810322}
+  m_PrefabInstance: {fileID: 5703399811528894634}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &7957160450359041014 stripped
+--- !u!4 &8782991769391643918 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3946841659545818532, guid: 9c6a6f76aabd8ed45bc1decb6b1e9019, type: 3}
-  m_PrefabInstance: {fileID: 6388493332900810322}
+  m_PrefabInstance: {fileID: 5703399811528894634}
   m_PrefabAsset: {fileID: 0}

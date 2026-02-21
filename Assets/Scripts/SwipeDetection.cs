@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class SwipeDetection : MonoBehaviour
@@ -20,8 +21,12 @@ public class SwipeDetection : MonoBehaviour
     private float directionThreshold = .9f;
 
     [SerializeField]
+    bool trailEnabled = false;
+    [SerializeField]
     private TrailRenderer trail;
-    private Coroutine coroutine;
+    private Coroutine trailCoroutine;
+    private Coroutine swipeCoroutine;
+
 
 
     private void OnEnable()
@@ -40,18 +45,32 @@ public class SwipeDetection : MonoBehaviour
     {
         startPosition = position;
         startTime = time;
-        trail.transform.position = startPosition;
-        //trail.SetActive(true);
-        trail.Clear();
-        trail.enabled = true;
-        coroutine = StartCoroutine(UpdateTrail());
+        swipeCoroutine = StartCoroutine(SwipeUpdate());
+
+        if (trailEnabled)
+        {
+            trail.transform.position = startPosition;
+            trail.Clear();
+            trail.enabled = true;
+            trailCoroutine = StartCoroutine(UpdateTrail());
+        }
     }
 
     IEnumerator UpdateTrail()
     {
         while (true)
         {
-            trail.transform.position = inputHandler.PrimaryPosition();
+            trail.transform.position = inputHandler.Primary3DPosition();
+            yield return null;
+        }
+    }
+
+    IEnumerator SwipeUpdate()
+    {
+        while (true)
+        {   
+            float distance = Vector2.Distance(startPosition, trail.transform.position);
+            inputHandler.SwipeUpdate(distance);
             yield return null;
         }
     }
@@ -59,10 +78,13 @@ public class SwipeDetection : MonoBehaviour
 
     private void SwipeEnd(Vector2 position, float time)
     {
-        //trail.SetActive(false);
-        trail.enabled = false;
+        if (trailEnabled)
+        {
+            trail.enabled = false;
+            StopCoroutine(trailCoroutine);
+        }
 
-        StopCoroutine(coroutine);
+        StopCoroutine(swipeCoroutine);
         endPosition = position;
         endTime = time;
         DetectSwipe();
@@ -70,12 +92,11 @@ public class SwipeDetection : MonoBehaviour
 
     private void DetectSwipe()
     {
-        if (Vector3.Distance(startPosition, endPosition) >= minimumDistance && (endTime - startTime) <= maximumTime)
+        if (Vector2.Distance(startPosition, endPosition) >= minimumDistance && (endTime - startTime) <= maximumTime)
         {
-            Debug.Log("Swiped");
-            Vector3 direction = endPosition - startPosition;
-            Vector2 direction2D = new Vector2(direction.x, direction.y).normalized;
-            SwipeDirection(direction2D);
+            Vector2 direction = endPosition - startPosition;
+            inputHandler.SwipeEnd(direction);
+            //SwipeDirection(direction.normalized);
         }
     }
 
@@ -98,4 +119,7 @@ public class SwipeDetection : MonoBehaviour
             Debug.Log("Swipe right");
         }
     }
+
+
+
 }

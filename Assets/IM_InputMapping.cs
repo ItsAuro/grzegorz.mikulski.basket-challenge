@@ -139,9 +139,9 @@ public partial class @IM_InputMapping: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""PrimaryContact"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Button"",
                     ""id"": ""5ac3c2f5-d199-441f-aaf3-93a3f74ba4c3"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -259,7 +259,7 @@ public partial class @IM_InputMapping: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e474d8cd-4f64-4302-916d-9f64e091c413"",
-                    ""path"": ""<Touchscreen>/primaryTouch/press"",
+                    ""path"": ""<Touchscreen>/Press"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
@@ -269,8 +269,30 @@ public partial class @IM_InputMapping: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""57038b32-366a-48b9-9480-4bec585b7b71"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PrimaryContact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""68cd806e-d26b-4be7-a903-56fdc1a4f140"",
-                    ""path"": ""<Touchscreen>/primaryTouch/position"",
+                    ""path"": ""<Touchscreen>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PrimaryPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e46b3e5-4356-4dcd-8d9e-1075f3212051"",
+                    ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

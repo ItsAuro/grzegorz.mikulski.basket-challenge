@@ -9,35 +9,31 @@ public class InputHandler : MonoBehaviour
     private Camera _mainCamera;
 
 
-    public delegate void StartTouch(Vector2 position, float time);
-    public event StartTouch OnStartTouch;
-    public delegate void EndTouch(Vector2 position, float time);
-    public event EndTouch OnEndTouch;
+    public delegate void TouchStart(Vector2 position, float time);
+    public delegate void TouchEnd(Vector2 position, float time);
+
 
     public delegate void Jump();
-    public event Jump OnJump;
-    public delegate void ThrowBall(bool auto = true);
-    public event ThrowBall OnThrowBall;
-
     public delegate void Move(Vector2 movement);
-    public event Move OnMove;
     public delegate void Look(Vector2 look);
-    public event Look OnLook;
+    public delegate void ThrowBall(bool auto = true);
+
+    public delegate void PowerUpdate(float distance);
+    public delegate void PowerEnd(Vector2 direction);
 
 
+    public event TouchStart OnStartTouch;
+    public event TouchEnd   OnEndTouch;
 
-    //InputAction _moveAction;
-    //InputAction _jumpAction;
-    //InputAction _lookAction;
-    //
-    //InputAction _togglemouseAction;
-    //
-    //InputAction _throwballAction;
-    //
-    //bool _isSwiping = false;
-    //InputAction _swipeAction;
-    //
-    //Vector2 DBG_SWIPE = Vector2.zero;
+
+    public event Jump       OnJump;
+    public event Move       OnMove;
+    public event Look       OnLook;
+    public event ThrowBall  OnThrowBall;
+
+    public event PowerUpdate OnPowerUpdate;
+    public event PowerEnd    OnPowerEnd;
+
 
     private void Awake()
     {
@@ -59,83 +55,95 @@ public class InputHandler : MonoBehaviour
         //Cursor.visible = false;
         //Cursor.lockState = CursorLockMode.Locked;
 
-        _playerControls.PlayerActions.PrimaryContact.started += OnPrimaryContactStart;
-        _playerControls.PlayerActions.PrimaryContact.canceled += OnPrimaryContactEnd;
-        _playerControls.PlayerActions.Jump.started += OnJumpPerformed;
-        _playerControls.PlayerActions.ThrowBall.started += OnThrowBallPerformed;
-        _playerControls.PlayerActions.ToggleMouse.started += OnMouseToggle;
+        _playerControls.PlayerActions.PrimaryContact.started  += PrimaryContactStart;
+        _playerControls.PlayerActions.PrimaryContact.canceled += PrimaryContactEnd;
+        _playerControls.PlayerActions.Jump.started            += JumpPerformed;
+        _playerControls.PlayerActions.ThrowBall.started       += ThrowBallPerformed;
+        _playerControls.PlayerActions.ToggleMouse.started     += MouseToggle;
 
     }
 
     void Update()
     {
-        //Vector2 input_movementVector = _moveAction.ReadValue<Vector2>();
-        //_playerController.Move(input_movementVector);
-        //
-        //Vector2 input_lookVector = _lookAction.ReadValue<Vector2>();
-        //_playerController.Look(input_lookVector);
-
         OnLook?.Invoke(_playerControls.PlayerActions.Look.ReadValue<Vector2>());
         OnMove?.Invoke(_playerControls.PlayerActions.Move.ReadValue<Vector2>());  
     }
 
 
-    private void OnPrimaryContactStart(InputAction.CallbackContext context)
+    private void PrimaryContactStart(InputAction.CallbackContext context)
     {
         OnStartTouch?.Invoke(
-            ScreenToWorld(_mainCamera, _playerControls.PlayerActions.PrimaryPosition.ReadValue<Vector2>()),
+            //ScreenToWorld(_mainCamera, _playerControls.PlayerActions.PrimaryPosition.ReadValue<Vector2>()),
+            _playerControls.PlayerActions.PrimaryPosition.ReadValue<Vector2>(),
             (float)context.startTime
         );
     }
 
-    private void OnPrimaryContactEnd(InputAction.CallbackContext context)
+    private void PrimaryContactEnd(InputAction.CallbackContext context)
     {
         OnEndTouch?.Invoke(
-            ScreenToWorld(_mainCamera, _playerControls.PlayerActions.PrimaryPosition.ReadValue<Vector2>()),
+            //ScreenToWorld(_mainCamera, _playerControls.PlayerActions.PrimaryPosition.ReadValue<Vector2>()),
+            _playerControls.PlayerActions.PrimaryPosition.ReadValue<Vector2>(),
             (float)context.time
         );
     }
 
-    public Vector3 PrimaryPosition()
+    public Vector3 Primary3DPosition()
     {
         return ScreenToWorld(_mainCamera, _playerControls.PlayerActions.PrimaryPosition.ReadValue<Vector2>());
+    }
 
+    public Vector2 Primary2DPosition()
+    {
+        return _playerControls.PlayerActions.PrimaryPosition.ReadValue<Vector2>();
     }
 
     public static Vector3 ScreenToWorld(Camera camera, Vector3 position)
     {
-        position.z = camera.nearClipPlane;
+        position.z = camera.nearClipPlane + 0.5f;
         return camera.ScreenToWorldPoint(position);
     }
 
-    void OnMouseToggle(InputAction.CallbackContext context)
+    private void MouseToggle(InputAction.CallbackContext context)
     {
         if (_playerControls.PlayerActions.Look.enabled) 
         {
-            //Cursor.visible = true;
-            //Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             _playerControls.PlayerActions.Look.Disable();
             _playerControls.PlayerActions.ThrowBall.Disable();
+            _playerControls.PlayerActions.PrimaryContact.Enable();
         }
         else
         { 
-            //Cursor.visible = false;
-            //Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
             _playerControls.PlayerActions.Look.Enable();
             _playerControls.PlayerActions.ThrowBall.Enable();
+            _playerControls.PlayerActions.PrimaryContact.Disable();
+
         }
     }
-    
-    void OnJumpPerformed(InputAction.CallbackContext context)
+
+    private void JumpPerformed(InputAction.CallbackContext context)
     {
-        //_playerController.Jump();
         OnJump?.Invoke();
     }
 
-    void OnThrowBallPerformed(InputAction.CallbackContext context)
+    private void ThrowBallPerformed(InputAction.CallbackContext context)
     {
-        //_playerController.ThrowBall();
         OnThrowBall?.Invoke();
     }
 
+
+
+
+    public void SwipeUpdate(float power)
+    {
+        OnPowerUpdate?.Invoke(power);
+    }
+    public void SwipeEnd(Vector2 direction)
+    {
+        OnPowerEnd?.Invoke(direction);
+    }
 }

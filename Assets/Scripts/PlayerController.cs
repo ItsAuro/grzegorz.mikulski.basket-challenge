@@ -73,6 +73,11 @@ public class PlayerController : MonoBehaviour
         GameObject ball = _basketballFactory.CreateBasketball(_head.transform.position, _head.transform.rotation);
         if (auto) _ballisticLauncher.LaunchGameObject(ball, BallisticLauncher.LaunchMode.Direct, ball.GetComponent<Basketball>().BallDiameter/2f);
     }
+    public void ThrowBall(Vector2 direction)
+    {
+        GameObject ball = _basketballFactory.CreateBasketball(_head.transform.position, _head.transform.rotation);
+        _ballisticLauncher.LaunchGameObject(ball, BallisticLauncher.LaunchMode.Direct, ball.GetComponent<Basketball>().BallDiameter / 2f);
+    }
 
     void Start()
     {
@@ -85,6 +90,7 @@ public class PlayerController : MonoBehaviour
         _inputHandler.OnLook += Look;
         _inputHandler.OnMove += Move;
         _inputHandler.OnThrowBall += ThrowBall;
+        _inputHandler.OnPowerEnd += ThrowBall;
     }
     private void OnDisable()
     {
@@ -92,6 +98,8 @@ public class PlayerController : MonoBehaviour
         _inputHandler.OnLook -= Look;
         _inputHandler.OnMove -= Move;
         _inputHandler.OnThrowBall -= ThrowBall;
+        _inputHandler.OnPowerEnd -= ThrowBall;
+
     }
 
     void Update()
