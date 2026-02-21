@@ -25,7 +25,7 @@ public class Basketball : MonoBehaviour
     ParticleSystem _fireTrail;
 
 
-    void _AutoDelete()
+    private void _AutoDelete()
     {
         _lifetime -= 1;
         if( _lifetime <= 0)
@@ -33,15 +33,15 @@ public class Basketball : MonoBehaviour
             CancelInvoke(nameof(_AutoDelete));
             if (_shotType == BasketballShot.Miss) 
             { 
-                GameplayController.Instance.gameState.ResetFireball();
+                GameplayController.Instance?.gameState.ResetFireball();
             }
             Destroy(gameObject);
         }
     }
 
     private void Start()
-    {
-        if (GameplayController.Instance.gameState.FireballStatus) _fireTrail?.Play();
+    {   
+        if (GameplayController.Instance?.gameState.FireballStatus == true) _fireTrail?.Play();
 
         if( _autoDelete)
         {
@@ -69,15 +69,13 @@ public class Basketball : MonoBehaviour
                     _shotType = BasketballShot.Perfect;
                 }
 
-                GameState gameState = GameplayController.Instance.gameState;
-
-                if (gameState.FireballStatus) BallPoints *= GameConfig.FIREBALL_MULTIPLIER;
+                if (GameplayController.Instance?.gameState.FireballStatus == true) BallPoints *= GameConfig.FIREBALL_MULTIPLIER;
 
                 trigger.gameObject.GetComponent<FloaterTextController>()?.DisplayPoints(BallPoints);
                 trigger.gameObject.GetComponent<ScoreFXController>()?.PlayFX();
 
-                gameState.AddScore(BallPoints);
-                gameState.AddFireball(GameConfig.FIREBALL_INCREMENT);
+                GameplayController.Instance?.gameState.AddScore(BallPoints);
+                GameplayController.Instance?.gameState.AddFireball(GameConfig.FIREBALL_INCREMENT);
 
 
 
