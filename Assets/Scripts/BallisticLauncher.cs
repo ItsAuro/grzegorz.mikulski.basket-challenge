@@ -14,19 +14,23 @@ public class BallisticLauncher : MonoBehaviour
     public Transform ReflectAgainst;
     public float ArrivalAngle = -60f;
 
-    public bool LaunchGameObject(GameObject obj, LaunchMode mode = LaunchMode.Direct, float forward_offset = 0f)
+    [SerializeField]
+    public AnimationCurve GraceCurve = AnimationCurve.Linear(0,0,1,1);
+
+
+    public bool LaunchGameObject(GameObject obj, LaunchMode mode = LaunchMode.Direct, float forward_offset = 0f, float launch_power = -1)
     {
         if (Target == null) return false;
 
         return mode switch
         {
-            LaunchMode.Direct => LaunchDirect(obj),
-            LaunchMode.Reflect => LaunchReflect(obj, forward_offset),
+            LaunchMode.Direct => LaunchDirect(obj, launch_power),
+            LaunchMode.Reflect => LaunchReflect(obj, forward_offset, launch_power),
             _ => false,
         };
     }
 
-    private bool LaunchDirect(GameObject obj)
+    private bool LaunchDirect(GameObject obj, float launch_power = -1)
     {
         bool solution_found = false;
         solution_found = Ballistics.SolveArcTargetAngle(
@@ -42,10 +46,12 @@ public class BallisticLauncher : MonoBehaviour
         Rigidbody obj_rb = obj.GetComponent<Rigidbody>();
         if (obj_rb == null) return false;
 
+        if(launch_power > 0) launch_velocity *= GraceCurve.Evaluate(launch_power);
+
         obj_rb.velocity = launch_velocity;
         return true;
     }
-    private bool LaunchReflect(GameObject obj, float forward_offset = 0f)
+    private bool LaunchReflect(GameObject obj, float forward_offset = 0f, float launch_power = -1)
     {
         if (ReflectAgainst == null) return false;
 
@@ -73,6 +79,8 @@ public class BallisticLauncher : MonoBehaviour
         }
         Rigidbody obj_rb = obj.GetComponent<Rigidbody>();
         if (obj_rb == null) return false;
+
+        if (launch_power > 0) launch_velocity *= GraceCurve.Evaluate(launch_power);
 
         obj_rb.velocity = launch_velocity;
         return true;

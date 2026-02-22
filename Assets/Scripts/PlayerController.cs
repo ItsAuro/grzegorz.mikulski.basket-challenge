@@ -68,16 +68,64 @@ public class PlayerController : MonoBehaviour
             _velocityY = _jumpForce;
         }
     }
-    public void ThrowBall(bool auto = true)
+    //public void ThrowBall(bool auto = true)
+    //{
+    //    GameObject ball = _basketballFactory.CreateBasketball(_head.transform.position, _head.transform.rotation);
+    //    if (auto) _ballisticLauncher.LaunchGameObject(ball, BallisticLauncher.LaunchMode.Direct, ball.GetComponent<Basketball>().BallDiameter/2f);
+    //}
+    //public void ThrowBall(Vector2 direction, float distance)
+    //{
+    //    GameObject ball = _basketballFactory.CreateBasketball(_head.transform.position, _head.transform.rotation);
+    //    _ballisticLauncher.LaunchGameObject(ball, BallisticLauncher.LaunchMode.Direct, ball.GetComponent<Basketball>().BallDiameter / 2f);
+    //}
+
+
+
+
+    // throw logic
+
+    public void ThrowBallEnd(Vector2 direction, float power)
     {
         GameObject ball = _basketballFactory.CreateBasketball(_head.transform.position, _head.transform.rotation);
-        if (auto) _ballisticLauncher.LaunchGameObject(ball, BallisticLauncher.LaunchMode.Direct, ball.GetComponent<Basketball>().BallDiameter/2f);
+
+
+        Vector2 LEFT_THROW = Vector2.up + Vector2.left;
+        Vector2 RIGHT_THROW = Vector2.up + Vector2.right;
+        LEFT_THROW.Normalize();
+        RIGHT_THROW.Normalize();
+        bool backboard_throw = false;
+
+
+        if (Vector2.Dot(direction, LEFT_THROW) > 0.9f)
+        {
+            backboard_throw = true;
+        }
+        else if (Vector2.Dot(direction, RIGHT_THROW) > 0.9f)
+        {
+            backboard_throw = true;
+        }
+
+        if (backboard_throw)
+        {
+            _ballisticLauncher.LaunchGameObject(
+                ball,
+                BallisticLauncher.LaunchMode.Reflect,
+                ball.GetComponent<Basketball>().BallDiameter / 2f,
+                power
+                );
+        }
+        else
+        {
+            _ballisticLauncher.LaunchGameObject(
+                ball,
+                BallisticLauncher.LaunchMode.Direct,
+                ball.GetComponent<Basketball>().BallDiameter / 2f,
+                power
+                );
+        }
+
     }
-    public void ThrowBall(Vector2 direction)
-    {
-        GameObject ball = _basketballFactory.CreateBasketball(_head.transform.position, _head.transform.rotation);
-        _ballisticLauncher.LaunchGameObject(ball, BallisticLauncher.LaunchMode.Direct, ball.GetComponent<Basketball>().BallDiameter / 2f);
-    }
+
 
     void Start()
     {
@@ -89,17 +137,17 @@ public class PlayerController : MonoBehaviour
         _inputHandler.OnJump += Jump;
         _inputHandler.OnLook += Look;
         _inputHandler.OnMove += Move;
-        _inputHandler.OnThrowBall += ThrowBall;
-        _inputHandler.OnPowerEnd += ThrowBall;
+        //_inputHandler.OnThrowBall += ThrowBall;
+        _inputHandler.OnThrowEnd += ThrowBallEnd;
+
     }
     private void OnDisable()
     {
         _inputHandler.OnJump -= Jump;
         _inputHandler.OnLook -= Look;
         _inputHandler.OnMove -= Move;
-        _inputHandler.OnThrowBall -= ThrowBall;
-        _inputHandler.OnPowerEnd -= ThrowBall;
-
+        //_inputHandler.OnThrowBall -= ThrowBall;
+        _inputHandler.OnThrowEnd -= ThrowBallEnd;
     }
 
     void Update()

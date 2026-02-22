@@ -5,12 +5,12 @@ public class GameState
     public int  FireballValue  { private set; get; } = 0;
     public bool FireballStatus { private set; get; } = false;
 
-    public event System.Action<int> OnScoreChange;
-    public event System.Action<int> OnRemainingTimeChange;
-    public event System.Action      OnTimeEnd;
-    public event System.Action<int> OnFireballValueChange;
-    public event System.Action      OnFireballEnable;
-    public event System.Action      OnFireballDisable;
+    public event System.Action<int>   OnScoreChange;
+    public event System.Action<int>   OnRemainingTimeChange;
+    public event System.Action        OnTimeEnd;
+    public event System.Action<int>   OnFireballValueChange;
+    public event System.Action        OnFireballEnable;
+    public event System.Action        OnFireballDisable;
 
     // time editors
     public void AddTime(int increment)
@@ -71,4 +71,5 @@ public class GameState
         Score = 0;
         OnScoreChange?.Invoke(Score);
     }
+
 }

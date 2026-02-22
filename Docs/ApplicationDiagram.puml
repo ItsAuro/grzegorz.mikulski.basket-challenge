@@ -28,11 +28,15 @@ class "RandomPoint<static>" as RandomPoint{
   + Vector3 RandomPointInBox(Vector3 g1, Vector3 g2)
   
 }
-enum BasketballShot{
+enum "ShotType<flags>" as ShotType{
+  None
   Perfect
   Backboard
   HoopTouch
-  Miss
+}
+enum ScoreType{
+  Scored
+  Missed
 }
 
 
@@ -71,9 +75,44 @@ class "GameplayController<singleton>" as GameplayController{
 
 'PLAYER CLASSES'
 class InputHandler{
-  - void OnMouseToggle()
-  - void OnJumpPerformed()
-  - voic OnThrowBallPerformed()
+  - IM_InputMapping playerControls
+  - Camera mainCamera
+
+  + event OnStartTouch
+  + event OnEndTouch
+  + event OnJump
+  + event OnMove
+  + event OnLook
+  + event OnThrowBall
+  + event OnThrowUpdate
+  + event OnThrowEnd
+  + event OnThrowCancel
+
+  - void PrimaryContactStart()
+  - void PrimaryContactEnd()
+  - void MouseToggle()
+  - void JumpPerformed()
+  - voic ThrowBallPerformed()
+  + void SwipeUpdate(float distance)
+  + void SwipeEnd(Vector2 direction, float distance)
+  + void SwipeCancel()
+  + Vector3 ScreenToWorld(Camera camera, Vector3 position)
+  + Vector3 Primary3DPosition()
+  + Vector2 Primary2DPosition()
+}
+class SwipeDetection{
+  - Vector2 startPosition
+  - float startTime
+  - Vector2 endPosition
+  - float endTime
+  - float minimumDistance
+  - float maximumTime
+  - bool trailEnabled
+  - TrailRenderer trail
+  
+  - void SwipeStart(Vector2 position, float time)
+  - void SwipeEnd(Vector2 position, float time)
+  - void DetectSwipe()
 }
 class PlayerController{
   - GameObject head
@@ -86,7 +125,8 @@ class PlayerController{
   + void Move()
   + void Look()
   + void Jump()
-  + void ThrowBall()
+  + void ThrowBallEnd(Vector2 direction, float power)
+  //+ void ThrowBall()
 }
 
 'UI ELEMENTS'
@@ -96,11 +136,14 @@ class GameplayUI{
   - TMP TMP_FireballStatus
   - TMP TMP_Score
   
-  + void SetTimeLeft(int time)
-  + void SetScore(int score)
-  + void SetFireballValue(int value)
-  + void SetFireballEnable()
-  + void SetFireballDisable()
+  - void SetTimeLeft(int time)
+  - void SetScore(int score)
+  - void SetFireballValue(int value)
+  - void SetFireballEnable()
+  - void SetFireballDisable()
+  - void SetPowerValue(float value)
+  - void ResetPowerValue()
+  
 }
 class RewardUI{
   - TMP finalScore
@@ -154,19 +197,25 @@ class BallisticLauncher{
   + Transform Target
   + Transform ReflectAgainst
   + float ArrivalAngle
+  + AnimationCurve GraceCurve
   
-  + bool LaunchGameObject(GameObject o, LaunchMode m, float forward_offset)
-  - bool LaunchDirect(GameObject o)
-  - bool LaunchReflect(GameObject o, float forward_offset)
+  + bool LaunchGameObject(GameObject o, LaunchMode m, float forward_offset, float power)
+  - bool LaunchDirect(GameObject o, float power)
+  - bool LaunchReflect(GameObject o, float forward_offset, float power)
   
   + static bool LaunchDirect(...)
   + static bool LaunchReflect(...)
 }
+note right of BallisticLauncher::GraceCurve
+Alters the power
+makes it easier to score
+end note
 enum LaunchMode {
   Direct
   Reflect
 }
 class Basketball{
+  - ParticleSystem fireTrail
   + int BallPoints
   + float BallDiameter
   - bool isValid
@@ -194,11 +243,16 @@ end note
 
 
 
-InputHandler -> PlayerController
+
 PlayerController o-- BasketballFactory
 PlayerController o-- BallisticLauncher
+PlayerController o-- InputHandler
 
-GameplayController --> GameState
+PlayerController ..> GameplayController
+
+SwipeDetection --> InputHandler
+
+GameplayController *-- GameState
 GameState ..> GameConfig
 GameConfig -> BonusRarity
 GameConfig *-- RarityMetadata
@@ -212,7 +266,8 @@ BasketballFactory ..> Basketball
 Basketball ..> BasketballHoop
 Basketball ..> BasketballBoard
 Basketball ..> GameplayController
-Basketball -> BasketballShot
+Basketball -> ShotType
+Basketball -> ScoreType
 Basketball ...> FloaterTextController
 Basketball ...> ScoreFXController
 

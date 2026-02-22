@@ -14,11 +14,17 @@ public class GameplayUI: MonoBehaviour
     TextMeshProUGUI _TMP_FireballStatus;
     [SerializeField]
     TextMeshProUGUI _TMP_Score;
+    [SerializeField]
+    TextMeshProUGUI _TMP_PowerMeter;
+
+    [SerializeField]
+    InputHandler _inputHandler;
 
     const string _s_timeLeft       = "Time {0}";
     const string _s_fireballMeter  = "FireballMeter {0}/{1}";
     const string _s_fireballStatus = "FireballStatus {0}";
     const string _s_score          = "Score {0}";
+    const string _s_powerMeter     = "Power {0}/{1}";
 
     //time editor
     void SetTimeLeft(int time)
@@ -44,28 +50,49 @@ public class GameplayUI: MonoBehaviour
     {
         _TMP_FireballStatus.SetText(_s_fireballStatus, 0);
     }
+    //power editors
+    void SetPowerValue(float value)
+    {
+        _TMP_PowerMeter.SetText(_s_powerMeter, value, 1);
+    }
+    void ResetPowerValue()
+    {
+        _TMP_PowerMeter.SetText(_s_powerMeter, 0, 1);
+    }
 
     void Start()
     {
+        if (_inputHandler != null)
+        {
+            SetPowerValue(0);
+
+            _inputHandler.OnThrowUpdate += SetPowerValue;
+            _inputHandler.OnThrowEnd    += (_,_) => ResetPowerValue();
+            _inputHandler.OnThrowCancel += ResetPowerValue;
+        }
+
+
         GameState gameState = GameplayController.Instance?.gameState;
-        if (gameState == null) return;
+        if (gameState != null)
+        {
+            //replace default values
+            SetFireballValue(gameState.FireballValue);
+            SetScore(gameState.Score);
+            SetTimeLeft(gameState.RemainingTime);
+            if (gameState.FireballStatus) SetFireballEnable(); else SetFireballDisable();
 
-        //replace default values
-        SetFireballValue(gameState.FireballValue);
-        SetScore(gameState.Score);
-        SetTimeLeft(gameState.RemainingTime);
-        if (gameState.FireballStatus) SetFireballEnable(); else SetFireballDisable();
+            //fireball updates
+            gameState.OnFireballValueChange += SetFireballValue;
+            gameState.OnFireballEnable += SetFireballEnable;
+            gameState.OnFireballDisable += SetFireballDisable;
 
-        //fireball updates
-        gameState.OnFireballValueChange += SetFireballValue;
-        gameState.OnFireballEnable += SetFireballEnable;
-        gameState.OnFireballDisable += SetFireballDisable;
+            //score updates
+            gameState.OnScoreChange += SetScore;
 
-        //score updates
-        gameState.OnScoreChange += SetScore;
-
-        //time updates
-        gameState.OnRemainingTimeChange += SetTimeLeft;
+            //time updates
+            gameState.OnRemainingTimeChange += SetTimeLeft;
+        }
+ 
     }
 
 }

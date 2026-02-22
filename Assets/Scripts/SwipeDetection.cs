@@ -69,7 +69,7 @@ public class SwipeDetection : MonoBehaviour
     {
         while (true)
         {   
-            float distance = Vector2.Distance(startPosition, trail.transform.position);
+            float distance = Vector2.Distance(startPosition, inputHandler.Primary2DPosition());
             inputHandler.SwipeUpdate(distance);
             yield return null;
         }
@@ -92,11 +92,16 @@ public class SwipeDetection : MonoBehaviour
 
     private void DetectSwipe()
     {
-        if (Vector2.Distance(startPosition, endPosition) >= minimumDistance && (endTime - startTime) <= maximumTime)
+        float distance = Vector2.Distance(startPosition, endPosition);
+        if (distance >= minimumDistance && (endTime - startTime) <= maximumTime)
         {
             Vector2 direction = endPosition - startPosition;
-            inputHandler.SwipeEnd(direction);
+            inputHandler.SwipeEnd(direction, distance);
             //SwipeDirection(direction.normalized);
+        }
+        else
+        {
+            inputHandler.SwipeCancel();
         }
     }
 

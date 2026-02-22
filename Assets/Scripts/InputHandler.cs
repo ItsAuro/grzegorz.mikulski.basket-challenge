@@ -18,8 +18,9 @@ public class InputHandler : MonoBehaviour
     public delegate void Look(Vector2 look);
     public delegate void ThrowBall(bool auto = true);
 
-    public delegate void PowerUpdate(float distance);
-    public delegate void PowerEnd(Vector2 direction);
+    public delegate void ThrowUpdate(float distance);
+    public delegate void ThrowEnd(Vector2 direction, float power);
+    public delegate void ThrowCancel();
 
 
     public event TouchStart OnStartTouch;
@@ -31,8 +32,9 @@ public class InputHandler : MonoBehaviour
     public event Look       OnLook;
     public event ThrowBall  OnThrowBall;
 
-    public event PowerUpdate OnPowerUpdate;
-    public event PowerEnd    OnPowerEnd;
+    public event ThrowUpdate OnThrowUpdate;
+    public event ThrowEnd    OnThrowEnd;
+    public event ThrowCancel OnThrowCancel;
 
 
     private void Awake()
@@ -137,13 +139,20 @@ public class InputHandler : MonoBehaviour
 
 
 
+    [SerializeField]
+    private float throwDistanceMax = 500f;
 
-    public void SwipeUpdate(float power)
+    public void SwipeUpdate(float distance)
     {
-        OnPowerUpdate?.Invoke(power);
+        //ScaleDistance(distance, swipeDistanceMultiplier, swipeDistanceMax)
+        OnThrowUpdate?.Invoke(Mathf.Clamp01(distance / throwDistanceMax));
     }
-    public void SwipeEnd(Vector2 direction)
+    public void SwipeEnd(Vector2 direction, float distance)
     {
-        OnPowerEnd?.Invoke(direction);
+        OnThrowEnd?.Invoke(direction.normalized, Mathf.Clamp01(distance / throwDistanceMax));
+    }
+    public void SwipeCancel()
+    {
+        OnThrowCancel?.Invoke();
     }
 }
