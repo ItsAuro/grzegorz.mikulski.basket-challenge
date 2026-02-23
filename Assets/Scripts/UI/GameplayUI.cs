@@ -23,15 +23,14 @@ public class GameplayUI: MonoBehaviour
     Slider _Slider_PowerMeter;
     [SerializeField]
     Slider _Slider_FireBallMeter;
-
     [SerializeField]
     InputHandler _inputHandler;
 
-    const string _s_timeLeft       = "Time\n{0}";
-    const string _s_fireballMeter  = "FireballMeter {0}/{1}";
-    const string _s_fireballStatus = "FireballStatus {0}";
-    const string _s_score          = "Score {0}";
-    const string _s_powerMeter     = "Power {0}/{1}";
+    const string _s_timeLeft           = "Time\n{0}";
+    const string _s_fireballMeter      = "FireballMeter {0}/{1}";
+    const string _s_fireballStatus     = "FireballStatus {0}";
+    const string _s_score              = "Score {0:D8}";
+    const string _s_powerMeter         = "Power {0}/{1}";
     const string _s_fireballMultiplier = "x{0}";
 
     //time editor
@@ -42,7 +41,8 @@ public class GameplayUI: MonoBehaviour
     //score editor
     void SetScore(int score)
     {
-        _TMP_Score.SetText(_s_score, score);
+        //_TMP_Score.SetText(_s_score, score);
+        _TMP_Score.text = string.Format(_s_score, score);
 
     }
     //fireball editors
@@ -79,7 +79,6 @@ public class GameplayUI: MonoBehaviour
     {
         _TMP_PowerMeter.SetText(_s_powerMeter, 0, 1);
         _Slider_PowerMeter.SetValueWithoutNotify(0);
-
     }
 
     void Start()
