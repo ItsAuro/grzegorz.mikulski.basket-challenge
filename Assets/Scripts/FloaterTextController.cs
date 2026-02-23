@@ -12,9 +12,7 @@ public class FloaterTextController : MonoBehaviour
     [SerializeField]
     bool _playOnStart = false;
     [SerializeField]
-    GameObject _rotateTowards;
-    [SerializeField]
-    bool _autoRotateTowards = false;
+    Transform _rotateTowards;
     
 
     Coroutine _displayCoroutine = null;
@@ -43,9 +41,9 @@ public class FloaterTextController : MonoBehaviour
 
     private void Update()
     {
-        if (_autoRotateTowards)
+        if (_rotateTowards != null)
         {
-            Vector3 direction = _TMP_ballPoints.transform.position - _rotateTowards.transform.position;
+            Vector3 direction = _TMP_ballPoints.transform.position - _rotateTowards.position;
             _TMP_ballPoints.transform.rotation = Quaternion.LookRotation(direction);
         }
     }
