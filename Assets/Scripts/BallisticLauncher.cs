@@ -15,22 +15,51 @@ public class BallisticLauncher : MonoBehaviour
     public float ArrivalAngle = -60f;
 
     [SerializeField]
-    public AnimationCurve GraceCurve = AnimationCurve.Linear(0,0,1,1);
+    public AnimationCurve AimAssistCurve = AnimationCurve.Linear(-1,0,1,0);
+    [SerializeField]
+    public float AimAssistRange = 200f;
 
 
-    public bool LaunchGameObject(GameObject obj, LaunchMode mode = LaunchMode.Direct, float forward_offset = 0f, float launch_power = -1)
+    public static Vector3 AimAssist(Vector3 raw, Vector3 optimal, float range, AnimationCurve assist_curve)
+    {
+        /*  Aim assist was thought up as a "magnet" towards the optimal vector
+         *  modified by a curve f(x) where:
+         *  f(x) = 0 -> Aim assist   0% , outputs same as raw
+         *  f(x) = 1 -> Aim assist 100% , outputs optimal vector
+         *  the curve can be added to penalise or reward accuracy
+         *  activate only when undershoot or overshoot happens, and so on
+         *  
+         *  (-inf , -0  ] is undershoot
+         *  [+0   , +inf) is overshoot
+         *  
+         *  X_out = ( 1 - f(d) ) * X_raw + f(d) * X_opt
+         *  
+         *  where:
+         *  
+         *           sign( ||X_raw|| - ||X_opt|| )   *   || X_raw - X_opt ||
+         *  d  =   ------------------------------------------------------------
+         *                                     range
+         */
+
+        float d = Mathf.Sign(raw.magnitude - optimal.magnitude) * (raw-optimal).magnitude / range;
+
+        return ( 1 - assist_curve.Evaluate(d) ) * raw + assist_curve.Evaluate(d) * optimal;
+
+    }
+
+    public bool LaunchGameObject(GameObject obj, LaunchMode mode = LaunchMode.Direct, float forward_offset = 0f, float velocity = -1)
     {
         if (Target == null) return false;
 
         return mode switch
         {
-            LaunchMode.Direct => LaunchDirect(obj, launch_power),
-            LaunchMode.Reflect => LaunchReflect(obj, forward_offset, launch_power),
+            LaunchMode.Direct => LaunchDirect(obj, velocity),
+            LaunchMode.Reflect => LaunchReflect(obj, forward_offset, velocity),
             _ => false,
         };
     }
 
-    private bool LaunchDirect(GameObject obj, float launch_power = -1)
+    private bool LaunchDirect(GameObject obj, float velocity = -1)
     {
         bool solution_found = false;
         solution_found = Ballistics.SolveArcTargetAngle(
@@ -38,7 +67,7 @@ public class BallisticLauncher : MonoBehaviour
             Target.position,
             ArrivalAngle,
             Physics.gravity.y,
-            out Vector3 launch_velocity
+            out Vector3 optimal_velocity
             );
         if (!solution_found) { 
             return false; 
@@ -46,12 +75,11 @@ public class BallisticLauncher : MonoBehaviour
         Rigidbody obj_rb = obj.GetComponent<Rigidbody>();
         if (obj_rb == null) return false;
 
-        if(launch_power > 0) launch_velocity *= GraceCurve.Evaluate(launch_power);
-
-        obj_rb.velocity = launch_velocity;
+       
+        obj_rb.velocity = velocity < 0 ? optimal_velocity : AimAssist(optimal_velocity.normalized * velocity, optimal_velocity, AimAssistRange, AimAssistCurve);
         return true;
     }
-    private bool LaunchReflect(GameObject obj, float forward_offset = 0f, float launch_power = -1)
+    private bool LaunchReflect(GameObject obj, float forward_offset = 0f, float velocity = -1)
     {
         if (ReflectAgainst == null) return false;
 
@@ -71,7 +99,7 @@ public class BallisticLauncher : MonoBehaviour
             projected_point,
             ArrivalAngle,
             Physics.gravity.y,
-            out Vector3 launch_velocity
+            out Vector3 optimal_velocity
             );
         if (!solution_found)
         {
@@ -80,9 +108,8 @@ public class BallisticLauncher : MonoBehaviour
         Rigidbody obj_rb = obj.GetComponent<Rigidbody>();
         if (obj_rb == null) return false;
 
-        if (launch_power > 0) launch_velocity *= GraceCurve.Evaluate(launch_power);
+        obj_rb.velocity = velocity < 0 ? optimal_velocity : AimAssist(optimal_velocity.normalized * velocity, optimal_velocity, AimAssistRange, AimAssistCurve);
 
-        obj_rb.velocity = launch_velocity;
         return true;
     }
 

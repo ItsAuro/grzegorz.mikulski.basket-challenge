@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     BasketballFactory _basketballFactory;
     [SerializeField]
     BallisticLauncher _ballisticLauncher;
+    [SerializeField]
+    BasketballTracker _ballTracker;
 
 
 
@@ -29,13 +31,12 @@ public class PlayerController : MonoBehaviour
     float _jumpForce     = 5f;
     [SerializeField]
     float _gravity = 10f;
+    [SerializeField]
+    float _throwFactor = 20f;
 
 
     float _headAngle = 0f;
     float _velocityY = -1f;
-
-
-    
 
 
     public void Move(Vector2 movementVector)
@@ -84,10 +85,11 @@ public class PlayerController : MonoBehaviour
 
     // throw logic
 
-    public void ThrowBallEnd(Vector2 direction, float power)
+    public void ThrowBallEnd(Vector2 direction, float throw_power)
     {
         GameObject ball = _basketballFactory.CreateBasketball(_head.transform.position, _head.transform.rotation);
 
+        _ballTracker?.TrackBasketball(ball.GetComponent<Basketball>());
 
         Vector2 LEFT_THROW = Vector2.up + Vector2.left;
         Vector2 RIGHT_THROW = Vector2.up + Vector2.right;
@@ -111,7 +113,7 @@ public class PlayerController : MonoBehaviour
                 ball,
                 BallisticLauncher.LaunchMode.Reflect,
                 ball.GetComponent<Basketball>().BallDiameter / 2f,
-                power
+                throw_power * _throwFactor
                 );
         }
         else
@@ -120,11 +122,12 @@ public class PlayerController : MonoBehaviour
                 ball,
                 BallisticLauncher.LaunchMode.Direct,
                 ball.GetComponent<Basketball>().BallDiameter / 2f,
-                power
+                throw_power * _throwFactor
                 );
         }
 
     }
+
 
 
     void Start()

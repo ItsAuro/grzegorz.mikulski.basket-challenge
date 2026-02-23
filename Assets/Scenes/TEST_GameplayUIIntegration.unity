@@ -207,22 +207,22 @@ MonoBehaviour:
   Target: {fileID: 0}
   ReflectAgainst: {fileID: 433137164}
   ArrivalAngle: -60
-  GraceCurve:
+  AimAssistCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: -1
       value: 0
       inSlope: 0
-      outSlope: 1
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 1
-      inSlope: 1
+      value: 0
+      inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
@@ -231,6 +231,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AimAssistRange: 200
 --- !u!1001 &273340207
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1105,17 +1106,53 @@ PrefabInstance:
       propertyPath: _ballCamera
       value: 
       objectReference: {fileID: 1432953113}
+    - target: {fileID: 6679672018433940504, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+      propertyPath: _throwFactor
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
       propertyPath: Target
       value: 
       objectReference: {fileID: 75991485}
     - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+      propertyPath: AimAssistRange
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
       propertyPath: ReflectAgainst
       value: 
       objectReference: {fileID: 433137164}
     - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+      propertyPath: AimAssist.m_PreInfinity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+      propertyPath: AimAssist.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
       propertyPath: GraceCurve.m_Curve.Array.size
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+      propertyPath: AimAssistCurve.m_Curve.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+      propertyPath: AimAssist.m_Curve.Array.data[0].time
+      value: -0.02507782
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+      propertyPath: AimAssist.m_Curve.Array.data[1].time
+      value: 0.035423312
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+      propertyPath: AimAssist.m_Curve.Array.data[0].value
+      value: -0.013885498
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+      propertyPath: AimAssist.m_Curve.Array.data[1].value
+      value: 0.019433724
       objectReference: {fileID: 0}
     - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
       propertyPath: GraceCurve.m_Curve.Array.data[1].time
@@ -1154,6 +1191,14 @@ PrefabInstance:
       value: 3.1666667
       objectReference: {fileID: 0}
     - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+      propertyPath: AimAssistCurve.m_Curve.Array.data[1].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+      propertyPath: AimAssistCurve.m_Curve.Array.data[2].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
       propertyPath: GraceCurve.m_Curve.Array.data[0].outSlope
       value: 3.1666665
       objectReference: {fileID: 0}
@@ -1175,6 +1220,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
       propertyPath: GraceCurve.m_Curve.Array.data[3].outSlope
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+      propertyPath: AimAssistCurve.m_Curve.Array.data[1].value
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
@@ -1200,6 +1249,14 @@ PrefabInstance:
     - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
       propertyPath: GraceCurve.m_Curve.Array.data[3].tangentMode
       value: 69
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+      propertyPath: AimAssistCurve.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+      propertyPath: AimAssistCurve.m_Curve.Array.data[1].outWeight
+      value: 0.33333334
       objectReference: {fileID: 0}
     - target: {fileID: 8040929422688208993, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
       propertyPath: m_Name
