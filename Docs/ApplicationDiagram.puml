@@ -134,7 +134,12 @@ class GameplayUI{
   - TMP TMP_Time
   - TMP TMP_FireballMeter
   - TMP TMP_FireballStatus
+  - TMP TMP_FireballMultiplier
   - TMP TMP_Score
+  - TMP TMP_PowerMeter
+  - Slider Slider_PowerMeter
+  - Slider Slider_FireballMeter
+  - InputHandler inputHandler
   
   - void SetTimeLeft(int time)
   - void SetScore(int score)
@@ -143,8 +148,10 @@ class GameplayUI{
   - void SetFireballDisable()
   - void SetPowerValue(float value)
   - void ResetPowerValue()
-  
 }
+note left of GameplayUI::inputHandler
+to retrieve slide data
+end note
 class RewardUI{
   - TMP finalScore
   
@@ -173,9 +180,6 @@ class ScoreFXController{
 
 
 'BASKET RELATED CLASSES'
-class BasketballHoop{
-
-}
 class BasketballBoard{
   - TMP TMP_bonus
   - int rollFrequency
@@ -192,6 +196,13 @@ class BasketballFactory{
   + GameObject CreateBasketball()
   + GameObject CreateBasketball(Vector3 position, Quaternion rotation)
   + GameObject DelayDestroy(GameObject o, float delay)
+}
+class BasketballTracker{
+  - CinemachineVirtualCamera ballCamera
+  - Basketball trackedBall
+  
+  + void TrackBasketball(Basketball basketball)
+  - void ResetTrackingCamera(Basketball despawned_ball)
 }
 class BallisticLauncher{
   + Transform Target
@@ -223,6 +234,9 @@ class Basketball{
   - bool autoDelete
   - int lifetime
   
+  + event OnBasketballDestroy
+  + event OnBasketballScore
+  
   - void OnCollisionEnter() 
   - void OnTriggerEnter()
 }
@@ -247,6 +261,10 @@ end note
 PlayerController o-- BasketballFactory
 PlayerController o-- BallisticLauncher
 PlayerController o-- InputHandler
+PlayerController o-- BasketballTracker
+
+BasketballTracker o-- Basketball
+
 
 PlayerController ..> GameplayController
 
