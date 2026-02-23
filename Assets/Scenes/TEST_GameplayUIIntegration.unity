@@ -160,7 +160,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _basketballPrefab: {fileID: 7259236515502903761, guid: f5f9b2e3697d4d545a5f0ecdc12f789e, type: 3}
   _spawnOffset: {x: 0, y: 0, z: 0}
-  _ballCamera: {fileID: 0}
 --- !u!114 &206686177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1046,6 +1045,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4174116182368373442, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+      propertyPath: _ballCamera
+      value: 
+      objectReference: {fileID: 1432953113}
     - target: {fileID: 4446633141365434220, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
       propertyPath: swipeDistanceMultiplier
       value: 0.08
@@ -1352,7 +1355,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -0.03, z: 0}
 --- !u!1001 &2066543980
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -61,6 +61,7 @@ GameObject:
   - component: {fileID: 3376403532221416192}
   - component: {fileID: 7857730621977010546}
   - component: {fileID: 6357965268083635975}
+  - component: {fileID: 4174116182368373442}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -178,11 +179,11 @@ MonoBehaviour:
   _inputHandler: {fileID: 4446633141365434220}
   _basketballFactory: {fileID: 3376403532221416192}
   _ballisticLauncher: {fileID: 7857730621977010546}
+  _ballTracker: {fileID: 4174116182368373442}
   _movementSpeed: 5
   _rotationSpeed: 0.1
   _jumpForce: 5
   _gravity: 10
-  _ballCamera: {fileID: 0}
 --- !u!114 &4446633141365434220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,6 +268,19 @@ MonoBehaviour:
   directionThreshold: 0.9
   trailEnabled: 0
   trail: {fileID: 2186229629834859193}
+--- !u!114 &4174116182368373442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8040929422688208993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9310db028150b8649aa186a585f7a7a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ballCamera: {fileID: 0}
 --- !u!1 &9213801465491907432
 GameObject:
   m_ObjectHideFlags: 0

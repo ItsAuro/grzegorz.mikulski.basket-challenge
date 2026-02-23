@@ -31,8 +31,8 @@ public class Basketball : MonoBehaviour
     bool _autoDelete = true;
     int  _lifetime   = 5;
 
-    public delegate void BasketballDestroy(GameObject ball);
-    public delegate void BasketballScore  (GameObject ball);
+    public delegate void BasketballDestroy(Basketball ball);
+    public delegate void BasketballScore  (Basketball ball);
     public event BasketballDestroy OnBasketballDestroy;
     public event BasketballScore   OnBasketballScore;
 
@@ -52,7 +52,7 @@ public class Basketball : MonoBehaviour
 
     private void OnDestroy()
     {
-        OnBasketballDestroy?.Invoke(this.gameObject);
+        OnBasketballDestroy?.Invoke(this);
     }
     private void Start()
     {   
@@ -79,7 +79,7 @@ public class Basketball : MonoBehaviour
             {
                 // ball enters from above and is valid
                 // basket successful
-                OnBasketballScore?.Invoke(this.gameObject);
+                OnBasketballScore?.Invoke(this);
                 if (_shotType == ShotType.None) _shotType |= ShotType.Perfect;
                 _scoreType = ScoreType.Scored;
 
