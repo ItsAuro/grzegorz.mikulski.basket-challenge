@@ -451,6 +451,58 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_GameplayUI
       objectReference: {fileID: 0}
+    - target: {fileID: 353298933435075931, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 353298933435075931, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2062588062470940698, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2062588062470940698, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2062588062470940698, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4760739165107859501, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4760739165107859501, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4760739165107859501, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4810656517019243673, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4810656517019243673, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5677741420548986228, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5677741420548986228, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5677741420548986228, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5944459983109559036, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
       propertyPath: _inputHandler
       value: 
@@ -535,55 +587,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7407829010615979934, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7407829010615979934, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
---- !u!114 &564795679 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6932580302194281084, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
-  m_PrefabInstance: {fileID: 564795678}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &564795680 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7082705430787826358, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
-  m_PrefabInstance: {fileID: 564795678}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &564795681 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5447075352475051993, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
-  m_PrefabInstance: {fileID: 564795678}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &564795682 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6339314722028190023, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
-  m_PrefabInstance: {fileID: 564795678}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &815207447 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3828082877554831191, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
@@ -858,10 +874,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1862344432}
-  - component: {fileID: 1862344431}
   - component: {fileID: 1862344430}
   m_Layer: 0
-  m_Name: UI
+  m_Name: GameplayController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -879,24 +894,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4883a78a3c330924bbae4f5d687a0fec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1862344431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1862344429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2595631d6674454aa43ba20342079b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _TMP_Time: {fileID: 564795682}
-  _TMP_FireballMeter: {fileID: 564795681}
-  _TMP_FireballStatus: {fileID: 564795680}
-  _TMP_Score: {fileID: 564795679}
-  _TMP_PowerMeter: {fileID: 0}
-  _inputHandler: {fileID: 0}
 --- !u!4 &1862344432
 Transform:
   m_ObjectHideFlags: 0

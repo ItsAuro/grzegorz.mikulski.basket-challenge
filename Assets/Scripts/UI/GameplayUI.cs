@@ -1,8 +1,9 @@
+using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class GameplayUI: MonoBehaviour
 {
@@ -13,18 +14,25 @@ public class GameplayUI: MonoBehaviour
     [SerializeField]
     TextMeshProUGUI _TMP_FireballStatus;
     [SerializeField]
+    TextMeshProUGUI _TMP_FireballMultiplier;
+    [SerializeField]
     TextMeshProUGUI _TMP_Score;
     [SerializeField]
     TextMeshProUGUI _TMP_PowerMeter;
+    [SerializeField]
+    Slider _Slider_PowerMeter;
+    [SerializeField]
+    Slider _Slider_FireBallMeter;
 
     [SerializeField]
     InputHandler _inputHandler;
 
-    const string _s_timeLeft       = "Time {0}";
+    const string _s_timeLeft       = "Time\n{0}";
     const string _s_fireballMeter  = "FireballMeter {0}/{1}";
     const string _s_fireballStatus = "FireballStatus {0}";
     const string _s_score          = "Score {0}";
     const string _s_powerMeter     = "Power {0}/{1}";
+    const string _s_fireballMultiplier = "x{0}";
 
     //time editor
     void SetTimeLeft(int time)
@@ -41,23 +49,37 @@ public class GameplayUI: MonoBehaviour
     void SetFireballValue(int value)
     {
         _TMP_FireballMeter.SetText(_s_fireballMeter, value, GameConfig.FIREBALL_THRESHOLD);
+        _Slider_FireBallMeter.SetValueWithoutNotify((float)value / GameConfig.FIREBALL_THRESHOLD);
     }
     void SetFireballEnable()
     {
         _TMP_FireballStatus.SetText(_s_fireballStatus, 1);
+        SetFireballMultiplierVisibility(true);
     }
     void SetFireballDisable()
     {
         _TMP_FireballStatus.SetText(_s_fireballStatus, 0);
+        SetFireballMultiplierVisibility(false);
+    }
+    void SetFireballMultiplierValue(int value)
+    {
+        _TMP_FireballMultiplier.SetText(_s_fireballMultiplier, value);
+    }
+    void SetFireballMultiplierVisibility(bool visibility)
+    {
+        _TMP_FireballMultiplier.enabled = visibility;
     }
     //power editors
     void SetPowerValue(float value)
     {
         _TMP_PowerMeter.SetText(_s_powerMeter, value, 1);
+        _Slider_PowerMeter.SetValueWithoutNotify(value);
     }
     void ResetPowerValue()
     {
         _TMP_PowerMeter.SetText(_s_powerMeter, 0, 1);
+        _Slider_PowerMeter.SetValueWithoutNotify(0);
+
     }
 
     void Start()
@@ -79,6 +101,9 @@ public class GameplayUI: MonoBehaviour
             SetFireballValue(gameState.FireballValue);
             SetScore(gameState.Score);
             SetTimeLeft(gameState.RemainingTime);
+            SetFireballMultiplierValue(GameConfig.FIREBALL_MULTIPLIER);
+            SetFireballMultiplierVisibility(gameState.FireballStatus);
+
             if (gameState.FireballStatus) SetFireballEnable(); else SetFireballDisable();
 
             //fireball updates
