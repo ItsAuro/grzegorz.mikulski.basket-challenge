@@ -38,6 +38,7 @@ public class FloaterTextController : MonoBehaviour
     private void Start()
     {
         if(_playOnStart) _TMP_ballPoints.GetComponent<Animator>().Play("Float", 0, 0f);
+        _TMP_ballPoints.gameObject.SetActive(false);
     }
 
     private void Update()

@@ -22,21 +22,17 @@ public class Basketball : MonoBehaviour
 
     [SerializeField]
     ParticleSystem _fireTrail;
-
     public int   BallPoints   { get; private set; } = 1;
     public float BallDiameter { get { return transform.localScale.x; } }
-
-
     ShotType  _shotType  = ShotType.None;
     ScoreType _scoreType = ScoreType.Missed;
-
     bool _isValid    = false;
     bool _isLegal    = true;
     bool _autoDelete = true;
     int  _lifetime   = 5;
 
-    
-
+    public event Action OnBasketballDestroy;
+    public event Action OnBasketballScore;
 
     private void _AutoDelete()
     {
@@ -52,6 +48,10 @@ public class Basketball : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        OnBasketballDestroy?.Invoke();
+    }
     private void Start()
     {   
         if (GameplayController.Instance?.gameState.FireballStatus == true) _fireTrail?.Play();
@@ -61,9 +61,8 @@ public class Basketball : MonoBehaviour
             InvokeRepeating(nameof(_AutoDelete), 0, 1);
         }
     }
-
     private void OnTriggerEnter(Collider trigger)
-    {
+    {       
         if (trigger.gameObject.CompareTag("TriggerScoreValidate"))
         {
             _isValid = true;
@@ -77,6 +76,7 @@ public class Basketball : MonoBehaviour
             if (_isLegal && _isValid)
             {
                 //Debug.Log("Scored");
+                OnBasketballScore?.Invoke();
                 if (_shotType == ShotType.None) _shotType |= ShotType.Perfect;
                 _scoreType = ScoreType.Scored;
 
