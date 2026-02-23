@@ -13,13 +13,13 @@ public class GameplayController : MonoBehaviour
         else _instance = this;
     }
 
-
     public GameState gameState = new GameState();
 
     public event System.Action OnGameStart;
     public event System.Action OnGameEnd;
 
-
+    [SerializeField]
+    private bool _startGameOnStart = false;
 
     public void StartGame()
     {
@@ -31,18 +31,21 @@ public class GameplayController : MonoBehaviour
         CancelInvoke(nameof(TimeStep));
         OnGameEnd?.Invoke();
     }
-
     private void TimeStep()
     {
         gameState.RemoveTime(1);
     }
-    void Start()
+
+    private void OnEnable()
     {
         gameState.OnTimeEnd += EndGame;
     }
-
-    void Update()
+    private void OnDisable()
     {
-        
+        gameState.OnTimeEnd -= EndGame;
+    }
+    void Start()
+    {
+        if (_startGameOnStart) StartGame();
     }
 }
