@@ -465,6 +465,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 513869378481095056, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -6.7349854
+      objectReference: {fileID: 0}
     - target: {fileID: 2062588062470940698, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -606,6 +610,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7407829010615979934, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7522312491743416548, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
