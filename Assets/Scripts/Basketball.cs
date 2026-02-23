@@ -31,8 +31,10 @@ public class Basketball : MonoBehaviour
     bool _autoDelete = true;
     int  _lifetime   = 5;
 
-    public event Action OnBasketballDestroy;
-    public event Action OnBasketballScore;
+    public delegate void BasketballDestroy(GameObject ball);
+    public delegate void BasketballScore  (GameObject ball);
+    public event BasketballDestroy OnBasketballDestroy;
+    public event BasketballScore   OnBasketballScore;
 
     private void _AutoDelete()
     {
@@ -50,41 +52,42 @@ public class Basketball : MonoBehaviour
 
     private void OnDestroy()
     {
-        OnBasketballDestroy?.Invoke();
+        OnBasketballDestroy?.Invoke(this.gameObject);
     }
     private void Start()
     {   
+        // fire trail dependent on fireball state
         if (GameplayController.Instance?.gameState.FireballStatus == true) _fireTrail?.Play();
 
-        if( _autoDelete)
-        {
-            InvokeRepeating(nameof(_AutoDelete), 0, 1);
-        }
+        if( _autoDelete) InvokeRepeating(nameof(_AutoDelete), 0, 1);
     }
     private void OnTriggerEnter(Collider trigger)
     {       
         if (trigger.gameObject.CompareTag("TriggerScoreValidate"))
         {
+            // validate if the ball enters from the top
             _isValid = true;
         }
         else if (trigger.gameObject.CompareTag("TriggerScoreFinalise"))
         {
             if (_isLegal && !_isValid) {
+                // ball enters from below
                 _isLegal = false;
             }
 
             if (_isLegal && _isValid)
             {
-                //Debug.Log("Scored");
-                OnBasketballScore?.Invoke();
+                // ball enters from above and is valid
+                // basket successful
+                OnBasketballScore?.Invoke(this.gameObject);
                 if (_shotType == ShotType.None) _shotType |= ShotType.Perfect;
                 _scoreType = ScoreType.Scored;
 
+                // multiply points if fireball active
                 if (GameplayController.Instance?.gameState.FireballStatus == true) BallPoints *= GameConfig.FIREBALL_MULTIPLIER;
 
                 trigger.gameObject.GetComponent<FloaterTextController>()?.DisplayPoints(BallPoints);
                 trigger.gameObject.GetComponent<ScoreFXController>()?.PlayFX();
-
                 GameplayController.Instance?.gameState.AddScore(BallPoints);
                 GameplayController.Instance?.gameState.AddFireball(GameConfig.FIREBALL_INCREMENT);
 
@@ -96,16 +99,15 @@ public class Basketball : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("BasketballBoard"))
         {
+            // board hit
             _shotType |= ShotType.Backboard;
-            //Debug.Log("Hit Board");
-
             int PointBonus = collision.gameObject.GetComponent<BasketballBoard>().PointBonus;
             BallPoints = PointBonus;
         }
         else if (collision.gameObject.CompareTag("BasketballHoop"))
         {
+            // hoop hit
             _shotType |= ShotType.HoopTouch;
-            //Debug.Log("Hit Hoop");
         }
 
     }

@@ -30,14 +30,14 @@ public class BasketballFactory : MonoBehaviour
 
         if (_ballCamera != null)
         {
-            if (_trackedBall)
+            if (_trackedBall != null)
             {
                 _trackedBall.GetComponent<Basketball>().OnBasketballDestroy -= ResetTrackingCamera;
-                _trackedBall.GetComponent<Basketball>().OnBasketballScore -= ResetTrackingCamera;
+                _trackedBall.GetComponent<Basketball>().OnBasketballScore   -= ResetTrackingCamera;
             }
             _trackedBall = basketball;
             _trackedBall.GetComponent<Basketball>().OnBasketballDestroy += ResetTrackingCamera;
-            _trackedBall.GetComponent<Basketball>().OnBasketballScore += ResetTrackingCamera;
+            _trackedBall.GetComponent<Basketball>().OnBasketballScore   += ResetTrackingCamera;
             _ballCamera.Follow = _trackedBall.transform;
             //_ballCamera.LookAt = _trackedBall.transform;
             _ballCamera.Priority = 15;
@@ -45,12 +45,16 @@ public class BasketballFactory : MonoBehaviour
 
         return basketball;
     }
-    private void ResetTrackingCamera()
+    private void ResetTrackingCamera(GameObject ball)
     {
-        _ballCamera.Priority = 5;
-        _ballCamera.Follow = null;
-        //_ballCamera.LookAt = null;
-        _trackedBall = null;
+        if(_trackedBall == ball)
+        {
+            _ballCamera.Priority = 5;
+            _ballCamera.Follow = null;
+            //_ballCamera.LookAt = null;
+            _trackedBall = null;
+        }
+        
     }
 
 
