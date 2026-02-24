@@ -44,6 +44,7 @@ public class SwipeDetection : MonoBehaviour
     private void SwipeStart(Vector2 position, float time)
     {
         startPosition = position;
+        endPosition   = position;
         startTime = time;
         swipeCoroutine = StartCoroutine(SwipeUpdate());
 

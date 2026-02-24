@@ -208,8 +208,10 @@ class BallisticLauncher{
   + Transform Target
   + Transform ReflectAgainst
   + float ArrivalAngle
-  + AnimationCurve GraceCurve
+  + AnimationCurve AimAssistCurve
+  + float AimAssistRange
   
+  + Vector3 AimAssist(Vector3 raw, Vector3 optimal, float range, AnimationCurve assist_curve)
   + bool LaunchGameObject(GameObject o, LaunchMode m, float forward_offset, float power)
   - bool LaunchDirect(GameObject o, float power)
   - bool LaunchReflect(GameObject o, float forward_offset, float power)

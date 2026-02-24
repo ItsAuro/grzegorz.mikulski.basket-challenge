@@ -80,6 +80,15 @@ public class PlayerController : MonoBehaviour
     //    _ballisticLauncher.LaunchGameObject(ball, BallisticLauncher.LaunchMode.Direct, ball.GetComponent<Basketball>().BallDiameter / 2f);
     //}
 
+    public void Teleport(Vector3 position, Transform look_at)
+    {
+        transform.position = position;
+        Vector3 target_direction = (look_at.position - position).normalized;
+        Quaternion target_rotation = Quaternion.LookRotation(new Vector3(target_direction.x, 0, target_direction.z));
+        transform.rotation = target_rotation;
+        if (_head != null) _head.transform.LookAt(look_at);
+    }
+
 
 
 

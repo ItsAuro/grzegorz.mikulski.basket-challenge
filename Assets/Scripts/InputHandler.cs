@@ -62,7 +62,6 @@ public class InputHandler : MonoBehaviour
         _playerControls.PlayerActions.Jump.started            += JumpPerformed;
         _playerControls.PlayerActions.ThrowBall.started       += ThrowBallPerformed;
         _playerControls.PlayerActions.ToggleMouse.started     += MouseToggle;
-
     }
 
     void Update()
