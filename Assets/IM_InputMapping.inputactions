@@ -3,7 +3,7 @@
     "name": "IM_InputMapping",
     "maps": [
         {
-            "name": "PlayerActions",
+            "name": "Movement",
             "id": "4e009b3c-e487-4f26-97b3-f3afc113849c",
             "actions": [
                 {
@@ -28,42 +28,6 @@
                     "name": "Look",
                     "type": "Value",
                     "id": "a8a8ae67-79e1-42db-8cc5-f7a0c418ce39",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "ToggleMouse",
-                    "type": "Button",
-                    "id": "6512534c-b7e6-49dc-8a35-d1506de83769",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "ThrowBall",
-                    "type": "Button",
-                    "id": "ff89cbc2-432f-45dc-a05c-56fe88f7f34d",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "PrimaryContact",
-                    "type": "Button",
-                    "id": "5ac3c2f5-d199-441f-aaf3-93a3f74ba4c3",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "PrimaryPosition",
-                    "type": "Value",
-                    "id": "d0c63e7a-68d9-4fa2-aedb-9f23be0091a6",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -147,32 +111,36 @@
                     "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
+                }
+            ]
+        },
+        {
+            "name": "Swipes",
+            "id": "382d632d-2a21-4aa6-8095-f976bf88a834",
+            "actions": [
                 {
-                    "name": "",
-                    "id": "de21f5a7-7182-46b5-b89a-5737d573df0c",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
+                    "name": "PrimaryContact",
+                    "type": "Button",
+                    "id": "0e96aa79-433e-4f28-9984-bacdc5bd8082",
+                    "expectedControlType": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "ToggleMouse",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "360c1bb4-c76f-4385-886e-0cdd82556659",
-                    "path": "<Mouse>/rightButton",
                     "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ThrowBall",
-                    "isComposite": false,
-                    "isPartOfComposite": false
+                    "initialStateCheck": false
                 },
                 {
+                    "name": "PrimaryPosition",
+                    "type": "Value",
+                    "id": "d07c2976-0ba2-456e-a920-02e1f0f507be",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
                     "name": "",
-                    "id": "e474d8cd-4f64-4302-916d-9f64e091c413",
+                    "id": "2e8e0a97-da9b-4194-b4f7-6e819426f790",
                     "path": "<Touchscreen>/Press",
                     "interactions": "Press",
                     "processors": "",
@@ -183,7 +151,7 @@
                 },
                 {
                     "name": "",
-                    "id": "57038b32-366a-48b9-9480-4bec585b7b71",
+                    "id": "267f4626-067c-4a9a-9e62-855d5edce263",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
@@ -194,7 +162,7 @@
                 },
                 {
                     "name": "",
-                    "id": "68cd806e-d26b-4be7-a903-56fdc1a4f140",
+                    "id": "f642232c-f910-4a95-b73c-ce37325c5db1",
                     "path": "<Touchscreen>/position",
                     "interactions": "",
                     "processors": "",
@@ -205,12 +173,68 @@
                 },
                 {
                     "name": "",
-                    "id": "5e46b3e5-4356-4dcd-8d9e-1075f3212051",
+                    "id": "f23293be-be90-42ae-ab3e-d1b94d7ca322",
                     "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "PrimaryPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Utility",
+            "id": "27580c0a-88ef-4537-b821-71669f3279f7",
+            "actions": [
+                {
+                    "name": "ToggleMouse",
+                    "type": "Button",
+                    "id": "19609899-6888-43a7-ba6a-9b17c94aa3a2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b10dc13f-0c79-486e-bb94-20d1a41c7bb8",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleMouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Actions",
+            "id": "8dc10d49-e591-4b81-ab75-3612f0998afd",
+            "actions": [
+                {
+                    "name": "Throw",
+                    "type": "Button",
+                    "id": "730cebcd-c3fd-4fdb-b7aa-cd6780aba022",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e38e5712-7be4-4e54-91cd-026efb65fbe1",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Throw",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

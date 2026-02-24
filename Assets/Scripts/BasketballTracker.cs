@@ -13,12 +13,16 @@ public class BasketballTracker : MonoBehaviour
     {
         if (_ballCamera != null)
         {
+            
+            // unsubscribe from current target if we're tracking
             if (_trackedBall != null)
-            {
+            {   
                 _trackedBall.OnBasketballDestroy -= ResetTrackingCamera;
                 _trackedBall.OnBasketballScore   -= ResetTrackingCamera;
             }
             _trackedBall = basketball;
+
+            // subscribe to target
             _trackedBall.OnBasketballDestroy += ResetTrackingCamera;
             _trackedBall.OnBasketballScore   += ResetTrackingCamera;
 
@@ -26,10 +30,13 @@ public class BasketballTracker : MonoBehaviour
             _ballCamera.Priority = 15;
         }
     }
-    private void ResetTrackingCamera(Basketball despawned_ball)
+    private void ResetTrackingCamera(Basketball basketball)
     {
-        if (_trackedBall == despawned_ball)
+        if (_trackedBall == basketball)
         {
+            _trackedBall.OnBasketballDestroy -= ResetTrackingCamera;
+            _trackedBall.OnBasketballScore   -= ResetTrackingCamera;
+
             _ballCamera.Priority = 5;
             _ballCamera.Follow   = null;
             _trackedBall         = null;

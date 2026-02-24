@@ -2,41 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static InputHandler;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    GameObject _head;
-    [SerializeField]
-    CharacterController _characterController;
-    [SerializeField]
-    InputHandler _inputHandler;
+    [SerializeField] GameObject _head;
+    [SerializeField] CharacterController _characterController;
+    [SerializeField] InputHandler _inputHandler;
+    [SerializeField] PlayerArea _playerArea;
 
+    // modules
+    [SerializeField] BasketballFactory _basketballFactory;
+    [SerializeField] BallisticLauncher _ballisticLauncher;
+    [SerializeField] BasketballTracker _ballTracker;
 
-    //TESTING/DEBUG
-    [SerializeField]
-    BasketballFactory _basketballFactory;
-    [SerializeField]
-    BallisticLauncher _ballisticLauncher;
-    [SerializeField]
-    BasketballTracker _ballTracker;
-
-
-
-    [SerializeField]
-    float _movementSpeed = 5f;
-    [SerializeField]
-    float _rotationSpeed = .1f;
-    [SerializeField]
-    float _jumpForce     = 5f;
-    [SerializeField]
-    float _gravity = 10f;
-    [SerializeField]
-    float _throwFactor = 20f;
+    [SerializeField] float _movementSpeed = 5f;
+    [SerializeField] float _rotationSpeed = .1f;
+    [SerializeField] float _jumpForce     = 5f;
+    [SerializeField] float _gravity = 10f;
+    [SerializeField] float _throwFactor = 20f;
 
 
     float _headAngle = 0f;
     float _velocityY = -1f;
+    Basketball _thrownBall = null;
 
 
     public void Move(Vector2 movementVector)
@@ -80,25 +69,66 @@ public class PlayerController : MonoBehaviour
     //    _ballisticLauncher.LaunchGameObject(ball, BallisticLauncher.LaunchMode.Direct, ball.GetComponent<Basketball>().BallDiameter / 2f);
     //}
 
-    public void Teleport(Vector3 position, Transform look_at)
+    public void Teleport(Vector3 position, Vector3 look_at)
     {
-        transform.position = position;
-        Vector3 target_direction = (look_at.position - position).normalized;
-        Quaternion target_rotation = Quaternion.LookRotation(new Vector3(target_direction.x, 0, target_direction.z));
-        transform.rotation = target_rotation;
-        if (_head != null) _head.transform.LookAt(look_at);
+        float height_offset = _characterController.height / 2;
+
+        _characterController.enabled = false;
+        transform.position = position + transform.up * height_offset;
+        _characterController.enabled = true;
+
+        Vector3 target_direction = (look_at - transform.position).normalized;
+        if(target_direction != Vector3.zero)
+        {
+            Quaternion target_rotation = Quaternion.LookRotation(new Vector3(target_direction.x, 0, target_direction.z));
+            transform.rotation = target_rotation;
+            if (_head != null) _head.transform.LookAt(look_at);
+        }
     }
 
 
 
 
     // throw logic
+    private void EnableTeleportOnDestroy(Basketball basketball)
+    {
+        basketball.OnBasketballDestroy += TeleportOnDestroy;
+    }
+    private void TeleportOnDestroy(Basketball basketball)
+    {
+        if(_playerArea != null) Teleport(_playerArea.GetPoint(), _playerArea.FocalPoint.position);
+    }
+    private void EnableInputsOnDestroy(Basketball basketball)
+    {
+        _thrownBall.OnBasketballDestroy -= EnableInputsOnDestroy;
+        _thrownBall.OnBasketballScore -= EnableTeleportOnDestroy;
+        _thrownBall.OnBasketballDestroy -= TeleportOnDestroy;
 
+
+        _inputHandler.Movement = false;
+        _inputHandler.Actions = false;
+        _inputHandler.Utility = true;
+        _inputHandler.Swipes = true;
+        _thrownBall = null;
+    }
     public void ThrowBallEnd(Vector2 direction, float throw_power)
     {
-        GameObject ball = _basketballFactory.CreateBasketball(_head.transform.position, _head.transform.rotation);
+        if (_thrownBall) return;
 
-        _ballTracker?.TrackBasketball(ball.GetComponent<Basketball>());
+        _inputHandler.Movement = false;
+        _inputHandler.Actions = false;
+        _inputHandler.Utility = false;
+        _inputHandler.Swipes = false;
+
+
+        GameObject ball = _basketballFactory.CreateBasketball(_head.transform.position, _head.transform.rotation);
+        _thrownBall = ball.GetComponent<Basketball>();
+
+
+        _ballTracker?.TrackBasketball(_thrownBall);
+
+        _thrownBall.OnBasketballDestroy += EnableInputsOnDestroy;
+        _thrownBall.OnBasketballScore += EnableTeleportOnDestroy;
 
         Vector2 LEFT_THROW = Vector2.up + Vector2.left;
         Vector2 RIGHT_THROW = Vector2.up + Vector2.right;
@@ -150,7 +180,7 @@ public class PlayerController : MonoBehaviour
         _inputHandler.OnLook += Look;
         _inputHandler.OnMove += Move;
         //_inputHandler.OnThrowBall += ThrowBall;
-        _inputHandler.OnThrowEnd += ThrowBallEnd;
+        _inputHandler.OnSwipeThrowSuccessful += ThrowBallEnd;
 
     }
     private void OnDisable()
@@ -159,7 +189,7 @@ public class PlayerController : MonoBehaviour
         _inputHandler.OnLook -= Look;
         _inputHandler.OnMove -= Move;
         //_inputHandler.OnThrowBall -= ThrowBall;
-        _inputHandler.OnThrowEnd -= ThrowBallEnd;
+        _inputHandler.OnSwipeThrowSuccessful -= ThrowBallEnd;
     }
 
     void Update()

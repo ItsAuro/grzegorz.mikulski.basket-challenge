@@ -18,7 +18,16 @@ public static class RandomPoint
             vertex1.y + Random.Range(vertex1.y, vertex2.y - vertex1.y),
             vertex1.z + Random.Range(vertex1.z, vertex2.z - vertex1.z)
         );
-
         return random_point;
+    }
+    public static Vector3 RandomPointInBox(Transform boxTransform, Vector3 size)
+    {
+        Vector3 randomLocalPoint = new Vector3(
+            Random.Range(-size.x / 2, size.x / 2),
+            Random.Range(-size.y / 2, size.y / 2),
+            Random.Range(-size.z / 2, size.z / 2)
+        );
+
+        return boxTransform.TransformPoint(randomLocalPoint);
     }
 }

@@ -2,39 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 
 public class InputHandler : MonoBehaviour
 {
     private IM_InputMapping _playerControls;
-    private Camera _mainCamera;
+    private Camera          _mainCamera;
+    private bool _primaryContact;
 
+    public bool Movement { get { return _playerControls.Movement.enabled; }  set { if (value) _playerControls.Movement.Enable(); else _playerControls.Movement.Disable(); } }
+    public bool Actions { get { return _playerControls.Actions.enabled; }  set { if (value) _playerControls.Actions.Enable(); else _playerControls.Actions.Disable(); } }
+    public bool Swipes { get { return _playerControls.Swipes.enabled; }  set { if (value) _playerControls.Swipes.Enable(); else _playerControls.Swipes.Disable(); } }
+    public bool Utility { get  { return _playerControls.Utility.enabled; }  set { if (value) _playerControls.Utility.Enable(); else _playerControls.Utility.Disable(); } }
 
+    
+
+    // events related to swipes
     public delegate void TouchStart(Vector2 position, float time);
     public delegate void TouchEnd(Vector2 position, float time);
+    public event TouchStart OnStartTouch;
+    public event TouchEnd OnEndTouch;
 
-
+    // events related to player actions
     public delegate void Jump();
     public delegate void Move(Vector2 movement);
     public delegate void Look(Vector2 look);
     public delegate void ThrowBall(bool auto = true);
+    public delegate void SwipeThrowUpdate(float distance);
+    public delegate void SwipeThrowStarted();
+    public delegate void SwipeThrowSuccessful(Vector2 direction, float power);
+    public delegate void SwipeThrowCanceled();
 
-    public delegate void ThrowUpdate(float distance);
-    public delegate void ThrowEnd(Vector2 direction, float power);
-    public delegate void ThrowCancel();
-
-
-    public event TouchStart OnStartTouch;
-    public event TouchEnd   OnEndTouch;
-
-
-    public event Jump       OnJump;
-    public event Move       OnMove;
-    public event Look       OnLook;
-    public event ThrowBall  OnThrowBall;
-
-    public event ThrowUpdate OnThrowUpdate;
-    public event ThrowEnd    OnThrowEnd;
-    public event ThrowCancel OnThrowCancel;
+    public event Jump                 OnJump;
+    public event Move                 OnMove;
+    public event Look                 OnLook;
+    public event ThrowBall            OnThrow;
+    public event SwipeThrowUpdate     OnSwipeThrowUpdate;
+    public event SwipeThrowStarted    OnSwipeThrowStarted;
+    public event SwipeThrowSuccessful OnSwipeThrowSuccessful;
+    public event SwipeThrowCanceled   OnSwipeThrowCanceled;
 
 
     private void Awake()
@@ -53,50 +59,47 @@ public class InputHandler : MonoBehaviour
 
     void Start()
     {
-       
-        //Cursor.visible = false;
-        //Cursor.lockState = CursorLockMode.Locked;
 
-        _playerControls.PlayerActions.PrimaryContact.started  += PrimaryContactStart;
-        _playerControls.PlayerActions.PrimaryContact.canceled += PrimaryContactEnd;
-        _playerControls.PlayerActions.Jump.started            += JumpPerformed;
-        _playerControls.PlayerActions.ThrowBall.started       += ThrowBallPerformed;
-        _playerControls.PlayerActions.ToggleMouse.started     += MouseToggle;
+        SetMouseVisibility(false);
+
+        _playerControls.Swipes.PrimaryContact.started  += PrimaryContactStart;
+        _playerControls.Swipes.PrimaryContact.canceled += PrimaryContactEnd;
+        _playerControls.Movement.Jump.started          += JumpPerformed;
+        _playerControls.Actions.Throw.started          += ThrowPerformed;
+        _playerControls.Utility.ToggleMouse.started    += MouseTogglePerformed;
     }
-
     void Update()
     {
-        OnLook?.Invoke(_playerControls.PlayerActions.Look.ReadValue<Vector2>());
-        OnMove?.Invoke(_playerControls.PlayerActions.Move.ReadValue<Vector2>());  
+        OnLook?.Invoke(_playerControls.Movement.Look.ReadValue<Vector2>());
+        OnMove?.Invoke(_playerControls.Movement.Move.ReadValue<Vector2>());  
     }
-
-
     private void PrimaryContactStart(InputAction.CallbackContext context)
     {
+        _primaryContact = true;
+
         OnStartTouch?.Invoke(
-            //ScreenToWorld(_mainCamera, _playerControls.PlayerActions.PrimaryPosition.ReadValue<Vector2>()),
-            _playerControls.PlayerActions.PrimaryPosition.ReadValue<Vector2>(),
+            _playerControls.Swipes.PrimaryPosition.ReadValue<Vector2>(),
             (float)context.startTime
         );
     }
-
     private void PrimaryContactEnd(InputAction.CallbackContext context)
     {
-        OnEndTouch?.Invoke(
-            //ScreenToWorld(_mainCamera, _playerControls.PlayerActions.PrimaryPosition.ReadValue<Vector2>()),
-            _playerControls.PlayerActions.PrimaryPosition.ReadValue<Vector2>(),
+        if (_primaryContact) OnEndTouch?.Invoke(
+            _playerControls.Swipes.PrimaryPosition.ReadValue<Vector2>(),
             (float)context.time
         );
+
+        _primaryContact = false;
     }
 
     public Vector3 Primary3DPosition()
     {
-        return ScreenToWorld(_mainCamera, _playerControls.PlayerActions.PrimaryPosition.ReadValue<Vector2>());
+        return ScreenToWorld(_mainCamera, _playerControls.Swipes.PrimaryPosition.ReadValue<Vector2>());
     }
 
     public Vector2 Primary2DPosition()
     {
-        return _playerControls.PlayerActions.PrimaryPosition.ReadValue<Vector2>();
+        return _playerControls.Swipes.PrimaryPosition.ReadValue<Vector2>();
     }
 
     public static Vector3 ScreenToWorld(Camera camera, Vector3 position)
@@ -105,53 +108,67 @@ public class InputHandler : MonoBehaviour
         return camera.ScreenToWorldPoint(position);
     }
 
-    private void MouseToggle(InputAction.CallbackContext context)
+    private void MouseTogglePerformed(InputAction.CallbackContext context)
     {
-        if (_playerControls.PlayerActions.Look.enabled) 
+        SetMouseVisibility(!Cursor.visible);
+    }
+
+    public void SetMouseVisibility(bool active)
+    {
+        if (active)
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            _playerControls.PlayerActions.Look.Disable();
-            _playerControls.PlayerActions.ThrowBall.Disable();
-            _playerControls.PlayerActions.PrimaryContact.Enable();
+            Swipes = true;
+            Actions = false;
+            Movement = false;
         }
         else
-        { 
+        {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
-            _playerControls.PlayerActions.Look.Enable();
-            _playerControls.PlayerActions.ThrowBall.Enable();
-            _playerControls.PlayerActions.PrimaryContact.Disable();
-
+            Swipes = false;
+            Actions = true;
+            Movement = true;
         }
     }
+
+
+    
 
     private void JumpPerformed(InputAction.CallbackContext context)
     {
         OnJump?.Invoke();
     }
 
-    private void ThrowBallPerformed(InputAction.CallbackContext context)
+    private void ThrowPerformed(InputAction.CallbackContext context)
     {
-        OnThrowBall?.Invoke();
+        OnThrow?.Invoke();
     }
 
-
-
-    [SerializeField]
-    private float throwDistanceMax = 500f;
 
     public void SwipeUpdate(float distance)
     {
-        //ScaleDistance(distance, swipeDistanceMultiplier, swipeDistanceMax)
-        OnThrowUpdate?.Invoke(Mathf.Clamp01(distance / throwDistanceMax));
+        OnSwipeThrowUpdate?.Invoke(distance);
     }
-    public void SwipeEnd(Vector2 direction, float distance)
+    public void SwipeStart()
     {
-        OnThrowEnd?.Invoke(direction.normalized, Mathf.Clamp01(distance / throwDistanceMax));
+        OnSwipeThrowStarted?.Invoke();
     }
-    public void SwipeCancel()
+    public void SwipeSuccessful(Vector2 direction, float distance)
     {
-        OnThrowCancel?.Invoke();
+        OnSwipeThrowSuccessful?.Invoke(direction.normalized, distance);
     }
+    public void SwipeCanceled()
+    {
+        OnSwipeThrowCanceled?.Invoke();
+    }
+
+
+
+
+
+
+
+
 }

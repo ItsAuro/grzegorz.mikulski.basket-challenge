@@ -87,9 +87,9 @@ public class GameplayUI: MonoBehaviour
         {
             SetPowerValue(0);
 
-            _inputHandler.OnThrowUpdate += SetPowerValue;
-            _inputHandler.OnThrowEnd    += (_,_) => ResetPowerValue();
-            _inputHandler.OnThrowCancel += ResetPowerValue;
+            _inputHandler.OnSwipeThrowUpdate     += SetPowerValue;
+            _inputHandler.OnSwipeThrowSuccessful += (_,_) => ResetPowerValue();
+            _inputHandler.OnSwipeThrowCanceled   += ResetPowerValue;
         }
 
 

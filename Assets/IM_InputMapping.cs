@@ -89,7 +89,7 @@ public partial class @IM_InputMapping: IInputActionCollection2, IDisposable
     ""name"": ""IM_InputMapping"",
     ""maps"": [
         {
-            ""name"": ""PlayerActions"",
+            ""name"": ""Movement"",
             ""id"": ""4e009b3c-e487-4f26-97b3-f3afc113849c"",
             ""actions"": [
                 {
@@ -114,42 +114,6 @@ public partial class @IM_InputMapping: IInputActionCollection2, IDisposable
                     ""name"": ""Look"",
                     ""type"": ""Value"",
                     ""id"": ""a8a8ae67-79e1-42db-8cc5-f7a0c418ce39"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""ToggleMouse"",
-                    ""type"": ""Button"",
-                    ""id"": ""6512534c-b7e6-49dc-8a35-d1506de83769"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""ThrowBall"",
-                    ""type"": ""Button"",
-                    ""id"": ""ff89cbc2-432f-45dc-a05c-56fe88f7f34d"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""PrimaryContact"",
-                    ""type"": ""Button"",
-                    ""id"": ""5ac3c2f5-d199-441f-aaf3-93a3f74ba4c3"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""PrimaryPosition"",
-                    ""type"": ""Value"",
-                    ""id"": ""d0c63e7a-68d9-4fa2-aedb-9f23be0091a6"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -233,32 +197,36 @@ public partial class @IM_InputMapping: IInputActionCollection2, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
+                }
+            ]
+        },
+        {
+            ""name"": ""Swipes"",
+            ""id"": ""382d632d-2a21-4aa6-8095-f976bf88a834"",
+            ""actions"": [
                 {
-                    ""name"": """",
-                    ""id"": ""de21f5a7-7182-46b5-b89a-5737d573df0c"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
+                    ""name"": ""PrimaryContact"",
+                    ""type"": ""Button"",
+                    ""id"": ""0e96aa79-433e-4f28-9984-bacdc5bd8082"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ToggleMouse"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""360c1bb4-c76f-4385-886e-0cdd82556659"",
-                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ThrowBall"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""PrimaryPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""d07c2976-0ba2-456e-a920-02e1f0f507be"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
                     ""name"": """",
-                    ""id"": ""e474d8cd-4f64-4302-916d-9f64e091c413"",
+                    ""id"": ""2e8e0a97-da9b-4194-b4f7-6e819426f790"",
                     ""path"": ""<Touchscreen>/Press"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
@@ -269,7 +237,7 @@ public partial class @IM_InputMapping: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""57038b32-366a-48b9-9480-4bec585b7b71"",
+                    ""id"": ""267f4626-067c-4a9a-9e62-855d5edce263"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -280,7 +248,7 @@ public partial class @IM_InputMapping: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""68cd806e-d26b-4be7-a903-56fdc1a4f140"",
+                    ""id"": ""f642232c-f910-4a95-b73c-ce37325c5db1"",
                     ""path"": ""<Touchscreen>/position"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -291,7 +259,7 @@ public partial class @IM_InputMapping: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""5e46b3e5-4356-4dcd-8d9e-1075f3212051"",
+                    ""id"": ""f23293be-be90-42ae-ab3e-d1b94d7ca322"",
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -301,24 +269,89 @@ public partial class @IM_InputMapping: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Utility"",
+            ""id"": ""27580c0a-88ef-4537-b821-71669f3279f7"",
+            ""actions"": [
+                {
+                    ""name"": ""ToggleMouse"",
+                    ""type"": ""Button"",
+                    ""id"": ""19609899-6888-43a7-ba6a-9b17c94aa3a2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""b10dc13f-0c79-486e-bb94-20d1a41c7bb8"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Actions"",
+            ""id"": ""8dc10d49-e591-4b81-ab75-3612f0998afd"",
+            ""actions"": [
+                {
+                    ""name"": ""Throw"",
+                    ""type"": ""Button"",
+                    ""id"": ""730cebcd-c3fd-4fdb-b7aa-cd6780aba022"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e38e5712-7be4-4e54-91cd-026efb65fbe1"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Throw"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
 }");
-        // PlayerActions
-        m_PlayerActions = asset.FindActionMap("PlayerActions", throwIfNotFound: true);
-        m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
-        m_PlayerActions_Move = m_PlayerActions.FindAction("Move", throwIfNotFound: true);
-        m_PlayerActions_Look = m_PlayerActions.FindAction("Look", throwIfNotFound: true);
-        m_PlayerActions_ToggleMouse = m_PlayerActions.FindAction("ToggleMouse", throwIfNotFound: true);
-        m_PlayerActions_ThrowBall = m_PlayerActions.FindAction("ThrowBall", throwIfNotFound: true);
-        m_PlayerActions_PrimaryContact = m_PlayerActions.FindAction("PrimaryContact", throwIfNotFound: true);
-        m_PlayerActions_PrimaryPosition = m_PlayerActions.FindAction("PrimaryPosition", throwIfNotFound: true);
+        // Movement
+        m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
+        m_Movement_Jump = m_Movement.FindAction("Jump", throwIfNotFound: true);
+        m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
+        m_Movement_Look = m_Movement.FindAction("Look", throwIfNotFound: true);
+        // Swipes
+        m_Swipes = asset.FindActionMap("Swipes", throwIfNotFound: true);
+        m_Swipes_PrimaryContact = m_Swipes.FindAction("PrimaryContact", throwIfNotFound: true);
+        m_Swipes_PrimaryPosition = m_Swipes.FindAction("PrimaryPosition", throwIfNotFound: true);
+        // Utility
+        m_Utility = asset.FindActionMap("Utility", throwIfNotFound: true);
+        m_Utility_ToggleMouse = m_Utility.FindAction("ToggleMouse", throwIfNotFound: true);
+        // Actions
+        m_Actions = asset.FindActionMap("Actions", throwIfNotFound: true);
+        m_Actions_Throw = m_Actions.FindAction("Throw", throwIfNotFound: true);
     }
 
     ~@IM_InputMapping()
     {
-        UnityEngine.Debug.Assert(!m_PlayerActions.enabled, "This will cause a leak and performance issues, IM_InputMapping.PlayerActions.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Movement.enabled, "This will cause a leak and performance issues, IM_InputMapping.Movement.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Swipes.enabled, "This will cause a leak and performance issues, IM_InputMapping.Swipes.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Utility.enabled, "This will cause a leak and performance issues, IM_InputMapping.Utility.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Actions.enabled, "This will cause a leak and performance issues, IM_InputMapping.Actions.Disable() has not been called.");
     }
 
     /// <summary>
@@ -391,59 +424,39 @@ public partial class @IM_InputMapping: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // PlayerActions
-    private readonly InputActionMap m_PlayerActions;
-    private List<IPlayerActionsActions> m_PlayerActionsActionsCallbackInterfaces = new List<IPlayerActionsActions>();
-    private readonly InputAction m_PlayerActions_Jump;
-    private readonly InputAction m_PlayerActions_Move;
-    private readonly InputAction m_PlayerActions_Look;
-    private readonly InputAction m_PlayerActions_ToggleMouse;
-    private readonly InputAction m_PlayerActions_ThrowBall;
-    private readonly InputAction m_PlayerActions_PrimaryContact;
-    private readonly InputAction m_PlayerActions_PrimaryPosition;
+    // Movement
+    private readonly InputActionMap m_Movement;
+    private List<IMovementActions> m_MovementActionsCallbackInterfaces = new List<IMovementActions>();
+    private readonly InputAction m_Movement_Jump;
+    private readonly InputAction m_Movement_Move;
+    private readonly InputAction m_Movement_Look;
     /// <summary>
-    /// Provides access to input actions defined in input action map "PlayerActions".
+    /// Provides access to input actions defined in input action map "Movement".
     /// </summary>
-    public struct PlayerActionsActions
+    public struct MovementActions
     {
         private @IM_InputMapping m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public PlayerActionsActions(@IM_InputMapping wrapper) { m_Wrapper = wrapper; }
+        public MovementActions(@IM_InputMapping wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "PlayerActions/Jump".
+        /// Provides access to the underlying input action "Movement/Jump".
         /// </summary>
-        public InputAction @Jump => m_Wrapper.m_PlayerActions_Jump;
+        public InputAction @Jump => m_Wrapper.m_Movement_Jump;
         /// <summary>
-        /// Provides access to the underlying input action "PlayerActions/Move".
+        /// Provides access to the underlying input action "Movement/Move".
         /// </summary>
-        public InputAction @Move => m_Wrapper.m_PlayerActions_Move;
+        public InputAction @Move => m_Wrapper.m_Movement_Move;
         /// <summary>
-        /// Provides access to the underlying input action "PlayerActions/Look".
+        /// Provides access to the underlying input action "Movement/Look".
         /// </summary>
-        public InputAction @Look => m_Wrapper.m_PlayerActions_Look;
-        /// <summary>
-        /// Provides access to the underlying input action "PlayerActions/ToggleMouse".
-        /// </summary>
-        public InputAction @ToggleMouse => m_Wrapper.m_PlayerActions_ToggleMouse;
-        /// <summary>
-        /// Provides access to the underlying input action "PlayerActions/ThrowBall".
-        /// </summary>
-        public InputAction @ThrowBall => m_Wrapper.m_PlayerActions_ThrowBall;
-        /// <summary>
-        /// Provides access to the underlying input action "PlayerActions/PrimaryContact".
-        /// </summary>
-        public InputAction @PrimaryContact => m_Wrapper.m_PlayerActions_PrimaryContact;
-        /// <summary>
-        /// Provides access to the underlying input action "PlayerActions/PrimaryPosition".
-        /// </summary>
-        public InputAction @PrimaryPosition => m_Wrapper.m_PlayerActions_PrimaryPosition;
+        public InputAction @Look => m_Wrapper.m_Movement_Look;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
+        public InputActionMap Get() { return m_Wrapper.m_Movement; }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
         public void Enable() { Get().Enable(); }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
@@ -451,9 +464,9 @@ public partial class @IM_InputMapping: IInputActionCollection2, IDisposable
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
         public bool enabled => Get().enabled;
         /// <summary>
-        /// Implicitly converts an <see ref="PlayerActionsActions" /> to an <see ref="InputActionMap" /> instance.
+        /// Implicitly converts an <see ref="MovementActions" /> to an <see ref="InputActionMap" /> instance.
         /// </summary>
-        public static implicit operator InputActionMap(PlayerActionsActions set) { return set.Get(); }
+        public static implicit operator InputActionMap(MovementActions set) { return set.Get(); }
         /// <summary>
         /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
         /// </summary>
@@ -461,11 +474,11 @@ public partial class @IM_InputMapping: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
         /// </remarks>
-        /// <seealso cref="PlayerActionsActions" />
-        public void AddCallbacks(IPlayerActionsActions instance)
+        /// <seealso cref="MovementActions" />
+        public void AddCallbacks(IMovementActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerActionsActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerActionsActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_MovementActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MovementActionsCallbackInterfaces.Add(instance);
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
@@ -475,12 +488,110 @@ public partial class @IM_InputMapping: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
-            @ToggleMouse.started += instance.OnToggleMouse;
-            @ToggleMouse.performed += instance.OnToggleMouse;
-            @ToggleMouse.canceled += instance.OnToggleMouse;
-            @ThrowBall.started += instance.OnThrowBall;
-            @ThrowBall.performed += instance.OnThrowBall;
-            @ThrowBall.canceled += instance.OnThrowBall;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="MovementActions" />
+        private void UnregisterCallbacks(IMovementActions instance)
+        {
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="MovementActions.UnregisterCallbacks(IMovementActions)" />.
+        /// </summary>
+        /// <seealso cref="MovementActions.UnregisterCallbacks(IMovementActions)" />
+        public void RemoveCallbacks(IMovementActions instance)
+        {
+            if (m_Wrapper.m_MovementActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="MovementActions.AddCallbacks(IMovementActions)" />
+        /// <seealso cref="MovementActions.RemoveCallbacks(IMovementActions)" />
+        /// <seealso cref="MovementActions.UnregisterCallbacks(IMovementActions)" />
+        public void SetCallbacks(IMovementActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MovementActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MovementActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="MovementActions" /> instance referencing this action map.
+    /// </summary>
+    public MovementActions @Movement => new MovementActions(this);
+
+    // Swipes
+    private readonly InputActionMap m_Swipes;
+    private List<ISwipesActions> m_SwipesActionsCallbackInterfaces = new List<ISwipesActions>();
+    private readonly InputAction m_Swipes_PrimaryContact;
+    private readonly InputAction m_Swipes_PrimaryPosition;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Swipes".
+    /// </summary>
+    public struct SwipesActions
+    {
+        private @IM_InputMapping m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public SwipesActions(@IM_InputMapping wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Swipes/PrimaryContact".
+        /// </summary>
+        public InputAction @PrimaryContact => m_Wrapper.m_Swipes_PrimaryContact;
+        /// <summary>
+        /// Provides access to the underlying input action "Swipes/PrimaryPosition".
+        /// </summary>
+        public InputAction @PrimaryPosition => m_Wrapper.m_Swipes_PrimaryPosition;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Swipes; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="SwipesActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(SwipesActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="SwipesActions" />
+        public void AddCallbacks(ISwipesActions instance)
+        {
+            if (instance == null || m_Wrapper.m_SwipesActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SwipesActionsCallbackInterfaces.Add(instance);
             @PrimaryContact.started += instance.OnPrimaryContact;
             @PrimaryContact.performed += instance.OnPrimaryContact;
             @PrimaryContact.canceled += instance.OnPrimaryContact;
@@ -495,24 +606,9 @@ public partial class @IM_InputMapping: IInputActionCollection2, IDisposable
         /// <remarks>
         /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
         /// </remarks>
-        /// <seealso cref="PlayerActionsActions" />
-        private void UnregisterCallbacks(IPlayerActionsActions instance)
+        /// <seealso cref="SwipesActions" />
+        private void UnregisterCallbacks(ISwipesActions instance)
         {
-            @Jump.started -= instance.OnJump;
-            @Jump.performed -= instance.OnJump;
-            @Jump.canceled -= instance.OnJump;
-            @Move.started -= instance.OnMove;
-            @Move.performed -= instance.OnMove;
-            @Move.canceled -= instance.OnMove;
-            @Look.started -= instance.OnLook;
-            @Look.performed -= instance.OnLook;
-            @Look.canceled -= instance.OnLook;
-            @ToggleMouse.started -= instance.OnToggleMouse;
-            @ToggleMouse.performed -= instance.OnToggleMouse;
-            @ToggleMouse.canceled -= instance.OnToggleMouse;
-            @ThrowBall.started -= instance.OnThrowBall;
-            @ThrowBall.performed -= instance.OnThrowBall;
-            @ThrowBall.canceled -= instance.OnThrowBall;
             @PrimaryContact.started -= instance.OnPrimaryContact;
             @PrimaryContact.performed -= instance.OnPrimaryContact;
             @PrimaryContact.canceled -= instance.OnPrimaryContact;
@@ -522,12 +618,12 @@ public partial class @IM_InputMapping: IInputActionCollection2, IDisposable
         }
 
         /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="PlayerActionsActions.UnregisterCallbacks(IPlayerActionsActions)" />.
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="SwipesActions.UnregisterCallbacks(ISwipesActions)" />.
         /// </summary>
-        /// <seealso cref="PlayerActionsActions.UnregisterCallbacks(IPlayerActionsActions)" />
-        public void RemoveCallbacks(IPlayerActionsActions instance)
+        /// <seealso cref="SwipesActions.UnregisterCallbacks(ISwipesActions)" />
+        public void RemoveCallbacks(ISwipesActions instance)
         {
-            if (m_Wrapper.m_PlayerActionsActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_SwipesActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
@@ -537,27 +633,219 @@ public partial class @IM_InputMapping: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
         /// </remarks>
-        /// <seealso cref="PlayerActionsActions.AddCallbacks(IPlayerActionsActions)" />
-        /// <seealso cref="PlayerActionsActions.RemoveCallbacks(IPlayerActionsActions)" />
-        /// <seealso cref="PlayerActionsActions.UnregisterCallbacks(IPlayerActionsActions)" />
-        public void SetCallbacks(IPlayerActionsActions instance)
+        /// <seealso cref="SwipesActions.AddCallbacks(ISwipesActions)" />
+        /// <seealso cref="SwipesActions.RemoveCallbacks(ISwipesActions)" />
+        /// <seealso cref="SwipesActions.UnregisterCallbacks(ISwipesActions)" />
+        public void SetCallbacks(ISwipesActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerActionsActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_SwipesActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerActionsActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_SwipesActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
     /// <summary>
-    /// Provides a new <see cref="PlayerActionsActions" /> instance referencing this action map.
+    /// Provides a new <see cref="SwipesActions" /> instance referencing this action map.
     /// </summary>
-    public PlayerActionsActions @PlayerActions => new PlayerActionsActions(this);
+    public SwipesActions @Swipes => new SwipesActions(this);
+
+    // Utility
+    private readonly InputActionMap m_Utility;
+    private List<IUtilityActions> m_UtilityActionsCallbackInterfaces = new List<IUtilityActions>();
+    private readonly InputAction m_Utility_ToggleMouse;
     /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "PlayerActions" which allows adding and removing callbacks.
+    /// Provides access to input actions defined in input action map "Utility".
     /// </summary>
-    /// <seealso cref="PlayerActionsActions.AddCallbacks(IPlayerActionsActions)" />
-    /// <seealso cref="PlayerActionsActions.RemoveCallbacks(IPlayerActionsActions)" />
-    public interface IPlayerActionsActions
+    public struct UtilityActions
+    {
+        private @IM_InputMapping m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public UtilityActions(@IM_InputMapping wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Utility/ToggleMouse".
+        /// </summary>
+        public InputAction @ToggleMouse => m_Wrapper.m_Utility_ToggleMouse;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Utility; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="UtilityActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(UtilityActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="UtilityActions" />
+        public void AddCallbacks(IUtilityActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UtilityActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UtilityActionsCallbackInterfaces.Add(instance);
+            @ToggleMouse.started += instance.OnToggleMouse;
+            @ToggleMouse.performed += instance.OnToggleMouse;
+            @ToggleMouse.canceled += instance.OnToggleMouse;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="UtilityActions" />
+        private void UnregisterCallbacks(IUtilityActions instance)
+        {
+            @ToggleMouse.started -= instance.OnToggleMouse;
+            @ToggleMouse.performed -= instance.OnToggleMouse;
+            @ToggleMouse.canceled -= instance.OnToggleMouse;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="UtilityActions.UnregisterCallbacks(IUtilityActions)" />.
+        /// </summary>
+        /// <seealso cref="UtilityActions.UnregisterCallbacks(IUtilityActions)" />
+        public void RemoveCallbacks(IUtilityActions instance)
+        {
+            if (m_Wrapper.m_UtilityActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="UtilityActions.AddCallbacks(IUtilityActions)" />
+        /// <seealso cref="UtilityActions.RemoveCallbacks(IUtilityActions)" />
+        /// <seealso cref="UtilityActions.UnregisterCallbacks(IUtilityActions)" />
+        public void SetCallbacks(IUtilityActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UtilityActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UtilityActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="UtilityActions" /> instance referencing this action map.
+    /// </summary>
+    public UtilityActions @Utility => new UtilityActions(this);
+
+    // Actions
+    private readonly InputActionMap m_Actions;
+    private List<IActionsActions> m_ActionsActionsCallbackInterfaces = new List<IActionsActions>();
+    private readonly InputAction m_Actions_Throw;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Actions".
+    /// </summary>
+    public struct ActionsActions
+    {
+        private @IM_InputMapping m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public ActionsActions(@IM_InputMapping wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Actions/Throw".
+        /// </summary>
+        public InputAction @Throw => m_Wrapper.m_Actions_Throw;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Actions; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="ActionsActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(ActionsActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="ActionsActions" />
+        public void AddCallbacks(IActionsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_ActionsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_ActionsActionsCallbackInterfaces.Add(instance);
+            @Throw.started += instance.OnThrow;
+            @Throw.performed += instance.OnThrow;
+            @Throw.canceled += instance.OnThrow;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="ActionsActions" />
+        private void UnregisterCallbacks(IActionsActions instance)
+        {
+            @Throw.started -= instance.OnThrow;
+            @Throw.performed -= instance.OnThrow;
+            @Throw.canceled -= instance.OnThrow;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="ActionsActions.UnregisterCallbacks(IActionsActions)" />.
+        /// </summary>
+        /// <seealso cref="ActionsActions.UnregisterCallbacks(IActionsActions)" />
+        public void RemoveCallbacks(IActionsActions instance)
+        {
+            if (m_Wrapper.m_ActionsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="ActionsActions.AddCallbacks(IActionsActions)" />
+        /// <seealso cref="ActionsActions.RemoveCallbacks(IActionsActions)" />
+        /// <seealso cref="ActionsActions.UnregisterCallbacks(IActionsActions)" />
+        public void SetCallbacks(IActionsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_ActionsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_ActionsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="ActionsActions" /> instance referencing this action map.
+    /// </summary>
+    public ActionsActions @Actions => new ActionsActions(this);
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Movement" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="MovementActions.AddCallbacks(IMovementActions)" />
+    /// <seealso cref="MovementActions.RemoveCallbacks(IMovementActions)" />
+    public interface IMovementActions
     {
         /// <summary>
         /// Method invoked when associated input action "Jump" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
@@ -580,20 +868,14 @@ public partial class @IM_InputMapping: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLook(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "ToggleMouse" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnToggleMouse(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "ThrowBall" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnThrowBall(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Swipes" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="SwipesActions.AddCallbacks(ISwipesActions)" />
+    /// <seealso cref="SwipesActions.RemoveCallbacks(ISwipesActions)" />
+    public interface ISwipesActions
+    {
         /// <summary>
         /// Method invoked when associated input action "PrimaryContact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -608,5 +890,35 @@ public partial class @IM_InputMapping: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPrimaryPosition(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Utility" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="UtilityActions.AddCallbacks(IUtilityActions)" />
+    /// <seealso cref="UtilityActions.RemoveCallbacks(IUtilityActions)" />
+    public interface IUtilityActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "ToggleMouse" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnToggleMouse(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Actions" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="ActionsActions.AddCallbacks(IActionsActions)" />
+    /// <seealso cref="ActionsActions.RemoveCallbacks(IActionsActions)" />
+    public interface IActionsActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Throw" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnThrow(InputAction.CallbackContext context);
     }
 }
