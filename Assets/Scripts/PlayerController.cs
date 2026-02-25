@@ -102,6 +102,8 @@ public class PlayerController : MonoBehaviour
         ScoreController.Instance.BasketballScore(_gameState, basketball.BallPoints);
         basketball.OnBasket -= OnThrownBallScored;
         basketball.OnMiss -= OnThrownBallMiss;
+
+        if (_playerArea != null) Teleport(_playerArea.GetPoint(), _playerArea.FocalPoint.position);
     }
     private void OnThrownBallMiss(Basketball basketball)
     {
@@ -113,7 +115,6 @@ public class PlayerController : MonoBehaviour
     {
         basketball.OnDespawn -= OnThrownBallDespawn;
 
-        if (_playerArea != null) Teleport(_playerArea.GetPoint(), _playerArea.FocalPoint.position);
 
         _inputHandler.Movement = false;
         _inputHandler.Actions = false;

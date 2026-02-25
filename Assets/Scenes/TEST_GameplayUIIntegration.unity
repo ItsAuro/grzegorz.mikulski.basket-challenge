@@ -1161,10 +1161,6 @@ PrefabInstance:
       propertyPath: _playerArea
       value: 
       objectReference: {fileID: 1397597128}
-    - target: {fileID: 6679672018433940504, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
-      propertyPath: _throwFactor
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 7857730621977010546, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
       propertyPath: Target
       value: 
