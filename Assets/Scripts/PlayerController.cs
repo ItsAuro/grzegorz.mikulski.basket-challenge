@@ -78,6 +78,7 @@ public class PlayerController : MonoBehaviour
     private void DisableControls()
     {
         if (!_disableInputOnTimeEnd) return;
+        _inputHandler.SetMouseVisibility(true);
         _inputHandler.enabled = false;
     }
 

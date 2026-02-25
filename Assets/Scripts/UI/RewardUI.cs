@@ -9,7 +9,7 @@ public class RewardUI : MonoBehaviour
     [SerializeField] GameState _gameState;
     [SerializeField] bool _enableOnTimeEnd = false;
 
-    const string _s_finalScore = "You scored {0}";
+    const string _s_finalScore = "{0}";
 
     void SetFinalScore(int score)
     {

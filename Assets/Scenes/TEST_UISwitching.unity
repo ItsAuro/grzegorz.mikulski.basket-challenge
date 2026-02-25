@@ -457,13 +457,17 @@ PrefabInstance:
       propertyPath: _gameState
       value: 
       objectReference: {fileID: 1558797928}
+    - target: {fileID: 1872974702890597865, guid: 0778d173c37553a4dac07a0eb4422222, type: 3}
+      propertyPath: _enableOnTimeEnd
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6037549725108784388, guid: 0778d173c37553a4dac07a0eb4422222, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7936194212204004283, guid: 0778d173c37553a4dac07a0eb4422222, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -653,6 +657,10 @@ PrefabInstance:
       propertyPath: _inputHandler
       value: 
       objectReference: {fileID: 1394953205}
+    - target: {fileID: 5944459983109559036, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: _disableOnTimeEnd
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6670682679727797436, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
       propertyPath: m_Pivot.x
       value: 0
