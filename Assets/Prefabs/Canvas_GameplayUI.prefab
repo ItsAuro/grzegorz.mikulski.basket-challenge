@@ -33,13 +33,13 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 513869378481095056}
   - {fileID: 2752377958050410798}
   - {fileID: 2686132049910631336}
   - {fileID: 3558985833908444674}
   - {fileID: 5931570810456821186}
   - {fileID: 6504866135453349537}
   - {fileID: 5485230141608884949}
+  - {fileID: 513869378481095056}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -131,6 +131,8 @@ MonoBehaviour:
   _Slider_PowerMeter: {fileID: 286540373913498380}
   _Slider_FireBallMeter: {fileID: 6203269262680553246}
   _inputHandler: {fileID: 0}
+  _gameState: {fileID: 0}
+  _disableOnTimeEnd: 0
 --- !u!114 &3893996797853843871
 MonoBehaviour:
   m_ObjectHideFlags: 0

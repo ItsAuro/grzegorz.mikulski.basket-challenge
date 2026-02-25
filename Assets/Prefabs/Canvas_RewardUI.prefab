@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 5234669705898223028}
   - component: {fileID: 7936194212204004283}
   - component: {fileID: 3198756689462762216}
+  - component: {fileID: 1872974702890597865}
   m_Layer: 5
   m_Name: Canvas_RewardUI
   m_TagString: Untagged
@@ -248,6 +249,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97b9e0b27133a047916c33a50859334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1872974702890597865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871613366540204472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d1c855c11137340a0e7fa1f4372a2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _finalScore: {fileID: 3055966700755667141}
+  _gameState: {fileID: 0}
+  _enableOnTimeEnd: 0
 --- !u!1 &4110466909126812649
 GameObject:
   m_ObjectHideFlags: 0

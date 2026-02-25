@@ -18,6 +18,8 @@ public class GameplayUI: MonoBehaviour
     [SerializeField] InputHandler _inputHandler;
 
     [SerializeField] GameState _gameState;
+    [SerializeField] bool _disableOnTimeEnd = false;
+
 
     const string _s_timeLeft           = "Time\n{0}";
     const string _s_fireballMeter      = "FireballMeter {0}/{1}";
@@ -25,6 +27,13 @@ public class GameplayUI: MonoBehaviour
     const string _s_score              = "Score {0:D8}";
     const string _s_powerMeter         = "Power {0}/{1}";
     const string _s_fireballMultiplier = "x{0}";
+
+
+    void HideUI()
+    {
+        if (!_disableOnTimeEnd) return;
+        GetComponent<Canvas>().enabled = false;
+    }
 
     //time editor
     void SetTimeLeft(int time)
@@ -106,6 +115,9 @@ public class GameplayUI: MonoBehaviour
 
             //time updates
             _gameState.OnRemainingTimeChange += SetTimeLeft;
+
+            // game over
+            _gameState.OnTimeEnd += HideUI;
         }
  
     }

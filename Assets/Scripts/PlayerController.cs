@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] CharacterController _characterController;
     [SerializeField] InputHandler        _inputHandler;
     [SerializeField] GameState           _gameState;
+    [SerializeField] bool _disableInputOnTimeEnd = false;
 
     [Header("Modules"), Space(10)]
     [SerializeField] BasketballFactory _basketballFactory;
@@ -73,6 +74,11 @@ public class PlayerController : MonoBehaviour
             transform.rotation = target_rotation;
             if (_head != null) _head.transform.LookAt(look_at);
         }
+    }
+    private void DisableControls()
+    {
+        if (!_disableInputOnTimeEnd) return;
+        _inputHandler.enabled = false;
     }
 
     // actions
@@ -189,6 +195,8 @@ public class PlayerController : MonoBehaviour
         _inputHandler.OnThrow                += ThrowBallAuto;
         _inputHandler.OnSwipeThrowSuccessful += SwipeThrowBall;
 
+        _gameState.OnTimeEnd += DisableControls;
+
     }
     private void OnDisable()
     {
@@ -197,6 +205,15 @@ public class PlayerController : MonoBehaviour
         _inputHandler.OnMove                 -= Move;
         _inputHandler.OnThrow                -= ThrowBallAuto;
         _inputHandler.OnSwipeThrowSuccessful -= SwipeThrowBall;
+
+        _gameState.OnTimeEnd -= DisableControls;
+
     }
 
+    private void Start()
+    {
+        _gameState.StartTimer();
+    }
+
+   
 }
