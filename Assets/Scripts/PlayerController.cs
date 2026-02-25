@@ -135,6 +135,7 @@ public class PlayerController : MonoBehaviour
 
 
         _thrownBall = _basketballFactory.CreateBasketball(_head.transform.position, _head.transform.rotation);
+        if(_gameState.FireballStatus) _thrownBall.ActivateFireTrail();
 
         _ballTracker?.TrackBasketball(_thrownBall);
 
