@@ -31,8 +31,15 @@ public class GameplayUI: MonoBehaviour
 
     void HideUI()
     {
-        if (!_disableOnTimeEnd) return;
         GetComponent<Canvas>().enabled = false;
+    }
+    void DisableUpdates()
+    {
+        _gameState.OnFireballValueChange -= SetFireballValue;
+        _gameState.OnFireballEnable -= SetFireballEnable;
+        _gameState.OnFireballDisable -= SetFireballDisable;
+        _gameState.OnScoreChange -= SetScore;
+        _gameState.OnRemainingTimeChange -= SetTimeLeft;
     }
 
     //time editor
@@ -117,7 +124,9 @@ public class GameplayUI: MonoBehaviour
             _gameState.OnRemainingTimeChange += SetTimeLeft;
 
             // game over
-            _gameState.OnTimeEnd += HideUI;
+            _gameState.OnTimeEnd += DisableUpdates;
+            if (_disableOnTimeEnd)
+                _gameState.OnTimeEnd += HideUI;
         }
  
     }

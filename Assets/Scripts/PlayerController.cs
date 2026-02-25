@@ -213,6 +213,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        if (_playerArea != null) Teleport(_playerArea.GetPoint(), _playerArea.FocalPoint.position);
+        
         _gameState.StartTimer();
     }
 

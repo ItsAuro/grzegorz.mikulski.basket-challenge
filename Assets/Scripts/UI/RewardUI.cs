@@ -17,21 +17,25 @@ public class RewardUI : MonoBehaviour
     }
     void ShowUI()
     {
-        if (!_enableOnTimeEnd) return;
         GetComponent<Canvas>().enabled = true;
+    }
+    void DisableScoreUpdates(){
+        _gameState.OnScoreChange -= SetFinalScore;
     }
     void Start()
     {
-        if(_gameState)
-        {
-            // replace default values
-            SetFinalScore(0);
+        if (!_gameState) return;
+        
+        // replace default values
+        SetFinalScore(0);
 
-            // score updates
-            _gameState.OnScoreChange += SetFinalScore;
-            
-            // game over
+        // score updates
+        _gameState.OnScoreChange += SetFinalScore;
+        _gameState.OnTimeEnd += DisableScoreUpdates;
+
+        // game over
+        if (_enableOnTimeEnd)
             _gameState.OnTimeEnd += ShowUI;
-        }
+        
     }
 }

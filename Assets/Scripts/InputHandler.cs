@@ -50,22 +50,29 @@ public class InputHandler : MonoBehaviour
     }
     private void OnEnable()
     {
-        _playerControls.Enable();
+        //_playerControls.Enable();
     }
     private void OnDisable()
     {
-        _playerControls.Disable();
+        //_playerControls.Disable();
     }
 
     void Start()
     {
-        SetMouseVisibility(false);
+        MobilePlayMode();
+        //SetMouseVisibility(false);
 
         _playerControls.Swipes.PrimaryContact.started  += PrimaryContactStart;
         _playerControls.Swipes.PrimaryContact.canceled += PrimaryContactEnd;
         _playerControls.Movement.Jump.started          += JumpPerformed;
         _playerControls.Actions.Throw.started          += ThrowPerformed;
         _playerControls.Utility.ToggleMouse.started    += MouseTogglePerformed;
+
+        Debug.Log("swipes" + _playerControls.Swipes.enabled);
+        Debug.Log("movement" + _playerControls.Movement.enabled);
+        Debug.Log("actions" + _playerControls.Actions.enabled);
+        Debug.Log("utility" + _playerControls.Utility.enabled);
+
     }
 
     // movement
@@ -120,6 +127,15 @@ public class InputHandler : MonoBehaviour
     private void MouseTogglePerformed(InputAction.CallbackContext context)
     {
         SetMouseVisibility(!Cursor.visible);
+    }
+    private void MobilePlayMode()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Swipes = true;
+        Actions = false;
+        Movement = false;
+        Utility = false;
     }
     public void SetMouseVisibility(bool active)
     {
