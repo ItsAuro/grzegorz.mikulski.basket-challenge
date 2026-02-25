@@ -28,12 +28,12 @@ public class TEST_RandomPointBallistics : MonoBehaviour
 
     void _ThrowBall()
     {
-        Vector3 random_point = RandomPoint.RandomPointInBox(_vertex1 , _vertex2);
-        GameObject ball = _basketballFactory.CreateBasketball(random_point, Quaternion.identity);
-        _basketballFactory.DelayDestroy(ball, 6f);
+        Vector3 random_point = RandomPoint.RandomPointBetweenGameObjects(_vertex1 , _vertex2);
+        Basketball ball = _basketballFactory.CreateBasketball(random_point, Quaternion.identity);
+        _basketballFactory.DelayDestroy(ball.gameObject, 6f);
 
 
-        _ballisticLauncher.LaunchGameObject(ball, _launchMode, ball.GetComponent<Basketball>().BallDiameter / 2f);
+        _ballisticLauncher.LaunchGameObject(ball.gameObject, _launchMode, ball.BallDiameter / 2f);
 
     }
 }

@@ -5,20 +5,13 @@ using UnityEngine;
 
 public class TEST_BallisticsReflect: MonoBehaviour
 {
-    [SerializeField]
-    GameObject ball;
-    [SerializeField]
-    GameObject target;
-    [SerializeField]
-    float targetAngle;
-    [SerializeField]
-    GameObject reflect;
-
-
+    [SerializeField] private GameObject ball;
+    [SerializeField] private GameObject target;
+    [SerializeField] private float targetAngle;
+    [SerializeField] private GameObject reflect;
 
     void Start()
     {
-
         BoxCollider bc = reflect.GetComponent<BoxCollider>();
 
         if(Ballistics.SolveArcTargetAngle(
@@ -38,8 +31,5 @@ public class TEST_BallisticsReflect: MonoBehaviour
         {
             Debug.LogWarning("Ballistic solver no solution");
         }
-
-
     }
-
 }

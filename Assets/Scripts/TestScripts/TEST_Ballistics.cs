@@ -5,14 +5,9 @@ using UnityEngine;
 
 public class TEST_Ballistics : MonoBehaviour
 {
-    [SerializeField]
-    GameObject gm;
-    [SerializeField]
-    GameObject target;
-    [SerializeField]
-    float targetAngle;
-
-
+    [SerializeField] private GameObject gm;
+    [SerializeField] private GameObject target;
+    [SerializeField] private float targetAngle;
 
     void Start()
     {
@@ -30,13 +25,6 @@ public class TEST_Ballistics : MonoBehaviour
         {
             Debug.LogWarning("Ballistic solver no solution");
         }
-
-
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

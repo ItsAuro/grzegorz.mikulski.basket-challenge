@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class RewardUI : MonoBehaviour
 {
-    [SerializeField]
-    TextMeshProUGUI _finalScore;
+    [SerializeField] TextMeshProUGUI _finalScore;
+    [SerializeField] GameState _gameState;
 
     const string _s_finalScore = "You scored {0}";
 
@@ -17,10 +17,9 @@ public class RewardUI : MonoBehaviour
 
     void Start()
     {
-        if(GameplayController.Instance != null)
-        {   
-            // could bind to OnGameEnd and implement a way to retrieve score
-            GameplayController.Instance.gameState.OnScoreChange += SetFinalScore;
+        if(_gameState)
+        {
+            _gameState.OnScoreChange += SetFinalScore;
         }
     }
 }

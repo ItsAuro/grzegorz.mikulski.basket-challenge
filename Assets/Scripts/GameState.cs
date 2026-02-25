@@ -1,4 +1,6 @@
-public class GameState
+using UnityEngine;
+
+public class GameState : MonoBehaviour
 {
     public int  Score          { private set; get; } = 0;
     public int  RemainingTime  { private set; get; } = GameConfig.MAX_TIME;
@@ -7,6 +9,7 @@ public class GameState
 
     public event System.Action<int>   OnScoreChange;
     public event System.Action<int>   OnRemainingTimeChange;
+    public event System.Action        OnTimeStart;
     public event System.Action        OnTimeEnd;
     public event System.Action<int>   OnFireballValueChange;
     public event System.Action        OnFireballEnable;
@@ -26,8 +29,18 @@ public class GameState
         {
             RemainingTime = 0;
             OnTimeEnd?.Invoke();
+            CancelInvoke(nameof(TimeStep));
         }
         OnRemainingTimeChange?.Invoke(RemainingTime);
+    }
+    public void StartTimer()
+    {
+        OnTimeStart?.Invoke();
+        InvokeRepeating(nameof(TimeStep), 1, 1);
+    }
+    private void TimeStep()
+    {
+        RemoveTime(1);
     }
     // fireball editors
     public void AddFireball(int increment)
@@ -37,28 +50,18 @@ public class GameState
         if (FireballValue >= GameConfig.FIREBALL_THRESHOLD)
         {
             FireballValue = GameConfig.FIREBALL_THRESHOLD;
-            Fireball(true);
+            FireballStatus = true;
+            OnFireballEnable?.Invoke();
         }
         OnFireballValueChange?.Invoke(FireballValue);
     }
     public void ResetFireball()
     {
         FireballValue = 0;
+        FireballStatus = false;
+
         OnFireballValueChange?.Invoke(FireballValue);
-        Fireball(false);
-    }
-    private void Fireball(bool enable)
-    {
-        if(enable) 
-        {
-            FireballStatus = true;
-            OnFireballEnable?.Invoke(); 
-        }
-        else 
-        { 
-            FireballStatus = false;
-            OnFireballDisable?.Invoke(); 
-        }
+        OnFireballDisable?.Invoke();
     }
     // score editors
     public void AddScore(int score)

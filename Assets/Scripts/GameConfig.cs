@@ -14,19 +14,18 @@ public static class GameConfig
     // class acts like a global datastructure for parameters
     // it must not have any dependency other than Unity itself
 
-    public static int MAX_TIME = 60;
+    public static int          MAX_TIME = 60;
     public static readonly int FIREBALL_MULTIPLIER = 2;
     public static readonly int FIREBALL_INCREMENT = 1;
     public static readonly int FIREBALL_THRESHOLD = 5;
     public static readonly int BACKBOARD_FREQUENCY = 5;
 
-
     public readonly struct RarityMetadata
     {
         public RarityMetadata(Color c, int t, int p)
         {
-            color = c;
-            threshold = t;
+            color      = c;
+            threshold  = t;
             pointBonus = p;
         }
         public readonly Color color;

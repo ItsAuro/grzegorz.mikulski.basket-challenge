@@ -9,8 +9,8 @@ public class Basketball : MonoBehaviour
     [Flags]
     public enum ShotType
     {
-        None = 0,
-        Perfect = 1 << 0,
+        None      = 0,
+        Perfect   = 1 << 0,
         Backboard = 1 << 1,
         HoopTouch = 1 << 2,
     }
@@ -20,21 +20,25 @@ public class Basketball : MonoBehaviour
         Missed,
     }
 
-    [SerializeField]
-    ParticleSystem _fireTrail;
-    public int   BallPoints   { get; private set; } = 1;
-    public float BallDiameter { get { return transform.localScale.x; } }
-    ShotType  _shotType  = ShotType.None;
-    ScoreType _scoreType = ScoreType.Missed;
+    [SerializeField] ParticleSystem _fireTrail;
+    public int       BallPoints    { get; private set; } = 1;
+    public float     BallDiameter  { get { return transform.localScale.x; } }
+    public ShotType  BallShotType  { get; private set; } = ShotType.None;
+    public ScoreType BallScoreType { get; private set; } = ScoreType.Missed;
+
+    [SerializeField] bool _autoDelete = true;
+    [SerializeField] int  _lifetime   = 5;
+
     bool _isValid    = false;
     bool _isLegal    = true;
-    bool _autoDelete = true;
-    int  _lifetime   = 5;
+    
 
-    public delegate void BasketballDestroy(Basketball ball);
-    public delegate void BasketballScore  (Basketball ball);
-    public event BasketballDestroy OnBasketballDestroy;
-    public event BasketballScore   OnBasketballScore;
+    public delegate void Despawn(Basketball ball);
+    public delegate void Basket(Basketball ball);
+    public delegate void Miss(Basketball ball);
+    public event Despawn OnDespawn;
+    public event Basket  OnBasket;
+    public event Miss    OnMiss;
 
     private void _AutoDelete()
     {
@@ -42,23 +46,24 @@ public class Basketball : MonoBehaviour
         if( _lifetime <= 0)
         {
             CancelInvoke(nameof(_AutoDelete));
-            if (_scoreType == ScoreType.Missed) 
-            { 
-                GameplayController.Instance?.gameState.ResetFireball();
-            }
+
+            if (BallScoreType == ScoreType.Missed)
+                OnMiss?.Invoke(this);
+
             Destroy(gameObject);
         }
     }
-
+    public void ActivateFireTrail()
+    {   
+        _fireTrail?.Play();
+    }
     private void OnDestroy()
     {
-        OnBasketballDestroy?.Invoke(this);
+        _fireTrail?.Stop();
+        OnDespawn?.Invoke(this);
     }
     private void Start()
     {   
-        // fire trail dependent on fireball state
-        if (GameplayController.Instance?.gameState.FireballStatus == true) _fireTrail?.Play();
-
         if( _autoDelete) InvokeRepeating(nameof(_AutoDelete), 0, 1);
     }
     private void OnTriggerEnter(Collider trigger)
@@ -77,19 +82,10 @@ public class Basketball : MonoBehaviour
 
             if (_isLegal && _isValid)
             {
-                // ball enters from above and is valid
-                // basket successful
-                OnBasketballScore?.Invoke(this);
-                if (_shotType == ShotType.None) _shotType |= ShotType.Perfect;
-                _scoreType = ScoreType.Scored;
-
-                // multiply points if fireball active
-                if (GameplayController.Instance?.gameState.FireballStatus == true) BallPoints *= GameConfig.FIREBALL_MULTIPLIER;
-
-                trigger.gameObject.GetComponent<FloaterTextController>()?.DisplayPoints(BallPoints);
-                trigger.gameObject.GetComponent<ScoreFXController>()?.PlayFX();
-                GameplayController.Instance?.gameState.AddScore(BallPoints);
-                GameplayController.Instance?.gameState.AddFireball(GameConfig.FIREBALL_INCREMENT);
+                // ball enters from above and is valid, basket successful
+                if (BallShotType == ShotType.None) BallShotType |= ShotType.Perfect;
+                BallScoreType = ScoreType.Scored;
+                OnBasket?.Invoke(this);
 
                 _isValid = false;
             }
@@ -100,14 +96,14 @@ public class Basketball : MonoBehaviour
         if(collision.gameObject.CompareTag("BasketballBoard"))
         {
             // board hit
-            _shotType |= ShotType.Backboard;
+            BallShotType |= ShotType.Backboard;
             int PointBonus = collision.gameObject.GetComponent<BasketballBoard>().PointBonus;
             BallPoints = PointBonus;
         }
         else if (collision.gameObject.CompareTag("BasketballHoop"))
         {
             // hoop hit
-            _shotType |= ShotType.HoopTouch;
+            BallShotType |= ShotType.HoopTouch;
         }
 
     }

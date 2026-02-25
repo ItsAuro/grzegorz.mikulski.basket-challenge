@@ -1,33 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using static InputHandler;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] GameObject _head;
+    [Header("Requrired Components"), Space(10)]
+    [SerializeField] GameObject          _head;
     [SerializeField] CharacterController _characterController;
-    [SerializeField] InputHandler _inputHandler;
-    [SerializeField] PlayerArea _playerArea;
+    [SerializeField] InputHandler        _inputHandler;
+    [SerializeField] GameState           _gameState;
 
-    // modules
+    [Header("Modules"), Space(10)]
     [SerializeField] BasketballFactory _basketballFactory;
     [SerializeField] BallisticLauncher _ballisticLauncher;
     [SerializeField] BasketballTracker _ballTracker;
+    [SerializeField] PlayerArea        _playerArea;
 
+    [Header("Movement Parameters"), Space(10)]
     [SerializeField] float _movementSpeed = 5f;
     [SerializeField] float _rotationSpeed = .1f;
     [SerializeField] float _jumpForce     = 5f;
-    [SerializeField] float _gravity = 10f;
-    [SerializeField] float _throwFactor = 20f;
+    [SerializeField] float _gravity       = 10f;
 
+    [Header("Throw Parameters"), Space(10)]
+    [SerializeField] float _throwFactor   = 20f;
 
-    float _headAngle = 0f;
-    float _velocityY = -1f;
+    float      _headAngle  = 0f;
+    float      _velocityY  = -1f;
     Basketball _thrownBall = null;
 
-
+    // movement
     public void Move(Vector2 movementVector)
     {
         // convert XY input into XZ movement
@@ -58,17 +58,6 @@ public class PlayerController : MonoBehaviour
             _velocityY = _jumpForce;
         }
     }
-    //public void ThrowBall(bool auto = true)
-    //{
-    //    GameObject ball = _basketballFactory.CreateBasketball(_head.transform.position, _head.transform.rotation);
-    //    if (auto) _ballisticLauncher.LaunchGameObject(ball, BallisticLauncher.LaunchMode.Direct, ball.GetComponent<Basketball>().BallDiameter/2f);
-    //}
-    //public void ThrowBall(Vector2 direction, float distance)
-    //{
-    //    GameObject ball = _basketballFactory.CreateBasketball(_head.transform.position, _head.transform.rotation);
-    //    _ballisticLauncher.LaunchGameObject(ball, BallisticLauncher.LaunchMode.Direct, ball.GetComponent<Basketball>().BallDiameter / 2f);
-    //}
-
     public void Teleport(Vector3 position, Vector3 look_at)
     {
         float height_offset = _characterController.height / 2;
@@ -78,7 +67,7 @@ public class PlayerController : MonoBehaviour
         _characterController.enabled = true;
 
         Vector3 target_direction = (look_at - transform.position).normalized;
-        if(target_direction != Vector3.zero)
+        if (target_direction != Vector3.zero)
         {
             Quaternion target_rotation = Quaternion.LookRotation(new Vector3(target_direction.x, 0, target_direction.z));
             transform.rotation = target_rotation;
@@ -86,24 +75,45 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // actions
+    public void ThrowBallAuto()
+    {
+        if (_basketballFactory == null) return;
+
+        Basketball ball = _basketballFactory.CreateBasketball(_head.transform.position, _head.transform.rotation);
+        ball.OnBasket += OnThrownBallScored;
+        
+        if (_ballisticLauncher == null) return;
+
+        _ballisticLauncher.LaunchGameObject(
+            ball.gameObject, 
+            BallisticLauncher.LaunchMode.Direct, 
+            ball.BallDiameter/2f
+            );
+
+    }
+
 
 
 
     // throw logic
-    private void EnableTeleportOnDestroy(Basketball basketball)
+    private void OnThrownBallScored(Basketball basketball)
     {
-        basketball.OnBasketballDestroy += TeleportOnDestroy;
+        ScoreController.Instance.BasketballScore(_gameState, basketball.BallPoints);
+        basketball.OnBasket -= OnThrownBallScored;
+        basketball.OnMiss -= OnThrownBallMiss;
     }
-    private void TeleportOnDestroy(Basketball basketball)
+    private void OnThrownBallMiss(Basketball basketball)
     {
-        if(_playerArea != null) Teleport(_playerArea.GetPoint(), _playerArea.FocalPoint.position);
+        ScoreController.Instance.BasketballMiss(_gameState);
+        basketball.OnMiss -= OnThrownBallMiss;
+        basketball.OnBasket -= OnThrownBallScored;
     }
-    private void EnableInputsOnDestroy(Basketball basketball)
+    private void OnThrownBallDespawn(Basketball basketball)
     {
-        _thrownBall.OnBasketballDestroy -= EnableInputsOnDestroy;
-        _thrownBall.OnBasketballScore -= EnableTeleportOnDestroy;
-        _thrownBall.OnBasketballDestroy -= TeleportOnDestroy;
+        basketball.OnDespawn -= OnThrownBallDespawn;
 
+        if (_playerArea != null) Teleport(_playerArea.GetPoint(), _playerArea.FocalPoint.position);
 
         _inputHandler.Movement = false;
         _inputHandler.Actions = false;
@@ -111,8 +121,10 @@ public class PlayerController : MonoBehaviour
         _inputHandler.Swipes = true;
         _thrownBall = null;
     }
-    public void ThrowBallEnd(Vector2 direction, float throw_power)
+    public void SwipeThrowBall(Vector2 direction, float throw_power)
     {
+        if (_basketballFactory == null) return;
+
         if (_thrownBall) return;
 
         _inputHandler.Movement = false;
@@ -121,14 +133,15 @@ public class PlayerController : MonoBehaviour
         _inputHandler.Swipes = false;
 
 
-        GameObject ball = _basketballFactory.CreateBasketball(_head.transform.position, _head.transform.rotation);
-        _thrownBall = ball.GetComponent<Basketball>();
-
+        _thrownBall = _basketballFactory.CreateBasketball(_head.transform.position, _head.transform.rotation);
 
         _ballTracker?.TrackBasketball(_thrownBall);
 
-        _thrownBall.OnBasketballDestroy += EnableInputsOnDestroy;
-        _thrownBall.OnBasketballScore += EnableTeleportOnDestroy;
+        _thrownBall.OnBasket += OnThrownBallScored;
+        _thrownBall.OnMiss += OnThrownBallMiss;
+        _thrownBall.OnDespawn += OnThrownBallDespawn;
+
+        if(_ballisticLauncher == null) return;
 
         Vector2 LEFT_THROW = Vector2.up + Vector2.left;
         Vector2 RIGHT_THROW = Vector2.up + Vector2.right;
@@ -149,51 +162,39 @@ public class PlayerController : MonoBehaviour
         if (backboard_throw)
         {
             _ballisticLauncher.LaunchGameObject(
-                ball,
+                _thrownBall.gameObject,
                 BallisticLauncher.LaunchMode.Reflect,
-                ball.GetComponent<Basketball>().BallDiameter / 2f,
+                _thrownBall.BallDiameter / 2f,
                 throw_power * _throwFactor
                 );
         }
         else
         {
             _ballisticLauncher.LaunchGameObject(
-                ball,
+                _thrownBall.gameObject,
                 BallisticLauncher.LaunchMode.Direct,
-                ball.GetComponent<Basketball>().BallDiameter / 2f,
+                _thrownBall.BallDiameter / 2f,
                 throw_power * _throwFactor
                 );
         }
-
-    }
-
-
-
-    void Start()
-    {
-  
     }
 
     private void OnEnable()
     {
-        _inputHandler.OnJump += Jump;
-        _inputHandler.OnLook += Look;
-        _inputHandler.OnMove += Move;
-        //_inputHandler.OnThrowBall += ThrowBall;
-        _inputHandler.OnSwipeThrowSuccessful += ThrowBallEnd;
+        _inputHandler.OnJump                 += Jump;
+        _inputHandler.OnLook                 += Look;
+        _inputHandler.OnMove                 += Move;
+        _inputHandler.OnThrow                += ThrowBallAuto;
+        _inputHandler.OnSwipeThrowSuccessful += SwipeThrowBall;
 
     }
     private void OnDisable()
     {
-        _inputHandler.OnJump -= Jump;
-        _inputHandler.OnLook -= Look;
-        _inputHandler.OnMove -= Move;
-        //_inputHandler.OnThrowBall -= ThrowBall;
-        _inputHandler.OnSwipeThrowSuccessful -= ThrowBallEnd;
+        _inputHandler.OnJump                 -= Jump;
+        _inputHandler.OnLook                 -= Look;
+        _inputHandler.OnMove                 -= Move;
+        _inputHandler.OnThrow                -= ThrowBallAuto;
+        _inputHandler.OnSwipeThrowSuccessful -= SwipeThrowBall;
     }
 
-    void Update()
-    {
- 
-    }
 }

@@ -5,25 +5,18 @@ using UnityEngine;
 
 public class FloaterTextController : MonoBehaviour
 {   
-    [SerializeField]
-    TextMeshPro _TMP_ballPoints;
-    [SerializeField]
-    float _autoDisable = 5;
-    [SerializeField]
-    bool _playOnStart = false;
-    [SerializeField]
-    Transform _rotateTowards;
+    [SerializeField] TextMeshPro _TMP_ballPoints;
+    [SerializeField] Transform   _rotateTowards;
+    [SerializeField] float       _autoDisable = 5;
     
-
     Coroutine _displayCoroutine = null;
 
     public void DisplayPoints(int points)
     {
-
         if (_displayCoroutine != null) StopCoroutine(_displayCoroutine);
         _displayCoroutine = StartCoroutine(_DisplayPoints(points));
     }
-    IEnumerator _DisplayPoints(int points)
+    private IEnumerator _DisplayPoints(int points)
     {   
         _TMP_ballPoints.SetText(points.ToString());
         _TMP_ballPoints.gameObject.SetActive(true);
@@ -33,9 +26,8 @@ public class FloaterTextController : MonoBehaviour
         _displayCoroutine = null;
     }
 
-    private void Start()
+    private void Awake()
     {
-        if(_playOnStart) _TMP_ballPoints.GetComponent<Animator>().Play("Float", 0, 0f);
         _TMP_ballPoints.gameObject.SetActive(false);
     }
 

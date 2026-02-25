@@ -9,14 +9,14 @@ using UnityEngine;
 public class BasketballBoard : MonoBehaviour
 {
 
-    [SerializeField]
-    TextMeshPro _TMP_bonus;
+    [SerializeField] TextMeshPro _TMP_bonus;
 
     private int _rollFrequency = GameConfig.BACKBOARD_FREQUENCY;
+
     public int PointBonus { get; private set;} = 1;
 
 
-    BonusRarity SelectRarity()
+    private BonusRarity SelectRarity()
     {
         int gen = Random.Range(0, 100);
         if (gen < GameConfig.RARITY_METADATA[BonusRarity.Common]  .threshold) return BonusRarity.Common;
@@ -25,17 +25,16 @@ public class BasketballBoard : MonoBehaviour
         if (gen < GameConfig.RARITY_METADATA[BonusRarity.Epic]    .threshold) return BonusRarity.Epic;
         return BonusRarity.Legendary;
     }
-    void UpdateText(BonusRarity rarity)
+    private void UpdateText(BonusRarity rarity)
     {
         PointBonus = GameConfig.RARITY_METADATA[rarity].pointBonus;
         _TMP_bonus.text = $"<color=#{ColorUtility.ToHtmlStringRGB(GameConfig.RARITY_METADATA[rarity].color)}>+{PointBonus}";
     }
-    void SelectApplyRarity()
+    private void SelectApplyRarity()
     {
         UpdateText(SelectRarity());
     }
-
-    void Start()
+    private void Start()
     {
         InvokeRepeating(nameof(SelectApplyRarity), 0, _rollFrequency);
     }

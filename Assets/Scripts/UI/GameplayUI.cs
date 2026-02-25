@@ -7,24 +7,17 @@ using UnityEngine.UI;
 
 public class GameplayUI: MonoBehaviour
 {
-    [SerializeField]
-    TextMeshProUGUI _TMP_Time;
-    [SerializeField]
-    TextMeshProUGUI _TMP_FireballMeter;
-    [SerializeField]
-    TextMeshProUGUI _TMP_FireballStatus;
-    [SerializeField]
-    TextMeshProUGUI _TMP_FireballMultiplier;
-    [SerializeField]
-    TextMeshProUGUI _TMP_Score;
-    [SerializeField]
-    TextMeshProUGUI _TMP_PowerMeter;
-    [SerializeField]
-    Slider _Slider_PowerMeter;
-    [SerializeField]
-    Slider _Slider_FireBallMeter;
-    [SerializeField]
-    InputHandler _inputHandler;
+    [SerializeField] TextMeshProUGUI _TMP_Time;
+    [SerializeField] TextMeshProUGUI _TMP_FireballMeter;
+    [SerializeField] TextMeshProUGUI _TMP_FireballStatus;
+    [SerializeField] TextMeshProUGUI _TMP_FireballMultiplier;
+    [SerializeField] TextMeshProUGUI _TMP_Score;
+    [SerializeField] TextMeshProUGUI _TMP_PowerMeter;
+    [SerializeField] Slider _Slider_PowerMeter;
+    [SerializeField] Slider _Slider_FireBallMeter;
+    [SerializeField] InputHandler _inputHandler;
+
+    [SerializeField] GameState _gameState;
 
     const string _s_timeLeft           = "Time\n{0}";
     const string _s_fireballMeter      = "FireballMeter {0}/{1}";
@@ -92,29 +85,27 @@ public class GameplayUI: MonoBehaviour
             _inputHandler.OnSwipeThrowCanceled   += ResetPowerValue;
         }
 
-
-        GameState gameState = GameplayController.Instance?.gameState;
-        if (gameState != null)
+        if (_gameState)
         {
             //replace default values
-            SetFireballValue(gameState.FireballValue);
-            SetScore(gameState.Score);
-            SetTimeLeft(gameState.RemainingTime);
+            SetFireballValue(_gameState.FireballValue);
+            SetScore(_gameState.Score);
+            SetTimeLeft(_gameState.RemainingTime);
             SetFireballMultiplierValue(GameConfig.FIREBALL_MULTIPLIER);
-            SetFireballMultiplierVisibility(gameState.FireballStatus);
+            SetFireballMultiplierVisibility(_gameState.FireballStatus);
 
-            if (gameState.FireballStatus) SetFireballEnable(); else SetFireballDisable();
+            if (_gameState.FireballStatus) SetFireballEnable(); else SetFireballDisable();
 
             //fireball updates
-            gameState.OnFireballValueChange += SetFireballValue;
-            gameState.OnFireballEnable += SetFireballEnable;
-            gameState.OnFireballDisable += SetFireballDisable;
+            _gameState.OnFireballValueChange += SetFireballValue;
+            _gameState.OnFireballEnable += SetFireballEnable;
+            _gameState.OnFireballDisable += SetFireballDisable;
 
             //score updates
-            gameState.OnScoreChange += SetScore;
+            _gameState.OnScoreChange += SetScore;
 
             //time updates
-            gameState.OnRemainingTimeChange += SetTimeLeft;
+            _gameState.OnRemainingTimeChange += SetTimeLeft;
         }
  
     }

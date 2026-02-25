@@ -1,15 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public static class Ballistics
 {
     public static bool SolveArcTargetAngle(
-        Vector3 start_position,
-        Vector3 target_position,
-        float impact_angle,
-        float gravity,
+        Vector3     start_position,
+        Vector3     target_position,
+        float       impact_angle,
+        float       gravity,
         out Vector3 initial_velocity
         )
     {
@@ -20,24 +17,25 @@ public static class Ballistics
         float H = target_position.y - start_position.y;
         if (R < 0.001f) return false;
 
-        // launch angle theta_0
-        // atan(
-        //                           H - R * tan(theta_i)
-        //     tan(theta_i) + 2 * ----------------------------
-        //                                    R
-        // )
-
-        // launch speed v_0
-        // sqrt(
-        //                         g * R
-        //   ---------------------------------------------------
-        //     cos^2(theta_0) * [tan(theta_0) - tan(theta_i)]
-        // )
-
-        // launch direction
-        //                           (x_t - x_0 , 0 , z_t - z_0)
-        //   v_0 * cos(theta_0) * ---------------------------------  + (0 , v_0 * sin(theta_0) , 0)
-        //                                        R
+        /*  launch angle theta_0
+         *  atan(
+         *                            H - R * tan(theta_i)
+         *      tan(theta_i) + 2 * ----------------------------
+         *                                     R
+         *  )
+         *  
+         *  launch speed v_0
+         *  sqrt(
+         *                          g * R
+         *    ---------------------------------------------------
+         *      cos^2(theta_0) * [tan(theta_0) - tan(theta_i)]
+         *  )
+         *  
+         *  launch direction
+         *                            (x_t - x_0 , 0 , z_t - z_0)
+         *    v_0 * cos(theta_0) * ---------------------------------  + (0 , v_0 * sin(theta_0) , 0)
+         *                                        R
+         */
 
         // launch angle
         float theta_i = impact_angle * Mathf.Deg2Rad;
@@ -63,9 +61,6 @@ public static class Ballistics
         Vector3 toPoint = point - planePoint;
         float distance = Vector3.Dot(toPoint, planeNormal);
 
-        //Debug.Log(point);
-        //Debug.Log(planePoint);
-        //Debug.Log(point - 2f * distance * planeNormal);
         return point - 2f * distance * planeNormal;
     }
 

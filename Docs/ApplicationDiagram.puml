@@ -264,32 +264,30 @@ PlayerController o-- BasketballFactory
 PlayerController o-- BallisticLauncher
 PlayerController o-- InputHandler
 PlayerController o-- BasketballTracker
+PlayerController o-- GameState
 
 BasketballTracker o-- Basketball
-
 
 PlayerController ..> GameplayController
 
 SwipeDetection --> InputHandler
 
-GameplayController *-- GameState
 GameState ..> GameConfig
 GameConfig -> BonusRarity
 GameConfig *-- RarityMetadata
 
-GameplayUI ..> GameplayController
-GameplayUI ..> GameConfig
-RewardUI ..> GameplayController
+GameplayUI --> GameState
+RewardUI --> GameState
 
 BasketballFactory ..> Basketball
 
-Basketball ..> BasketballHoop
 Basketball ..> BasketballBoard
-Basketball ..> GameplayController
 Basketball -> ShotType
 Basketball -> ScoreType
-Basketball ...> FloaterTextController
-Basketball ...> ScoreFXController
+
+GameplayController ..> GameState
+GameplayController ...> FloaterTextController
+GameplayController ...> ScoreFXController
 
 
 BallisticLauncher --> Ballistics

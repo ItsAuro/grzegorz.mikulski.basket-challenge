@@ -7,23 +7,21 @@ using UnityEngine;
 
 public class BasketballFactory : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject _basketballPrefab;
-    [SerializeField]
-    private Vector3 _spawnOffset;
+    [SerializeField] private GameObject _basketballPrefab;
+    [SerializeField] private Vector3    _spawnOffset;
 
-    public GameObject CreateBasketball()
+    public Basketball CreateBasketball()
     {
         return CreateBasketball(transform.position + transform.rotation * _spawnOffset, transform.rotation);
     }
-    public GameObject CreateBasketball(Vector3 position, Quaternion rotation)
+    public Basketball CreateBasketball(Vector3 position, Quaternion rotation)
     {
         GameObject basketball = Instantiate(
             _basketballPrefab,
             position + rotation * _spawnOffset,
             rotation
             );
-        return basketball;
+        return basketball.GetComponent<Basketball>();
     }
     
     public GameObject DelayDestroy(GameObject obj, float delay)
@@ -33,7 +31,7 @@ public class BasketballFactory : MonoBehaviour
     }
     private IEnumerator _DelayDestroy(GameObject obj, float delay)
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(delay);
         Destroy(obj);
     }
 

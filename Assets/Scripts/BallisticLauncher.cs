@@ -10,14 +10,14 @@ public class BallisticLauncher : MonoBehaviour
         Reflect
     }
 
+    [Header("Target Data"), Space(10)]
     public Transform Target;
     public Transform ReflectAgainst;
-    public float ArrivalAngle = -60f;
+    public float     ArrivalAngle = -60f;
 
-    [SerializeField]
+    [Header("Aim Assist"), Space(10)]
     public AnimationCurve AimAssistCurve = AnimationCurve.Linear(-1,0,1,0);
-    [SerializeField]
-    public float AimAssistRange = 200f;
+    public float          AimAssistRange = 5f;
 
 
     public static Vector3 AimAssist(Vector3 raw, Vector3 optimal, float range, AnimationCurve assist_curve)
@@ -46,7 +46,6 @@ public class BallisticLauncher : MonoBehaviour
         return ( 1 - assist_curve.Evaluate(d) ) * raw + assist_curve.Evaluate(d) * optimal;
 
     }
-
     public bool LaunchGameObject(GameObject obj, LaunchMode mode = LaunchMode.Direct, float forward_offset = 0f, float velocity = -1)
     {
         if (Target == null) return false;
@@ -110,60 +109,6 @@ public class BallisticLauncher : MonoBehaviour
 
         obj_rb.velocity = velocity < 0 ? optimal_velocity : AimAssist(optimal_velocity.normalized * velocity, optimal_velocity, AimAssistRange, AimAssistCurve);
 
-        return true;
-    }
-
-
-
-
-    public static bool LaunchDirect(GameObject obj, Transform target, float arrival_angle)
-    {
-        bool solution_found = false;
-        solution_found = Ballistics.SolveArcTargetAngle(
-            obj.transform.position,
-            target.position,
-            arrival_angle,
-            Physics.gravity.y,
-            out Vector3 launch_velocity
-            );
-        if (!solution_found)
-        { 
-            return false;
-        }
-        Rigidbody obj_rb = obj.GetComponent<Rigidbody>();
-        if (obj_rb == null) return false;
-
-        obj_rb.velocity = launch_velocity;
-        return true;
-    }
-    public static bool LaunchReflect(GameObject obj, Transform target, Transform reflect_against, float arrival_angle, float forward_offset = 0f)
-    {
-        Vector3 plane_point = reflect_against.gameObject.GetComponent<BoxCollider>() ?
-            reflect_against.gameObject.GetComponent<BoxCollider>().ClosestPointOnBounds(target.position) - reflect_against.forward * forward_offset
-            : reflect_against.position;
-
-        Vector3 projected_point = Ballistics.ReflectPointAcrossPlane(
-            target.position,
-            plane_point,
-            reflect_against.forward
-            );
-
-        bool solution_found = false;
-        solution_found = Ballistics.SolveArcTargetAngle(
-            obj.transform.position,
-            projected_point,
-            arrival_angle,
-            Physics.gravity.y,
-            out Vector3 launch_velocity
-            );
-        if (!solution_found)
-        {
-            return false;
-        }
-        Rigidbody obj_rb = obj.GetComponent<Rigidbody>();
-        if (obj_rb == null) return false;
-
-        obj_rb.velocity = launch_velocity;
         return true;
     }
 }

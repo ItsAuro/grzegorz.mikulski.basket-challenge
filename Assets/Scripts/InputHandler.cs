@@ -8,12 +8,12 @@ public class InputHandler : MonoBehaviour
 {
     private IM_InputMapping _playerControls;
     private Camera          _mainCamera;
-    private bool _primaryContact;
+    private bool            _primaryContact;
 
-    public bool Movement { get { return _playerControls.Movement.enabled; }  set { if (value) _playerControls.Movement.Enable(); else _playerControls.Movement.Disable(); } }
-    public bool Actions { get { return _playerControls.Actions.enabled; }  set { if (value) _playerControls.Actions.Enable(); else _playerControls.Actions.Disable(); } }
-    public bool Swipes { get { return _playerControls.Swipes.enabled; }  set { if (value) _playerControls.Swipes.Enable(); else _playerControls.Swipes.Disable(); } }
-    public bool Utility { get  { return _playerControls.Utility.enabled; }  set { if (value) _playerControls.Utility.Enable(); else _playerControls.Utility.Disable(); } }
+    public bool Movement { get { return _playerControls.Movement.enabled; } set { if (value) _playerControls.Movement.Enable(); else _playerControls.Movement.Disable(); } }
+    public bool Actions  { get { return _playerControls.Actions.enabled; }  set { if (value) _playerControls.Actions.Enable();  else _playerControls.Actions.Disable(); } }
+    public bool Swipes   { get { return _playerControls.Swipes.enabled; }   set { if (value) _playerControls.Swipes.Enable();   else _playerControls.Swipes.Disable(); } }
+    public bool Utility  { get  { return _playerControls.Utility.enabled; } set { if (value) _playerControls.Utility.Enable();  else _playerControls.Utility.Disable(); } }
 
     
 
@@ -27,7 +27,7 @@ public class InputHandler : MonoBehaviour
     public delegate void Jump();
     public delegate void Move(Vector2 movement);
     public delegate void Look(Vector2 look);
-    public delegate void ThrowBall(bool auto = true);
+    public delegate void ThrowBall();
     public delegate void SwipeThrowUpdate(float distance);
     public delegate void SwipeThrowStarted();
     public delegate void SwipeThrowSuccessful(Vector2 direction, float power);
@@ -46,7 +46,7 @@ public class InputHandler : MonoBehaviour
     private void Awake()
     {
         _playerControls = new IM_InputMapping();
-        _mainCamera = Camera.main;
+        _mainCamera     = Camera.main;
     }
     private void OnEnable()
     {
@@ -59,7 +59,6 @@ public class InputHandler : MonoBehaviour
 
     void Start()
     {
-
         SetMouseVisibility(false);
 
         _playerControls.Swipes.PrimaryContact.started  += PrimaryContactStart;
@@ -68,11 +67,19 @@ public class InputHandler : MonoBehaviour
         _playerControls.Actions.Throw.started          += ThrowPerformed;
         _playerControls.Utility.ToggleMouse.started    += MouseTogglePerformed;
     }
+
+    // movement
     void Update()
     {
         OnLook?.Invoke(_playerControls.Movement.Look.ReadValue<Vector2>());
         OnMove?.Invoke(_playerControls.Movement.Move.ReadValue<Vector2>());  
     }
+    private void JumpPerformed(InputAction.CallbackContext context)
+    {
+        OnJump?.Invoke();
+    }
+
+    // user touch
     private void PrimaryContactStart(InputAction.CallbackContext context)
     {
         _primaryContact = true;
@@ -94,13 +101,13 @@ public class InputHandler : MonoBehaviour
     {
         return ScreenToWorld(_mainCamera, _playerControls.Swipes.PrimaryPosition.ReadValue<Vector2>());
     }
-
     public Vector2 Primary2DPosition()
     {
         return ScreenToSquare(_playerControls.Swipes.PrimaryPosition.ReadValue<Vector2>());
     }
-    private Vector2 ScreenToSquare(Vector2 pixel_position)
+    private static Vector2 ScreenToSquare(Vector2 pixel_position)
     {
+        // scales the pixel position as the screen HEIGHT square
         return new Vector2(pixel_position.x / Screen.height, pixel_position.y / Screen.height);
     }
     public static Vector3 ScreenToWorld(Camera camera, Vector3 position)
@@ -109,11 +116,11 @@ public class InputHandler : MonoBehaviour
         return camera.ScreenToWorldPoint(position);
     }
 
+    // utility
     private void MouseTogglePerformed(InputAction.CallbackContext context)
     {
         SetMouseVisibility(!Cursor.visible);
     }
-
     public void SetMouseVisibility(bool active)
     {
         if (active)
@@ -135,29 +142,21 @@ public class InputHandler : MonoBehaviour
     }
 
 
-    
-
-    private void JumpPerformed(InputAction.CallbackContext context)
-    {
-        OnJump?.Invoke();
-    }
-
+    // actions
     private void ThrowPerformed(InputAction.CallbackContext context)
     {
         OnThrow?.Invoke();
     }
 
 
-
-
-
-    public void SwipeUpdate(float distance)
-    {
-        OnSwipeThrowUpdate?.Invoke(distance);
-    }
+    // swipes
     public void SwipeStart()
     {
         OnSwipeThrowStarted?.Invoke();
+    }
+    public void SwipeUpdate(float distance)
+    {
+        OnSwipeThrowUpdate?.Invoke(distance);
     }
     public void SwipeSuccessful(Vector2 direction, float distance)
     {
@@ -167,12 +166,4 @@ public class InputHandler : MonoBehaviour
     {
         OnSwipeThrowCanceled?.Invoke();
     }
-
-
-
-
-
-
-
-
 }

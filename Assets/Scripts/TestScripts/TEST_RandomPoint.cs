@@ -25,7 +25,7 @@ public class TEST_RandomPoint : MonoBehaviour
             counter++;
             if (counter >= 80)
             {
-                Instantiate(spawn, RandomPoint.RandomPointInBox(vertex1, vertex2), Quaternion.identity);
+                Instantiate(spawn, RandomPoint.RandomPointBetweenGameObjects(vertex1, vertex2), Quaternion.identity);
                 objects++;
                 counter = 0;
             }
