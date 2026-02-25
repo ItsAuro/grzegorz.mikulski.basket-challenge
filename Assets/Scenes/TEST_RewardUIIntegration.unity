@@ -459,7 +459,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 291719514529168944, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 353298933435075931, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -491,7 +491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4760739165107859501, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4760739165107859501, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
       propertyPath: m_AnchorMax.y
@@ -511,7 +511,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5569207941723726385, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5677741420548986228, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -526,9 +526,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5944459983109559036, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: _gameState
+      value: 
+      objectReference: {fileID: 1915385641}
+    - target: {fileID: 5944459983109559036, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
       propertyPath: _inputHandler
       value: 
       objectReference: {fileID: 1394953205}
+    - target: {fileID: 5944459983109559036, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
+      propertyPath: _disableOnTimeEnd
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6670682679727797436, guid: 4596847fc2cd15f408e60970375c5afa, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -811,6 +819,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_RewardUI
       objectReference: {fileID: 0}
+    - target: {fileID: 1872974702890597865, guid: 0778d173c37553a4dac07a0eb4422222, type: 3}
+      propertyPath: _gameState
+      value: 
+      objectReference: {fileID: 1915385641}
+    - target: {fileID: 1872974702890597865, guid: 0778d173c37553a4dac07a0eb4422222, type: 3}
+      propertyPath: _enableOnTimeEnd
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6037549725108784388, guid: 0778d173c37553a4dac07a0eb4422222, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1073,7 +1093,7 @@ GameObject:
   - component: {fileID: 1862344432}
   - component: {fileID: 1862344430}
   m_Layer: 0
-  m_Name: GameplayController
+  m_Name: ScoreController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1091,7 +1111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4883a78a3c330924bbae4f5d687a0fec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startGameOnStart: 1
+  _floaterText: {fileID: 0}
+  _scoreFX: {fileID: 0}
 --- !u!4 &1862344432
 Transform:
   m_ObjectHideFlags: 0
@@ -1378,6 +1399,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+--- !u!114 &1915385641 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3973810700820211472, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+  m_PrefabInstance: {fileID: 1915385640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df4b4a69b27fdf74d821da68992fa456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1997094580
 GameObject:
   m_ObjectHideFlags: 0
