@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 6357965268083635975}
   - component: {fileID: 4174116182368373442}
   - component: {fileID: 3973810700820211472}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,11 +178,12 @@ MonoBehaviour:
   _head: {fileID: 9213801465491907432}
   _characterController: {fileID: 7977038365998284802}
   _inputHandler: {fileID: 4446633141365434220}
-  _playerArea: {fileID: 0}
   _gameState: {fileID: 3973810700820211472}
+  _disableOnTimeEnd: 0
   _basketballFactory: {fileID: 3376403532221416192}
   _ballisticLauncher: {fileID: 7857730621977010546}
   _ballTracker: {fileID: 4174116182368373442}
+  _playerArea: {fileID: 0}
   _movementSpeed: 5
   _rotationSpeed: 0.1
   _jumpForce: 5

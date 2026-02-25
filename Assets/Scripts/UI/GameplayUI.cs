@@ -33,13 +33,11 @@ public class GameplayUI: MonoBehaviour
     {
         GetComponent<Canvas>().enabled = false;
     }
-    void DisableUpdates()
+    void SelfDisable()
     {
-        _gameState.OnFireballValueChange -= SetFireballValue;
-        _gameState.OnFireballEnable -= SetFireballEnable;
-        _gameState.OnFireballDisable -= SetFireballDisable;
-        _gameState.OnScoreChange -= SetScore;
-        _gameState.OnRemainingTimeChange -= SetTimeLeft;
+        if (_disableOnTimeEnd)
+            HideUI();
+        enabled = false;
     }
 
     //time editor
@@ -90,15 +88,14 @@ public class GameplayUI: MonoBehaviour
         _Slider_PowerMeter.SetValueWithoutNotify(0);
     }
 
-    void Start()
+    private void OnEnable()
     {
-        if (_inputHandler != null)
+        if (_inputHandler)
         {
             SetPowerValue(0);
-
-            _inputHandler.OnSwipeThrowUpdate     += SetPowerValue;
-            _inputHandler.OnSwipeThrowSuccessful += (_,_) => ResetPowerValue();
-            _inputHandler.OnSwipeThrowCanceled   += ResetPowerValue;
+            _inputHandler.OnSwipeThrowUpdate += SetPowerValue;
+            _inputHandler.OnSwipeThrowSuccessful += (_, _) => ResetPowerValue();
+            _inputHandler.OnSwipeThrowCanceled += ResetPowerValue;
         }
 
         if (_gameState)
@@ -124,11 +121,26 @@ public class GameplayUI: MonoBehaviour
             _gameState.OnRemainingTimeChange += SetTimeLeft;
 
             // game over
-            _gameState.OnTimeEnd += DisableUpdates;
-            if (_disableOnTimeEnd)
-                _gameState.OnTimeEnd += HideUI;
-        }
- 
-    }
+            _gameState.OnTimeEnd += SelfDisable;
 
+        }
+    }
+    private void OnDisable()
+    {
+        if (_inputHandler)
+        {
+            _inputHandler.OnSwipeThrowUpdate -= SetPowerValue;
+            _inputHandler.OnSwipeThrowSuccessful -= (_, _) => ResetPowerValue();
+            _inputHandler.OnSwipeThrowCanceled -= ResetPowerValue;
+        }
+        if (_gameState)
+        {
+            _gameState.OnFireballValueChange -= SetFireballValue;
+            _gameState.OnFireballEnable -= SetFireballEnable;
+            _gameState.OnFireballDisable -= SetFireballDisable;
+            _gameState.OnScoreChange -= SetScore;
+            _gameState.OnRemainingTimeChange -= SetTimeLeft;
+            _gameState.OnTimeEnd -= SelfDisable;
+        }
+    }
 }

@@ -50,29 +50,27 @@ public class InputHandler : MonoBehaviour
     }
     private void OnEnable()
     {
-        //_playerControls.Enable();
+        _playerControls.Enable();
+        _playerControls.Swipes.PrimaryContact.started += PrimaryContactStart;
+        _playerControls.Swipes.PrimaryContact.canceled += PrimaryContactEnd;
+        _playerControls.Movement.Jump.started += JumpPerformed;
+        _playerControls.Actions.Throw.started += ThrowPerformed;
+        _playerControls.Utility.ToggleMouse.started += MouseTogglePerformed;
     }
     private void OnDisable()
     {
-        //_playerControls.Disable();
+        _playerControls.Swipes.PrimaryContact.started -= PrimaryContactStart;
+        _playerControls.Swipes.PrimaryContact.canceled -= PrimaryContactEnd;
+        _playerControls.Movement.Jump.started -= JumpPerformed;
+        _playerControls.Actions.Throw.started -= ThrowPerformed;
+        _playerControls.Utility.ToggleMouse.started -= MouseTogglePerformed;
+        _playerControls.Disable();
     }
 
     void Start()
     {
         MobilePlayMode();
         //SetMouseVisibility(false);
-
-        _playerControls.Swipes.PrimaryContact.started  += PrimaryContactStart;
-        _playerControls.Swipes.PrimaryContact.canceled += PrimaryContactEnd;
-        _playerControls.Movement.Jump.started          += JumpPerformed;
-        _playerControls.Actions.Throw.started          += ThrowPerformed;
-        _playerControls.Utility.ToggleMouse.started    += MouseTogglePerformed;
-
-        Debug.Log("swipes" + _playerControls.Swipes.enabled);
-        Debug.Log("movement" + _playerControls.Movement.enabled);
-        Debug.Log("actions" + _playerControls.Actions.enabled);
-        Debug.Log("utility" + _playerControls.Utility.enabled);
-
     }
 
     // movement

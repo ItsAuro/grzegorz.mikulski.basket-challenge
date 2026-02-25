@@ -19,13 +19,20 @@ public class Basketball : MonoBehaviour
         Scored,
         Missed,
     }
-
-    [SerializeField] ParticleSystem _fireTrail;
-    public int       BallPoints    { get; private set; } = 1;
-    public float     BallDiameter  { get { return transform.localScale.x; } }
-    public ShotType  BallShotType  { get; private set; } = ShotType.None;
+    public int BallPoints { get; private set; } = 1;
+    public float BallDiameter { get { return transform.localScale.x; } }
+    public ShotType BallShotType { get; private set; } = ShotType.None;
     public ScoreType BallScoreType { get; private set; } = ScoreType.Missed;
 
+    [Header("Fire Trail"), Space(10)]
+    [SerializeField] ParticleSystem _fireTrail;
+    
+    [Header("Sounds"), Space(10)]
+    public List<AudioClip> BallBounceSounds;
+    public List<AudioClip> BallHoopSounds;
+    public AudioClip BallScoreSound;
+
+    [Header("Parameters"), Space(10)]
     [SerializeField] bool _autoDelete = true;
     [SerializeField] int  _lifetime   = 5;
 
@@ -86,6 +93,7 @@ public class Basketball : MonoBehaviour
                 if (BallShotType == ShotType.None) BallShotType |= ShotType.Perfect;
                 BallScoreType = ScoreType.Scored;
                 OnBasket?.Invoke(this);
+                if(BallScoreSound) AudioSource.PlayClipAtPoint(BallScoreSound, transform.position);
 
                 _isValid = false;
             }
@@ -93,17 +101,39 @@ public class Basketball : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        
+        
+
         if(collision.gameObject.CompareTag("BasketballBoard"))
         {
             // board hit
             BallShotType |= ShotType.Backboard;
             int PointBonus = collision.gameObject.GetComponent<BasketballBoard>().PointBonus;
             BallPoints = PointBonus;
+
+            if (BallBounceSounds.Count > 0)
+            {
+                AudioClip ac_bounce = BallBounceSounds[(int)UnityEngine.Random.Range(0, BallBounceSounds.Count)];
+                AudioSource.PlayClipAtPoint(ac_bounce, transform.position);
+            }
         }
         else if (collision.gameObject.CompareTag("BasketballHoop"))
         {
             // hoop hit
             BallShotType |= ShotType.HoopTouch;
+            if (BallHoopSounds.Count > 0)
+            {
+                AudioClip ac_bounce = BallHoopSounds[(int)UnityEngine.Random.Range(0, BallHoopSounds.Count)];
+                AudioSource.PlayClipAtPoint(ac_bounce, transform.position);
+            }
+        }
+        else
+        {
+            if (BallBounceSounds.Count > 0)
+            {
+                AudioClip ac_bounce = BallBounceSounds[(int)UnityEngine.Random.Range(0, BallBounceSounds.Count)];
+                AudioSource.PlayClipAtPoint(ac_bounce, transform.position);
+            }
         }
 
     }

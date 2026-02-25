@@ -52,7 +52,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -116,6 +116,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fireTrail: {fileID: 2574926531844972684}
+  BallBounceSounds:
+  - {fileID: 8300000, guid: 4dba35b6f7964f947a38b13bdaffcfc2, type: 3}
+  BallHoopSounds:
+  - {fileID: 8300000, guid: 8ea520d2847d527439569283ee369911, type: 3}
+  - {fileID: 8300000, guid: 8972744b242a5db46bacbbfce408eb21, type: 3}
+  - {fileID: 8300000, guid: 9f6f5058ac539e042b495662910ad488, type: 3}
+  - {fileID: 8300000, guid: 05249004404fc464fba8f0a505a4a2d6, type: 3}
+  - {fileID: 8300000, guid: 276d0c228f0400341858ec7c3ab02426, type: 3}
+  BallScoreSound: {fileID: 8300000, guid: b7ea63d34cbd85845b10c5cd72d27115, type: 3}
+  _autoDelete: 1
+  _lifetime: 5
 --- !u!96 &466030002583389993
 TrailRenderer:
   serializedVersion: 3

@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] CharacterController _characterController;
     [SerializeField] InputHandler        _inputHandler;
     [SerializeField] GameState           _gameState;
-    [SerializeField] bool _disableInputOnTimeEnd = false;
+    [SerializeField] bool _disableOnTimeEnd = false;
 
     [Header("Modules"), Space(10)]
     [SerializeField] BasketballFactory _basketballFactory;
@@ -74,12 +74,6 @@ public class PlayerController : MonoBehaviour
             transform.rotation = target_rotation;
             if (_head != null) _head.transform.LookAt(look_at);
         }
-    }
-    private void DisableControls()
-    {
-        if (!_disableInputOnTimeEnd) return;
-        _inputHandler.SetMouseVisibility(true);
-        _inputHandler.enabled = false;
     }
 
     // actions
@@ -188,27 +182,49 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void SelfDisable()
+    {
+        if (_disableOnTimeEnd)
+        {
+            _inputHandler.enabled = false;
+            enabled = false;
+        }
+    }
     private void OnEnable()
     {
-        _inputHandler.OnJump                 += Jump;
-        _inputHandler.OnLook                 += Look;
-        _inputHandler.OnMove                 += Move;
-        _inputHandler.OnThrow                += ThrowBallAuto;
-        _inputHandler.OnSwipeThrowSuccessful += SwipeThrowBall;
-
-        _gameState.OnTimeEnd += DisableControls;
-
+        if (_inputHandler)
+        {
+            _inputHandler.OnJump += Jump;
+            _inputHandler.OnLook += Look;
+            _inputHandler.OnMove += Move;
+            _inputHandler.OnThrow += ThrowBallAuto;
+            _inputHandler.OnSwipeThrowSuccessful += SwipeThrowBall;
+        }
+        if (_gameState)
+        {
+            _gameState.OnTimeEnd += SelfDisable;
+        }
     }
     private void OnDisable()
     {
-        _inputHandler.OnJump                 -= Jump;
-        _inputHandler.OnLook                 -= Look;
-        _inputHandler.OnMove                 -= Move;
-        _inputHandler.OnThrow                -= ThrowBallAuto;
-        _inputHandler.OnSwipeThrowSuccessful -= SwipeThrowBall;
-
-        _gameState.OnTimeEnd -= DisableControls;
-
+        if (_thrownBall)
+        {
+            _thrownBall.OnBasket -= OnThrownBallScored;
+            _thrownBall.OnMiss -= OnThrownBallMiss;
+            _thrownBall.OnDespawn -= OnThrownBallDespawn;
+        }
+        if (_inputHandler)
+        {
+            _inputHandler.OnJump -= Jump;
+            _inputHandler.OnLook -= Look;
+            _inputHandler.OnMove -= Move;
+            _inputHandler.OnThrow -= ThrowBallAuto;
+            _inputHandler.OnSwipeThrowSuccessful -= SwipeThrowBall;
+        }
+        if (_gameState) 
+        {
+            _gameState.OnTimeEnd -= SelfDisable;
+        }
     }
 
     private void Start()

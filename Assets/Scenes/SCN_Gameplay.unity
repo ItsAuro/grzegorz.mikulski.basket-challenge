@@ -1133,6 +1133,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1397597128}
     - target: {fileID: 6679672018433940504, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+      propertyPath: _disableOnTimeEnd
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679672018433940504, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
       propertyPath: _disableInputOnTimeEnd
       value: 1
       objectReference: {fileID: 0}
