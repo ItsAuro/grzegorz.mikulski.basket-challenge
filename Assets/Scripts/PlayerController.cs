@@ -72,7 +72,15 @@ public class PlayerController : MonoBehaviour
         {
             Quaternion target_rotation = Quaternion.LookRotation(new Vector3(target_direction.x, 0, target_direction.z));
             transform.rotation = target_rotation;
-            if (_head != null) _head.transform.LookAt(look_at);
+            if (_head != null)
+            {
+                // vertical angle
+                float tiltAngle = Mathf.Asin(target_direction.y) * Mathf.Rad2Deg;
+                tiltAngle = Mathf.Clamp(tiltAngle, -90f, 90f);
+
+                _head.transform.localRotation = Quaternion.Euler(tiltAngle, 0f, 0f);
+                _headAngle = tiltAngle;
+            }
         }
     }
 
