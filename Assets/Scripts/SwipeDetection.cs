@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class SwipeDetection : MonoBehaviour
 {
@@ -34,13 +35,13 @@ public class SwipeDetection : MonoBehaviour
         inputHandler.OnStartTouch -= SwipeStart;
         inputHandler.OnEndTouch   -= SwipeEnd;
     }
-    private void SwipeStart(Vector2 position, float time)
+    private void SwipeStart(float time)
     {   
         // swipe started
         inputHandler.SwipeStart();
 
-        startPosition = position;
-        endPosition   = position;
+        startPosition = inputHandler.Primary2DPosition();
+        endPosition   = inputHandler.Primary2DPosition();
         startTime = time;
         swipeCoroutine = StartCoroutine(SwipeUpdate());
 
@@ -70,7 +71,7 @@ public class SwipeDetection : MonoBehaviour
             yield return null;
         }
     }
-    private void SwipeEnd(Vector2 position, float time)
+    private void SwipeEnd(float time)
     {
         if (trailEnabled)
         {
@@ -79,7 +80,7 @@ public class SwipeDetection : MonoBehaviour
         }
 
         StopCoroutine(swipeCoroutine);
-        endPosition = position;
+        endPosition = inputHandler.Primary2DPosition();
         endTime = time;
         DetectSwipe();
     }

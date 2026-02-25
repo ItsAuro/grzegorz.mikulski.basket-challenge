@@ -1154,8 +1154,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6357965268083635975, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+      propertyPath: maximumTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6357965268083635975, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
       propertyPath: trailEnabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6357965268083635975, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
+      propertyPath: clampMaximumDistance
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 6679672018433940504, guid: b404d4449ea23464e8c509fbff92281d, type: 3}
       propertyPath: _ballCamera

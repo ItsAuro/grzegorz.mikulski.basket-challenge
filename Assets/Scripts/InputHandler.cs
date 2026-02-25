@@ -18,8 +18,8 @@ public class InputHandler : MonoBehaviour
     
 
     // events related to swipes
-    public delegate void TouchStart(Vector2 position, float time);
-    public delegate void TouchEnd(Vector2 position, float time);
+    public delegate void TouchStart(float time);
+    public delegate void TouchEnd(float time);
     public event TouchStart OnStartTouch;
     public event TouchEnd OnEndTouch;
 
@@ -78,14 +78,12 @@ public class InputHandler : MonoBehaviour
         _primaryContact = true;
 
         OnStartTouch?.Invoke(
-            _playerControls.Swipes.PrimaryPosition.ReadValue<Vector2>(),
             (float)context.startTime
         );
     }
     private void PrimaryContactEnd(InputAction.CallbackContext context)
     {
         if (_primaryContact) OnEndTouch?.Invoke(
-            _playerControls.Swipes.PrimaryPosition.ReadValue<Vector2>(),
             (float)context.time
         );
 
@@ -99,9 +97,12 @@ public class InputHandler : MonoBehaviour
 
     public Vector2 Primary2DPosition()
     {
-        return _playerControls.Swipes.PrimaryPosition.ReadValue<Vector2>();
+        return ScreenToSquare(_playerControls.Swipes.PrimaryPosition.ReadValue<Vector2>());
     }
-
+    private Vector2 ScreenToSquare(Vector2 pixel_position)
+    {
+        return new Vector2(pixel_position.x / Screen.height, pixel_position.y / Screen.height);
+    }
     public static Vector3 ScreenToWorld(Camera camera, Vector3 position)
     {
         position.z = camera.nearClipPlane + 0.5f;
@@ -145,6 +146,9 @@ public class InputHandler : MonoBehaviour
     {
         OnThrow?.Invoke();
     }
+
+
+
 
 
     public void SwipeUpdate(float distance)
