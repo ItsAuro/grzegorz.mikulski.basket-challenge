@@ -40,29 +40,35 @@ enum ScoreType{
 }
 
 
-class "GameState<pure class>" as GameState{
+class GameState{
   + int Score
   + int RemainingTime
   + int FireballValue
   + bool FireballStatus
   
-  + event OnScoreChange
   + event OnRemainingTimeChange
+  + event OnTimeStart
   + event OnTimeEnd
+  
   + event OnFireballChange
   + event OnFireballEnable
   + event OnFireballDisable
   
+  + event OnScoreChange
+  
   + void AddTime(int time)
   + void RemoveTime(int time)
+  + void StartTimer()
+  - void TimeStep()
+  
   + void AddFireball(int value)
   + void ResetFireball()
+  
   + void AddScore(int score)
   + void ResetScore()
-  - void Fireball(bool enable)
 }
-class "GameplayController<singleton>" as GameplayController{
-  + GameplayController Instance
+class "ScoreController<singleton>" as ScoreController{
+  + ScoreController Instance
   
   + event OnGameStart
   + event OnGameEnd
@@ -73,40 +79,58 @@ class "GameplayController<singleton>" as GameplayController{
   
 }
 
-'PLAYER CLASSES'
+'INPUT'
 class InputHandler{
   - IM_InputMapping playerControls
   - Camera mainCamera
-
+  - bool primaryContact
+  
   + event OnStartTouch
   + event OnEndTouch
+
   + event OnJump
   + event OnMove
   + event OnLook
-  + event OnThrowBall
-  + event OnThrowUpdate
-  + event OnThrowEnd
-  + event OnThrowCancel
+  + event OnThrow
+  
+  + event OnSwipeThrowUpdate;
+  + event OnSwipeThrowStarted;
+  + event OnSwipeThrowSuccessful;
+  + event OnSwipeThrowCanceled;
+
+  - void JumpPerformed()
 
   - void PrimaryContactStart()
   - void PrimaryContactEnd()
-  - void MouseToggle()
-  - void JumpPerformed()
-  - voic ThrowBallPerformed()
+  
+    + Vector3 Primary3DPosition()
+  + Vector2 Primary2DPosition()
+  + Vector3 ScreenToWorld(Camera camera, Vector3 position)
+  + Vector2 ScreenToSquare(Vector2 pixel_position)
+  
+  - void MouseTogglePerformed()
+  + void SetMouseVisibility(bool active)
+  
+  - voic ThrowPerformed()
+  
+  + void SwipeStart()
   + void SwipeUpdate(float distance)
   + void SwipeEnd(Vector2 direction, float distance)
   + void SwipeCancel()
-  + Vector3 ScreenToWorld(Camera camera, Vector3 position)
-  + Vector3 Primary3DPosition()
-  + Vector2 Primary2DPosition()
+  
+
 }
 class SwipeDetection{
   - Vector2 startPosition
   - float startTime
   - Vector2 endPosition
   - float endTime
+  
   - float minimumDistance
   - float maximumTime
+  - float directionThreshold
+  - float clampMaximumDistance
+  
   - bool trailEnabled
   - TrailRenderer trail
   
@@ -114,19 +138,32 @@ class SwipeDetection{
   - void SwipeEnd(Vector2 position, float time)
   - void DetectSwipe()
 }
+
+'PLAYER CLASSES'
 class PlayerController{
   - GameObject head
   - CharacterController characterController
+  
   - float movementSpeed
   - float rotationSpeed
   - float jumpForce
   - float gravity
+  - float throwFactor
+  
+  - Basketball thrownBall
   
   + void Move()
   + void Look()
   + void Jump()
-  + void ThrowBallEnd(Vector2 direction, float power)
-  //+ void ThrowBall()
+  + void Teleport(Vector3 position, Vector3 look_at)
+  
+  + void ThrowBallAuto()
+  
+  - void OnThrownBallScored(Basketball basketball)
+  - void OnThrownBallMiss(Basketball basketball)
+  - void OnThrownBallDespawn(Basketball basketball)
+  + void SwipeThrowBall(Vector2 direction, float power)
+
 }
 
 'UI ELEMENTS'
@@ -146,6 +183,8 @@ class GameplayUI{
   - void SetFireballValue(int value)
   - void SetFireballEnable()
   - void SetFireballDisable()
+  - void SetFireballMultiplierValue(int value)
+  - void SetFireballMultiplierVisibility(bool visibility)
   - void SetPowerValue(float value)
   - void ResetPowerValue()
 }
@@ -156,26 +195,6 @@ class RewardUI{
   - TMP finalScore
   
   + void SetFinalScore(int score)
-}
-class FloaterTextController{
-  - TMP TMP_BallPoints
-  - float autoDisable
-  - bool playOnStart
-  - GameObject _rotateTowards
-  - bool autoRotateTowards
-  
-  + void DisplayPoints(int points)
-}
-note left of FloaterTextController::TMP_BallPoints
-- animated no auto loop
-end note
-note left of FloaterTextController::autoRotateTowards
-- rotate text to object on update
-end note
-class ScoreFXController{
-  - ParticleSystem particleSystem
-  
-  + void PlayFX();
 }
 
 
@@ -193,8 +212,8 @@ class BasketballFactory{
   - GameObject basketballPrefab
   - Vector3 spawnOffset
   
-  + GameObject CreateBasketball()
-  + GameObject CreateBasketball(Vector3 position, Quaternion rotation)
+  + Basketball CreateBasketball()
+  + Basketball CreateBasketball(Vector3 position, Quaternion rotation)
   + GameObject DelayDestroy(GameObject o, float delay)
 }
 class BasketballTracker{
@@ -204,41 +223,22 @@ class BasketballTracker{
   + void TrackBasketball(Basketball basketball)
   - void ResetTrackingCamera(Basketball despawned_ball)
 }
-class BallisticLauncher{
-  + Transform Target
-  + Transform ReflectAgainst
-  + float ArrivalAngle
-  + AnimationCurve AimAssistCurve
-  + float AimAssistRange
-  
-  + Vector3 AimAssist(Vector3 raw, Vector3 optimal, float range, AnimationCurve assist_curve)
-  + bool LaunchGameObject(GameObject o, LaunchMode m, float forward_offset, float power)
-  - bool LaunchDirect(GameObject o, float power)
-  - bool LaunchReflect(GameObject o, float forward_offset, float power)
-  
-  + static bool LaunchDirect(...)
-  + static bool LaunchReflect(...)
-}
-note right of BallisticLauncher::GraceCurve
-Alters the power
-makes it easier to score
-end note
-enum LaunchMode {
-  Direct
-  Reflect
-}
 class Basketball{
   - ParticleSystem fireTrail
   + int BallPoints
   + float BallDiameter
-  - bool isValid
-  - bool isLegal
+  
   - bool autoDelete
   - int lifetime
   
-  + event OnBasketballDestroy
-  + event OnBasketballScore
+  - bool isValid
+  - bool isLegal
+
+  + event OnDespawn
+  + event OnBasket
+  + event OnMiss
   
+  + void ActivateFireTrail()
   - void OnCollisionEnter() 
   - void OnTriggerEnter()
 }
@@ -251,33 +251,80 @@ note left of Basketball::OnTriggerEnter()
 - Score trigger
 end note
 
+'OTHER'
+class BallisticLauncher{
+  + Transform Target
+  + Transform ReflectAgainst
+  + float ArrivalAngle
+  
+  + AnimationCurve AimAssistCurve
+  + float AimAssistRange
+  
+  + Vector3 AimAssist(Vector3 raw, Vector3 optimal, float range, AnimationCurve assist_curve)
+  + bool LaunchGameObject(GameObject o, LaunchMode m, float forward_offset, float power)
+  - bool LaunchDirect(GameObject o, float power)
+  - bool LaunchReflect(GameObject o, float forward_offset, float power)
+}
+note right of BallisticLauncher::GraceCurve
+Alters the power
+makes it easier to score
+end note
+enum LaunchMode {
+  Direct
+  Reflect
+}
+class PlayerArea {
+  - Vector3 size
+  + Transform focalPoint
+  
+  + Vector3 GetPoint()
+}
+class FloaterTextController{
+  - TMP TMP_BallPoints
+  - Transform _rotateTowards
+  - float autoDisable
+  
+  + void DisplayPoints(int points)
+}
+note left of FloaterTextController::TMP_BallPoints
+- animated no auto loop
+end note
+note left of FloaterTextController::autoRotateTowards
+- rotate text to object on update
+end note
+class ScoreFXController{
+  - ParticleSystem particleSystem
+  
+  + void PlayFX();
+}
 
-
-
-
-
-
-
-
-
-PlayerController o-- BasketballFactory
-PlayerController o-- BallisticLauncher
-PlayerController o-- InputHandler
-PlayerController o-- BasketballTracker
-PlayerController o-- GameState
-
-BasketballTracker o-- Basketball
-
-PlayerController ..> GameplayController
 
 SwipeDetection --> InputHandler
+
+ScoreController ..> GameConfig
+ScoreController ..> GameState
+ScoreController ---> FloaterTextController
+ScoreController ---> ScoreFXController
 
 GameState ..> GameConfig
 GameConfig -> BonusRarity
 GameConfig *-- RarityMetadata
 
-GameplayUI --> GameState
-RewardUI --> GameState
+PlayerController o-- BasketballFactory
+PlayerController o-- BallisticLauncher
+PlayerController o-- BasketballTracker
+PlayerController o-- PlayerArea
+
+PlayerArea ..> RandomPoint
+
+PlayerController o-- InputHandler
+PlayerController --> GameState
+PlayerController ..> ScoreController
+
+BallisticLauncher --> Ballistics
+BallisticLauncher -l-> LaunchMode 
+
+BasketballTracker o-- Basketball
 
 BasketballFactory ..> Basketball
 
@@ -285,13 +332,12 @@ Basketball ..> BasketballBoard
 Basketball -> ShotType
 Basketball -> ScoreType
 
-GameplayController ..> GameState
-GameplayController ...> FloaterTextController
-GameplayController ...> ScoreFXController
+
+GameplayUI --> GameState
+RewardUI --> GameState
 
 
-BallisticLauncher --> Ballistics
-BallisticLauncher -l-> LaunchMode 
+
 
 
 
