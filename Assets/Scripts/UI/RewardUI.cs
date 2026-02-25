@@ -24,6 +24,9 @@ public class RewardUI : MonoBehaviour
     {
         if(_gameState)
         {
+            // replace default values
+            SetFinalScore(0);
+
             // score updates
             _gameState.OnScoreChange += SetFinalScore;
             
