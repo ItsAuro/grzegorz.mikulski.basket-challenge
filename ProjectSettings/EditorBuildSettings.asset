@@ -6,10 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SCN_Gameplay.unity
-    guid: 3f59067e9ab87464aa2abcef071a4c96
-  - enabled: 1
     path: Assets/Scenes/SCN_MainMenu.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/SCN_Gameplay.unity
+    guid: 3343ba6204cf6c348a83c523b83fa6f3
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: e1824cf14ffdeda438c6c9bcf8620c1a, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 93460520f90286d4892a1b5fe6d4d246, type: 3}
+    com.unity.localization.settings: {fileID: 11400000, guid: e726dcd8bbd72c542bc92064d3da7809, type: 2}
