@@ -586,9 +586,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _TMP_ballPoints: {fileID: 8258224510821806175}
-  _autoDisable: 5
-  _playOnStart: 0
   _rotateTowards: {fileID: 0}
+  _autoDisable: 5
 --- !u!1001 &1511500483404751732
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -730,6 +729,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5756421200275659830, guid: 1fca6d15600bec84aba7aa1de9274211, type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8855714547623483927, guid: 1fca6d15600bec84aba7aa1de9274211, type: 3}
+      propertyPath: _hideOnAwake
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

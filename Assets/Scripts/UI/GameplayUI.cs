@@ -24,7 +24,7 @@ public class GameplayUI: MonoBehaviour
     const string _s_timeLeft           = "Time\n{0}";
     const string _s_fireballMeter      = "FireballMeter {0}/{1}";
     const string _s_fireballStatus     = "FireballStatus {0}";
-    const string _s_score              = "Score {0:D8}";
+    const string _s_score              = "Score {0:D6}";
     const string _s_powerMeter         = "Power {0}/{1}";
     const string _s_fireballMultiplier = "x{0}";
 
