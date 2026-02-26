@@ -15,7 +15,16 @@ public class ButtonEvents : MonoBehaviour
 
         SceneManager.LoadSceneAsync(targetScene);
     }
-
+    public void SwitchToGameplay(string gameplay_scene)
+    {
+        BackgroundMusic.Instance?.PlayFromStart();
+        SwitchScene(gameplay_scene);
+    }
+    public void SwitchToMainMenu(string main_menu_scene)
+    {
+        BackgroundMusic.Instance?.Stop();
+        SwitchScene(main_menu_scene);
+    }
     public void QuitGame()
     {
         Application.Quit();

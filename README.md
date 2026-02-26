@@ -28,6 +28,11 @@ An additional game mechanic was implemented where if a player consecutively scor
 - [Digital-7 Font](https://www.fontspace.com/digital-7-font-f7087) - Style-7, Oct 31 2022
 - [Basketball Court](https://sketchfab.com/3d-models/basketball-court-d2ea5bc76e094f1a9e6aa15891bd6885) - Klieg3D, Aug 30 2020
 
+# Audio
+- [Basketball Hit](https://mixkit.co/free-sound-effects/basketball/) - Mixkit
+- [Basketball Hoop](https://pixabay.com/sound-effects/film-special-effects-basketball-85872/) - reedhos, Pixabay, Aug 15 2022
+- [City Ambience](https://pixabay.com/sound-effects/city-city-above-far-ambience-car-479129/) - CliffordJohnson, Pixabay Feb 5 2026
+
 # Notes
 UML diagrams done with PlantUML with any compatible editor, e.g. [Pladitor](https://plantumleditor.com/)
 

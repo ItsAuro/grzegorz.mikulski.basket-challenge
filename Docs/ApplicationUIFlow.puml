@@ -18,10 +18,18 @@ class Options{
 }
 class ButtonEvents{
   + void SwitchScene(string targetScene)
+  + void SwitchToGameplay(string gameplay_scene)
+  + void SwitchToMainMenu(string main_menu_scene)
   + void QuitGame()
+}
+class "BackgroundMusic<singleton>" as BackgroundMusic{
+  - AudioSource BGM
+  + void PlayFromStart()
+  + void Stop()
 }
 circle Exit
 
+ButtonEvents ..> BackgroundMusic
 SCN_Gameplay --> GameplayUI
 SCN_Gameplay --> RewardUI
 SCN_MainMenu --> SCN_Gameplay : play

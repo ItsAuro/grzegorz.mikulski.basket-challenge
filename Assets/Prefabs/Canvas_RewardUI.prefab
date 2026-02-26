@@ -1306,7 +1306,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3198756689462762216}
         m_TargetAssemblyTypeName: ButtonEvents, Assembly-CSharp
-        m_MethodName: SwitchScene
+        m_MethodName: SwitchToMainMenu
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
