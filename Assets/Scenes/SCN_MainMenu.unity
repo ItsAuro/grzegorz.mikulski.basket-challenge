@@ -705,6 +705,26 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6233109466865882759, guid: 2747bd8e005d0d84eaa632ff0ae396b1, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6233109466865882759, guid: 2747bd8e005d0d84eaa632ff0ae396b1, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6233109466865882759, guid: 2747bd8e005d0d84eaa632ff0ae396b1, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6233109466865882759, guid: 2747bd8e005d0d84eaa632ff0ae396b1, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6233109466865882759, guid: 2747bd8e005d0d84eaa632ff0ae396b1, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7367480132476559740, guid: 2747bd8e005d0d84eaa632ff0ae396b1, type: 3}
       propertyPath: m_Name
       value: Canvas_MainMenu
