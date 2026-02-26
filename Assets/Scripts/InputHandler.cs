@@ -124,7 +124,9 @@ public class InputHandler : MonoBehaviour
     // utility
     private void MouseTogglePerformed(InputAction.CallbackContext context)
     {
-        SetMouseVisibility(!Cursor.visible);
+        //SetMouseVisibility(!Cursor.visible);
+        if (Cursor.visible) PCPlayMode();
+        else MobilePlayMode();
     }
     private void MobilePlayMode()
     {
@@ -133,7 +135,14 @@ public class InputHandler : MonoBehaviour
         Swipes = true;
         Actions = false;
         Movement = false;
-        Utility = false;
+    }
+    private void PCPlayMode()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Swipes = false;
+        Actions = true;
+        Movement = true;
     }
     public void SetMouseVisibility(bool active)
     {

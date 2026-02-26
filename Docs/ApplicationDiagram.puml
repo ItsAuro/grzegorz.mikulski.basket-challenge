@@ -1,4 +1,7 @@
-'UTILITY AND CONFIG'
+skinparam linetype ortho
+
+
+'CONFIG'
 class "GameConfig<static>" as GameConfig{
   + int MAX_TIME
   + int FIREBALL_MULTIPLIER
@@ -19,6 +22,9 @@ struct RarityMetadata{
   + int threshold
   + int pointBonus
 }
+
+
+'UTILITY'
 class "Ballistics<static>" as Ballistics{
   + bool, Vector3 SolveArcTargetAngle(Vector3 s, Vector3 t, float a, float g)
   + Vector3 ReflectPointAcrossPlane(Vector3 p, Vector3 plane, Vector3 normal)
@@ -26,7 +32,6 @@ class "Ballistics<static>" as Ballistics{
 class "RandomPoint<static>" as RandomPoint{
   + Vector3 RandomPointInBox(GameObject g1, GameObject g2)
   + Vector3 RandomPointInBox(Vector3 g1, Vector3 g2)
-  
 }
 enum "ShotType<flags>" as ShotType{
   None
@@ -38,8 +43,6 @@ enum ScoreType{
   Scored
   Missed
 }
-
-
 class GameState{
   + int Score
   + int RemainingTime
@@ -76,8 +79,8 @@ class "ScoreController<singleton>" as ScoreController{
   + void StartGame()
   + void EndGame()
   - void TimeStep()
-  
 }
+
 
 'INPUT'
 class InputHandler{
@@ -103,13 +106,15 @@ class InputHandler{
   - void PrimaryContactStart()
   - void PrimaryContactEnd()
   
-    + Vector3 Primary3DPosition()
+  + Vector3 Primary3DPosition()
   + Vector2 Primary2DPosition()
   + Vector3 ScreenToWorld(Camera camera, Vector3 position)
   + Vector2 ScreenToSquare(Vector2 pixel_position)
   
   - void MouseTogglePerformed()
   + void SetMouseVisibility(bool active)
+  + void MobilePlayMode()
+  + void PCPlayMode()
   
   - voic ThrowPerformed()
   
@@ -117,8 +122,6 @@ class InputHandler{
   + void SwipeUpdate(float distance)
   + void SwipeEnd(Vector2 direction, float distance)
   + void SwipeCancel()
-  
-
 }
 class SwipeDetection{
   - Vector2 startPosition
@@ -139,6 +142,7 @@ class SwipeDetection{
   - void DetectSwipe()
 }
 
+
 'PLAYER CLASSES'
 class PlayerController{
   - GameObject head
@@ -149,6 +153,7 @@ class PlayerController{
   - float jumpForce
   - float gravity
   - float throwFactor
+  - bool disableOnTimeEnd
   
   - Basketball thrownBall
   
@@ -163,8 +168,10 @@ class PlayerController{
   - void OnThrownBallMiss(Basketball basketball)
   - void OnThrownBallDespawn(Basketball basketball)
   + void SwipeThrowBall(Vector2 direction, float power)
-
+  
+  - void SelfDisable()
 }
+
 
 'UI ELEMENTS'
 class GameplayUI{
@@ -178,6 +185,8 @@ class GameplayUI{
   - Slider Slider_FireballMeter
   - InputHandler inputHandler
   
+  - bool disableOnTimeEnd
+  
   - void SetTimeLeft(int time)
   - void SetScore(int score)
   - void SetFireballValue(int value)
@@ -187,14 +196,21 @@ class GameplayUI{
   - void SetFireballMultiplierVisibility(bool visibility)
   - void SetPowerValue(float value)
   - void ResetPowerValue()
+  
+  - HideUI()
+  - void SelfDisable()
 }
 note left of GameplayUI::inputHandler
 to retrieve slide data
 end note
 class RewardUI{
   - TMP finalScore
+  - bool enableOnTimeEnd
   
   + void SetFinalScore(int score)
+  
+  - void ShowUI()
+  - void SelfDisable()
 }
 
 
@@ -228,9 +244,12 @@ class Basketball{
   + int BallPoints
   + float BallDiameter
   
+  + List<AudioClip> BallBounceSounds;
+  + List<AudioClip> BallHoopSounds;
+  + AudioClip BallScoreSound;
+
   - bool autoDelete
   - int lifetime
-  
   - bool isValid
   - bool isLegal
 
@@ -251,6 +270,7 @@ note left of Basketball::OnTriggerEnter()
 - Score trigger
 end note
 
+
 'OTHER'
 class BallisticLauncher{
   + Transform Target
@@ -265,7 +285,7 @@ class BallisticLauncher{
   - bool LaunchDirect(GameObject o, float power)
   - bool LaunchReflect(GameObject o, float forward_offset, float power)
 }
-note right of BallisticLauncher::GraceCurve
+note left of BallisticLauncher::AimAssistCurve
 Alters the power
 makes it easier to score
 end note
@@ -299,6 +319,7 @@ class ScoreFXController{
 }
 
 
+'RELATIONSHIPS'
 SwipeDetection --> InputHandler
 
 ScoreController ..> GameConfig
@@ -322,7 +343,7 @@ PlayerController --> GameState
 PlayerController ..> ScoreController
 
 BallisticLauncher --> Ballistics
-BallisticLauncher -l-> LaunchMode 
+BallisticLauncher --> LaunchMode 
 
 BasketballTracker o-- Basketball
 
@@ -331,7 +352,6 @@ BasketballFactory ..> Basketball
 Basketball ..> BasketballBoard
 Basketball -> ShotType
 Basketball -> ScoreType
-
 
 GameplayUI --> GameState
 RewardUI --> GameState

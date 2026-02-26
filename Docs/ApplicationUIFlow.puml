@@ -1,36 +1,35 @@
 struct SCN_MainMenu
 struct SCN_Gameplay
 
-class UI_MainMenu {
-  + void PlayGame()
+
+class "GameConfig<static>" as GameConfig {
+  + int MAX_TIME
+  ...
 }
-
-SCN_MainMenu --> UI_MainMenu
-
-UI_MainMenu ..> SCN_Gameplay
-
-
-
-class UI_Gameplay{
+class GameplayUI{
   - bool active = True
-  + void ExitGameplay()
 }
-class UI_Rewards{
+class RewardUI{
   - bool active = False
-  + void BackToMenu()
-  + void PlayAgain()
 }
-
-SCN_Gameplay --> UI_Gameplay
-SCN_Gameplay --> UI_Rewards
-UI_Rewards ..> SCN_Gameplay
-UI_Rewards ..> SCN_MainMenu
-UI_Gameplay ..> SCN_MainMenu
-
-class PlayerData {
-  - score
-  + void addScore(int score, int multiplier = 1)
-  + int getScore()
-  + void initialiseScore()
-  
+class Options{
+  - Slider maxTime
+  + void SetGameMaxTime()
 }
+class ButtonEvents{
+  + void SwitchScene(string targetScene)
+  + void QuitGame()
+}
+circle Exit
+
+SCN_Gameplay --> GameplayUI
+SCN_Gameplay --> RewardUI
+SCN_MainMenu --> SCN_Gameplay : play
+SCN_MainMenu --> Exit : quit
+SCN_MainMenu -> Options
+
+RewardUI ..> SCN_Gameplay : play
+RewardUI ..> SCN_MainMenu : back
+GameplayUI ..> SCN_MainMenu : back
+Options ..> GameConfig
+
