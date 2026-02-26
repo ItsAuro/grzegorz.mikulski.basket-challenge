@@ -2,6 +2,15 @@
 
 This project creates a simple basketball throwing game by swiping in unity with PC and Mobile support.
 
+<p align="center">
+  <img src="./Docs/samples/sample_menu_1.png" width="45%">
+  <img src="./Docs/samples/sample_gameplay_1.png" width="45%">
+</p>
+<p align="center">
+  <img src="./Docs/samples/sample_gameplay_2.png" width="45%">
+  <img src="./Docs/samples/sample_reward_1.png" width="45%">
+</p>
+
 # Description
 ## Main Menu  
 The main menu offers simple options to: play the game, open the settings which allows to change the game duration and exit the application.
@@ -37,3 +46,6 @@ An additional game mechanic was implemented where if a player consecutively scor
 UML diagrams done with PlantUML with any compatible editor, e.g. [Pladitor](https://plantumleditor.com/)
 
 Since throwing a ball with the exact velocity to score a basket is challenging, an aim assist was introduced using where the shot would have landed and pulling it towards an optimal point. It can be tested in a Desmos snapshot [here](https://www.desmos.com/calculator/ghqp4ncgbu)
+
+# UML
+![UML](./Docs/ApplicationDiagram.png)
