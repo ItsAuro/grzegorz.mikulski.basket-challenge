@@ -35,7 +35,7 @@ An additional game mechanic was implemented where if a player consecutively scor
 # Assets
 - [Toon City Pack](https://assetstore.unity.com/packages/3d/environments/urban/toon-city-pack-234785) - Punk Games, Oct 26 2022
 - [Digital-7 Font](https://www.fontspace.com/digital-7-font-f7087) - Style-7, Oct 31 2022
-- [Basketball Court](https://sketchfab.com/3d-models/basketball-court-d2ea5bc76e094f1a9e6aa15891bd6885) - Klieg3D, Aug 30 2020
+- [Basketball Court](https://sketchfab.com/3d-models/basketball-court-d2ea5bc76e094f1a9e6aa15891bd6885) (to be placed in Assets/ThirdParty/)- Klieg3D, Aug 30 2020
 
 # Audio
 - [Basketball Hit](https://mixkit.co/free-sound-effects/basketball/) - Mixkit
