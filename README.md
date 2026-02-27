@@ -42,6 +42,13 @@ An additional game mechanic was implemented where if a player consecutively scor
 - [Basketball Hoop](https://pixabay.com/sound-effects/film-special-effects-basketball-85872/) - reedhos, Pixabay, Aug 15 2022
 - [City Ambience](https://pixabay.com/sound-effects/city-city-above-far-ambience-car-479129/) - CliffordJohnson, Pixabay Feb 5 2026
 
+# Installation
+1. Download Unity 2022.3.62f1
+2. Clone the repo
+3. Add the downloaded repo folder from Unity Hub
+4. [OPTIONAL] Download the Toon City Pack for scenery, add it to the project assets: ./Assets/ThirdParty/<here>
+5. Open SCN_MainMenu or SCN_Gameplay located in ./Scenes/
+
 # Notes
 UML diagrams done with PlantUML with any compatible editor, e.g. [Pladitor](https://plantumleditor.com/)
 
