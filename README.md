@@ -1,5 +1,3 @@
-# grzegorz.mikulski.basket-challenge
-
 This project creates a simple basketball throwing game by swiping in unity with PC and Mobile support.
 
 <p align="center">
